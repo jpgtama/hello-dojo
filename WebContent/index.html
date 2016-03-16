@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Tutorial: Hello Dojo!</title>
+
+<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+</head>
+<body class="claro">
+	<h1 id="greeting">Hello</h1>
+
+	<button onclick="printMe()" value="Print">Print ME</button>
+
+	
+	<div>
+	<iframe name="pdfname" id="pdfid" >
+	</iframe></div>
+
+
+	<script type="text/javascript">
+	
+		function hello(w){
+			var t = document.title;
+			document.title = "XXXX";
+			w.print();
+			document.title = t;
+		}
+		
+		
+	
+		
+		
+	
+		function printMe() {
+			var pdfUrl = 'document.pdf';
+			var f = document.getElementById('pdfid');
+			//f.contentDocument.contentType = 'application/pdf';
+			
+			//f.setAttribute('src', 'document.pdf');
+			f.contentWindow.document.write('<body>  <iframe style="display: none;" src="'+ pdfUrl  + '" onload=" parent.hello(this.contentWindow); "></iframe>     </body>');;
+			
+			//var printWin = window.frames['pdfname'];
+			//f.setAttribute('src',)
+			//printWin.location.href = 'ISCV_Design documentation_Jan 2015.pdf';
+			//var c = document.getElementById("content").innerHTML;
+			//printWin.document.write('<body>  <iframe style="display: none;" src="document.pdf" onload="this.contentWindow.print()"></iframe>     </body>');
+			//printWin.print();
+			
+			//debugger;
+			
+			// <embed width="100%" height="100%" name="plugin" src="http://localhost:9090/hello-dojo/ISCV_Design%20documentation_Jan%202015.pdf" type="application/pdf">
+			
+			// var printWin = window.frames['printFrame'];
+			//var f = document.getElementById('printFrame');
+			 //var pdfEmbed  = document.getElementById('pdfEmbed');
+			 //printWin.document.write(pdfEmbed.innerHTML);
+			// window.frames['printFrame'].print();
+			 
+			 //var w = window.open('document.pdf','_self');
+			// w.print();
+			// w.close();
+			 
+			//document.getElementById('pdfDoc').printAll();
+			
+		}
+		
+		
+		
+		
+	</script>
+
+</body>
+</html>

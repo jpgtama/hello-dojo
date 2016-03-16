@@ -1,0 +1,18 @@
+<div>
+
+	<span class="fieldDisplay" data-dojo-type="dijit/_WidgetBase" data-dojo-props="innerHTML: at(this.dataModel, 'fieldDisplay')"></span> 
+	
+	<select class="fieldValueList" style="width: 100px; margin-right: 30px;"
+		data-dojo-type="dijit/form/Select" data-dojo-props="options: at(this.dataModel, 'fieldValueList'), value: at(this.dataModel, 'selectedFieldValue')"></select>
+
+	<input class="startDate" data-dojo-type="dijit/form/DateTextBox" style="width: 100px;margin-right: 10px;"
+		type="text" data-dojo-attach-point="startDateNode"
+		data-dojo-props="value:at(this.dataModel,'startDateValue'), datePattern: 'yyyy/MM/dd'">
+
+	<label data-dojo-type="app/widget/Label" value="to" style="margin-right: 10px;"></label>
+
+	<input class="endDate" data-dojo-type="dijit/form/DateTextBox" style="width: 100px;"
+		type="text" data-dojo-attach-point="endDateNode" 
+		data-dojo-props="value:at(this.dataModel,'endDateValue'), datePattern: 'yyyy/MM/dd'">
+		
+</div>

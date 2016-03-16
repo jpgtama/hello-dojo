@@ -1,0 +1,87 @@
+/* gridProfileSetting 为 baseClass*/
+.philips .gridColunmConfigDialog .dijitDialogPaneContent{
+	width:100%;
+	height:100%;
+}
+.philips .gridProfileSetting{
+	width:100%;
+	height:100%;
+}
+.philips .gridProfileSetting .gridConfigContainer{
+	width:100%;
+	height:85%;
+}
+.philips .gridProfileSetting .gridConfigContainer .gridConfigContent{
+	width:97%;
+	height:85%;
+}
+.philips .gridProfileSetting .gridConfigTools{
+	width:100%;
+	height:15%;
+	text-align:right;
+}
+.philips .gridProfileSetting .gridConfigTools .buttonTools{
+	margin-right:20px;
+}
+.philips .gridProfileSetting .dijitReset.dijitInline.dijitButtonNode{
+	height: 23px;
+}
+.philips .gridProfileSetting .dijitReset.dijitInline.dijitButtonText {
+ 	width: 30px;
+	height: 23px;
+	line-height: 30px;
+	text-align: center;
+	outline: none;
+	padding: 0px 14px 0px 14px !important;
+	border-radius: 5px;
+	font-family: 黑体 !important;
+}
+.philips .gridProfileSetting .saveButton .dijitButtonText {
+  color: #fff;
+  border: none;
+  margin-top: -3px;
+}
+.philips .gridProfileSetting .buttonDisabled .dijitButtonText,.philips .gridProfileSetting .cannelButton .dijitButtonText {
+  color: #878787;
+  border: none;
+  margin-top: -3px;
+}
+
+.philips .gridProfileSetting .gridConfigContent .menuLists {
+	float: left;
+	overflow: hidden;
+	width: 600px;
+}
+.philips .gridProfileSetting .gridConfigContent  {
+	height: 40px !important;
+	padding: 0 !important;
+	width: 100% !important;
+	position: static !important;
+	overflow: hidden;
+}
+.philips .gridProfileSetting .gridConfigContent .dijitTabInner {
+	background: none;
+	font-size: 11pt;
+	line-height: 26px;
+	color: #595959;
+	border: 0 none;
+	padding: 0 20px;
+	cursor: pointer;
+}
+
+.philips .gridProfileSetting .gridConfigContent .dijitTabInner:active {
+	color: #333;
+	font-size: 12pt
+}
+
+.philips .gridProfileSetting .gridConfigContent .dijitTabInner .tabLabel {
+	outline: none
+}
+
+.philips .gridProfileSetting .gridConfigContent .dijitChecked {
+	border-bottom: 4px solid #167dff;
+	color: #333
+}
+.philips .gridProfileSetting .dijitTabListContainer-top .tabStripButton{
+	display:none;
+}

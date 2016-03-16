@@ -1,0 +1,33 @@
+<div class="saveDialog">
+
+	<div data-dojo-attach-point="saveDialogForm"
+		data-dojo-type="dijit/form/Form">
+		
+		<div class="personalQueryLabel" data-dojo-type="app/widget/Label" value="personal_search"></div>
+		
+		<div class="queryNameLabel" data-dojo-type="app/widget/Label" value="search_condition_name"></div>
+
+		<input data-dojo-type="app/widget/ValidationTextBox" type="text"
+			data-dojo-attach-point="queryNameTextBox"
+			placeholder="shortcut_query_name" data-dojo-props="required:true,maxLength:20"/> 
+			
+		<input data-dojo-type="dijit/form/CheckBox" type="checkbox" data-dojo-attach-point="defaultCheckBox"/> 
+			
+		<label data-dojo-type="app/widget/Label" value="default"></label>
+		
+					
+		<div class="saveDialogButton">
+			<button data-dojo-type="app/widget/Button" type="button"
+					label="cancel" data-dojo-props=""
+					data-dojo-attach-point="cancelButton"
+					class="btns-outShadow btns-innerShadow-0a5dd6 white"></button>
+		
+			<button data-dojo-type="app/widget/Button" type="button"
+					label="save" data-dojo-props=""
+					data-dojo-attach-point="okButton"
+					class="btns-outShadow btns-innerShadow-0a5dd6 blue"></button>
+			
+		</div>
+	
+	</div>
+</div>

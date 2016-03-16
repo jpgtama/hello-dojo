@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dylan’s Original Junk Outlet</title>
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojo/resources/dojo.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojo/resources/dnd.css" />
+
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        paths : {
+            app : '/hello-dojo/js/appWidget/app',
+            js : '/hello-dojo/js/',
+            jquery : '/dojo-release-1.10.4-src/jquery/jquery'
+        }
+    };
+</script>
+<script src="/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+
+<script type="text/javascript">
+    require([
+        'dojo/aspect',
+        'dojo/query',
+        'dojo/string',
+        'dojo/topic',
+		'dojo/_base/lang',
+		'dojo/_base/array',
+        'dojo/dom-construct',
+        'dojo/dom-class',
+        "dojo/dnd/Source",
+        'dojo/dnd/Target',
+        'dojo/text!./itemTemplate.html',
+        'dojo/text!./avatarTemplate.html',
+        "dojo/domReady!"
+    ], function(aspect, query, stringUtil, topic, lang, arrayUtil, domC, domClass, Source, Target, itemTemplate, avatarTemplate) {
+
+        //         var wishlist = new Source("wishlistNode");
+        //         wishlist.insertNodes(false, [
+        //             "Wrist watch",
+        //             "Life jacket",
+        //             "Toy bulldozer",
+        //             "Vintage microphone",
+        //             "TIE fighter"
+        //         ]);
+
+        var creator = function(item, hint) {
+            var _this = this;
+
+            var template = hint === 'avatar' ? avatarTemplate : itemTemplate;
+
+            var domHTML = stringUtil.substitute(template, {
+                name : item.name || 'Product',
+                imageUrl : 'images/' + (item.image || '_blank.gif'),
+                quantity : item.quantity || 0,
+                description : item.description ? '<br> <span> ' + item.description + ' </span>' : ''
+            });
+
+            var node = domC.toDom(domHTML);
+
+            var type = item.quantity ? [
+                'inStock'
+            ] : [
+                'outOfStock'
+            ];
+
+            // total quantity
+            var captionNode = query('.count', this.node)[0];
+            var currentTQ = parseInt(captionNode.innerHTML) || 0;
+            var totalQ = currentTQ + item.quantity;
+            captionNode.innerHTML = totalQ;
+
+            return {
+                node : node,
+                data : item,
+                type : type
+            }
+
+        }
+
+        var catalog = new Source('catalog', {
+            accept : [
+                'inStock',
+                'outOfStock'
+            ],
+            copyOnly: true, 
+            selfAccept: false,
+            creator : creator
+        });
+        
+        window.catalog = catalog;
+
+        catalog.insertNodes(false, [
+            {
+                name : "Wrist watch",
+                image : "watch.jpg",
+                description : "Tell time with Swiss precision",
+                quantity : 3
+            },
+            {
+                name : 'Life jacket',
+                image : 'life-jacket.jpg',
+                description : 'Stay afloat during your frequent shipwrecks',
+                quantity : 1
+            },
+            {
+                name : 'Toy bulldozer',
+                image : 'bulldozer.jpg',
+                description : 'Move the earth, one cup at a time',
+                quantity : 8
+            },
+            {
+                name : 'Vintage microphone',
+                image : 'microphone.jpg',
+                description : 'Make \'em swoon in your blue suede shoes',
+                quantity : 0
+            },
+            {
+                name : 'TIE fighter',
+                image : 'tie-fighter.jpg',
+                description : 'Rid your neighborhood of pesky Rebel Scum',
+                quantity : 0
+            },
+            {
+                name : 'Apples',
+                image : 'apple.jpg',
+                description : 'Keep the doctor away on a daily basis',
+                quantity : 10
+            },
+            {
+                name : 'Bananas',
+                image : 'bananas.jpg',
+                description : 'Bananas are an excellent source of potassium',
+                quantity : 18
+            },
+            {
+                name : 'Tomatoes',
+                image : 'tomatoes.jpg',
+                description : 'Imported fresh daily from Dylan\'s front porch',
+                quantity : 0
+            },
+            {
+                name : 'Bread',
+                image : 'bread.jpg',
+                description : 'Guaranteed to be either stale or fresh',
+                quantity : 7
+            },
+
+        ]);
+
+        catalog.forInItems(function(item, id, map) {
+
+            domClass.add(id, item.type[0]);
+
+        })
+
+        // cart
+        var cart = new Source('cart', {
+            accept : [
+                'inStock'
+            ]
+        });
+
+        var wishlist = new Source('wishlist', {
+            accept : [
+                'inStock',
+                'outOfStock'
+            ]
+        });
+
+        // count function
+        var countFunction = function(source, nodes, copy) {
+            debugger;
+            query('.count', this.node)[0].innerHTML = this.getAllNodes().length;
+        }
+
+        aspect.after(cart, 'onDrop', countFunction);
+        aspect.after(wishlist, 'onDrop', countFunction);
+
+        // add highlight
+        // highlights available drop targets
+        function highlightTargets(show, source, nodes) {
+            domClass.toggle("wishlist", "highlight", show);
+            domClass.toggle("cart", "highlight", show && arrayUtil.every(nodes, function(node) {
+                return domClass.contains(node, "inStock");
+            }));
+        }
+
+        // highlight valid drop targets when a drag operation is started
+        // (/dnd/start)
+        topic.subscribe('/dnd/start', lang.partial(highlightTargets, true));
+        // remove the highlight when a drag operation is finished 
+        // (/dnd/cancel or /dnd/drop)
+        topic.subscribe("/dnd/cancel, /dnd/drop", lang.partial(highlightTargets, false));
+
+    });
+</script>
+
+<style>
+body {
+	font: 12px Myriad, Helvetica, Tahoma, Arial, clean, sans-serif;
+}
+
+.highlight, .glow {
+	outline: 5px solid #7fff00;
+	-webkit-transition: outline-width 0.2s;
+	-moz-transition: outline-width 0.2s;
+	-ms-transition: outline-width 0.2s;
+	-o-transition: outline-width 0.2s;
+	transition: outline-width 0.2s;
+}
+
+.glow {
+	outline-color: #ff5;
+}
+
+.dojoDndItemOver {
+	background-color: #ededed;
+	cursor: pointer;
+}
+
+.dojoDndItemAnchor {
+	background-color: #5bbdea;
+	color: black;
+	/* 	font-weight: bold; */
+}
+
+.dojoDndItemSelected {
+	background-color: #5bbdea;
+	color: #444;
+}
+
+.dojoDndAvatar {
+	border: 2px solid #ccc;
+}
+
+.dojoDndAvatarHeader {
+	background-color: #aaa;
+}
+
+.dojoDndAvatarItem {
+	background-color: #fff;
+	border-bottom: 1px solid #666;
+}
+
+.dojoDndAvatarItem .itemText {
+	font-size: 120%;
+}
+
+.catalogContainer {
+	display: table;
+	table-layout: fixed;
+	border-collapse: separate;
+	border-spacing: 5px;
+	width: 900px;
+}
+
+.catalogContainer .count {
+	text-align: center !important;
+	font-weight: bold !important;
+	font-size: larger;
+}
+
+.catalogContainer ul {
+	list-style: none;
+	border: 1px solid #aaa;
+}
+
+.catalogContainer ul>li {
+	line-height: 1.5em;
+}
+
+.catalogContainer>* {
+	display: table-cell;
+	border: 1px solid black;
+	padding: 6px;
+}
+
+.catalogContainer .inStock {
+	/* 	padding-left: 18px; */
+	/* 	background-image: url("images/inStock.png"); */
+	/* 	background-repeat: no-repeat; */
+	/* 	background-position: left center; */
+	
+}
+
+.catalogContainer .outOfStock {
+	/* 	padding-left: 18px; */
+	/* 	background-image: url("images/outOfStock.png"); */
+	/* 	background-repeat: no-repeat; */
+	/* 	background-position: left center; */
+	
+}
+</style>
+
+</head>
+<body>
+
+	<h1>Dylan’s Original Junk Outlet</h1>
+	<hr />
+
+
+	<div id="store">
+		<div class="wishlistContainer">
+			<h2>Wishlist</h2>
+			<ol id="wishlistNode" class="container">
+				<!-- 				<li>Wrist watch</li> -->
+				<!-- 				<li>Life jacket</li> -->
+				<!-- 				<li>Toy bulldozer</li> -->
+				<!-- 				<li>Vintage microphone</li> -->
+				<!-- 				<li>TIE fighter</li> -->
+			</ol>
+		</div>
+	</div>
+
+	<hr />
+	<div>
+		<label>Declarative</label>
+		<ol data-dojo-type="dojo.dnd.Source" id="wishlistNode"
+			class="container">
+			<li class="dojoDndItem">Wrist watch</li>
+			<li class="dojoDndItem">Life jacket</li>
+			<li class="dojoDndItem">Toy bulldozer</li>
+			<li class="dojoDndItem">Vintage microphone</li>
+			<li class="dojoDndItem">TIE fighter</li>
+		</ol>
+	</div>
+
+	<hr />
+	<h1>Multiple source</h1>
+	<div class="catalogContainer">
+		<table class="catalog" id="catalog">
+			<caption class="count"></caption>
+		</table>
+		<table class="cart" id="cart">
+			<caption class="count"></caption>
+		</table>
+		<table class="wishlist" id="wishlist">
+			<caption class="count"></caption>
+		</table>
+	</div>
+
+
+	<!--  -->
+
+	<!-- 	<table class="dojoDndAvatar" -->
+	<!-- 		style="position: absolute; z-index: 1999; margin: 0px; left: 119px; top: 348px;"> -->
+	<!-- 		<tbody> -->
+	<!-- 			<tr class="dojoDndAvatarHeader" style="opacity: 0.9;"> -->
+	<!-- 				<td><span>1</span></td> -->
+	<!-- 			</tr> -->
+	<!-- 			<tr class="dojoDndAvatarItem" style="opacity: 0.9;"> -->
+	<!-- 				<td><li id="" -->
+	<!-- 					class="dojoDndItem inStock dojoDndItemOver dojoDndItemAnchor">Wrist -->
+	<!-- 						watch</li></td> -->
+	<!-- 			</tr> -->
+	<!-- 		</tbody> -->
+	<!-- 	</table> -->
+
+
+	<!-- 	<table class="dojoDndAvatar" -->
+	<!-- 		style="position: absolute; z-index: 1999; margin: 0px; left: 541px; top: 290px;"> -->
+	<!-- 		<tbody> -->
+	<!-- 			<tr class="dojoDndAvatarHeader" style="opacity: 0.9;"> -->
+	<!-- 				<td><span>2</span></td> -->
+	<!-- 			</tr> -->
+	<!-- 			<tr class="dojoDndAvatarItem" style="opacity: 0.9;"> -->
+	<!-- 				<td><li id="" -->
+	<!-- 					class="dojoDndItem inStock dojoDndItemSelected dojoDndItemOver">Toy -->
+	<!-- 						bulldozer</li></td> -->
+	<!-- 			</tr> -->
+	<!-- 			<tr class="dojoDndAvatarItem" style="opacity: 0.8;"> -->
+	<!-- 				<td><li id="" class="dojoDndItem outOfStock dojoDndItemAnchor">Vintage -->
+	<!-- 						microphone</li></td> -->
+	<!-- 			</tr> -->
+	<!-- 		</tbody> -->
+	<!-- 	</table> -->
+
+
+	<!-- 	<table class="dojoDndAvatar dojoDndAvatarCanDrop" -->
+	<!-- 		style="position: absolute; z-index: 1999; margin: 0px; left: 552px; top: 280px;"> -->
+	<!-- 		<tbody> -->
+	<!-- 			<tr class="dojoDndAvatarHeader" style="opacity: 0.9;"> -->
+	<!-- 				<td><span>2</span></td> -->
+	<!-- 			</tr> -->
+	<!-- 			<tr class="dojoDndAvatarItem" style="opacity: 0.9;"> -->
+	<!-- 				<td><li id="" -->
+	<!-- 					class="dojoDndItem inStock dojoDndItemSelected dojoDndItemOver">Toy -->
+	<!-- 						bulldozer</li></td> -->
+	<!-- 			</tr> -->
+	<!-- 			<tr class="dojoDndAvatarItem" style="opacity: 0.8;"> -->
+	<!-- 				<td><li id="" class="dojoDndItem outOfStock dojoDndItemAnchor">Vintage -->
+	<!-- 						microphone</li></td> -->
+	<!-- 			</tr> -->
+	<!-- 		</tbody> -->
+	<!-- 	</table> -->
+
+</body>
+</html>

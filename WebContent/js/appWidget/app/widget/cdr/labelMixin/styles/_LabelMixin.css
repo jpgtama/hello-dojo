@@ -1,0 +1,17 @@
+/*
+Structure:
+	labelWrapper:
+		label
+		field	
+	
+
+*/
+.labelWrapper {
+	display: inline-block;
+}
+
+.labelWrapper .label {
+	display: block;
+	font-weight: bolder;
+	margin-bottom: 3px;
+}

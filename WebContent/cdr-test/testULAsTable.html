@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test UL as table</title>
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug: true,
+        paths : {
+            app : '/hello-dojo/js/appWidget/app',
+            js : '/hello-dojo/js/',
+            jquery : '/dojo-release-1.10.4-src/jquery/jquery'
+        }
+    };
+</script>
+<script src="/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+</head>
+<body class="claro">
+
+<h1>Test UL as table</h1>
+<hr/>
+
+
+<style>
+.container {
+	display: inline-block;
+	border-top: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+}
+.container ul{
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	display: table;
+}
+
+.container li:first-child{
+/* 	background-color: #ccc; */
+	font-weight: bold;
+}
+
+.container li{
+	display: table-row;
+}
+
+.container li> div{
+	display: table-cell;
+	padding: 3px 5px;
+	border-bottom: 1px solid #ccc;
+}
+
+.container li > div:first-child{
+	border-right: 1px solid #ccc;
+	text-align: center;
+}
+
+</style>
+<div class="container">
+
+	<ul>
+		<li>
+			<div>默认值</div>
+			<div>选项名称</div>
+		</li>
+		<li>
+			<div> <input type="radio" /> </div>
+			<div><input type="text"/></div>
+		</li>
+		<li>
+			<div> <input type="radio" /> </div>
+			<div><input type="text"/></div>
+		</li>
+		<li>
+			<div> <input type="radio" /> </div>
+			<div><input type="text"/></div>
+		</li>
+		
+	</ul>
+
+
+</div>
+
+<hr/>
+
+<div data-dojo-type="app/widget/cdr/optionsProperty/OptionsProperty"></div>
+
+</body>
+</html>

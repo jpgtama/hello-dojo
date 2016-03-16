@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test Grid Container</title>
+
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojox/layout/resources/GridContainer.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojox/layout/resources/DndGridContainer.css" />
+<link rel="stylesheet" href="/dojo-release-1.10.4-src/dojox/mdnd/resources/dnd.css" type="text/css" />
+<!-- <link rel="stylesheet" -->
+<!-- 	href="/dojo-release-1.10.4-src/dojo/resources/dojo.css" /> -->
+
+<!-- <link rel="stylesheet" -->
+<!-- 	href="/dojo-release-1.10.4-src/dojo/resources/dnd.css" /> -->
+
+<!-- <link rel="stylesheet" href="./styles/testBuilder.css" /> -->
+
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        paths : {
+            app : '/hello-dojo/js/appWidget/app',
+            js : '/hello-dojo/js/',
+            jquery : '/dojo-release-1.10.4-src/jquery/jquery'
+        }
+    };
+</script>
+<script src="/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+
+<script type="text/javascript">
+    require([
+        'dojox/mdnd/AreaManager',
+        'dojox/mdnd/DropIndicator',
+        'dojox/mdnd/dropMode/DefaultDropMode',
+        'dojo/_base/lang',
+        'dojo/topic',
+        'dojo/domReady!'
+    ], function(AreaManager, DropIndicator, DefaultDropMode, lang, topic) {
+
+
+    });
+</script>
+<script type="text/javascript" src="script_dnd.js"></script>
+<link rel="stylesheet" href="set_complete_dnd.css" type="text/css" />	
+<style>
+</style>
+
+</head>
+<body class="claro">
+	<div style="position:absolute;width:200px;left:5px;top:50px;">
+		<H2>Pure Source Dojo</H2>
+		<div dojoType="dojox/mdnd/PureSource" data-dojo-id="c1" class="container" >
+			<div class="dojoDndItem" dndType="ContentPane"><strong>ContentPane</strong></div>
+			<div class="dojoDndItem" dndType="Portlet"><strong>Portlet</strong></div>
+			<div class="dojoDndItem" dndType="TitlePane"><strong>TitlePane</strong></div>
+		</div>
+	</div>
+	<div style="position:absolute;width:200px;left:5px;top:220px;">
+		<H2>Source/Target Dojo</H2>
+		<div dojoType="dojo/dnd/Source" accept="rss, TitlePane, News" data-dojo-id="c2" class="container">
+			<div class="dojoDndItem" dndType="rss">RSS <strong>1</strong></div>
+			<div class="dojoDndItem" dndType="TitlePane"><strong>TitlePane</strong></div>
+			<div class="dojoDndItem" dndType="ContentPane"><strong>ContentPane</strong></div>
+		</div>
+		<p><b>accept :</b><br><i>Rss, TitlePane, News</i></p>
+	</div>
+	<div id="tb1" dojoType="dijit/layout/TabContainer" style="position:absolute;left:250px;top:50px;margin:10px; width:800px;height:500px">
+    	<div id="GC1" 
+			dojoType="dojox/layout/GridContainerLite" 
+			nbZones="3" 
+			isAutoOrganized="true" 
+			acceptTypes="Portlet, text, ContentPane, News"
+			title="onglet 1"
+			>
+			<div dojoType="dijit/layout/ContentPane" class="cpane" dndType="ContentPane">
+		   		Content Pane 1!!!
+		  	</div>
+		  	<div dojoType="dijit/layout/ContentPane" class="cpane" dndType="ContentPane">
+		   		Content Pane 2!!!
+		  	</div>
+			<div dojoType="dojox/widget/Portlet" 
+				id="ptl"
+				title = "News Draggable"
+				style="height:150px;"
+				dndType="Portlet" >
+				<b>Source/Target OAF (drop only rss)</b><br>
+				<div dojoType="dojo/dnd/Source" data-dojo-id="cp1" accept="rss">
+					<div class="dojoDndItem" dndType="News">News <strong>1</strong></div>
+					<div class="dojoDndItem" dndType="News">News <strong>2</strong></div>
+					<div class="dojoDndItem" dndType="News">News <strong>3</strong></div>
+					<div class="dojoDndItem" dndType="rss">RSS <strong>2</strong></div>
+				</div>
+			</div>
+			<div dojoType="dijit/TitlePane" title="titlePane1" dndType="TitlePane">
+		   		Title Pane 1!!!
+		  	</div>
+		</div>			
+        <div id="GC2" 
+			dojoType="dojox/layout/GridContainerLite" 
+			nbZones="3" 
+			isAutoOrganized="true" 
+			acceptTypes="text, Portlet, ContentPane, TitlePane"
+			style="min-height:350px"
+			title="onglet 2" 
+			closable="true"
+			>
+			<div dojoType="dijit/layout/ContentPane" dndType="ContentPane" class="cpane">
+		   		Content Pane 3!!!
+		  	</div>
+		  	<div dojoType="dijit/TitlePane" dndType="TitlePane" title="titlePane 2">
+		   		Title Pane 2!!!
+		  	</div>
+		</div>  
+	</div>
+
+
+</body>
+</html>

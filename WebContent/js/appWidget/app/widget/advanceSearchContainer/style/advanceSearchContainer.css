@@ -1,0 +1,55 @@
+/* baseClass: advanceSearchContainer */
+
+
+/*div display: inline */
+.philips .advanceSearchContainer {
+	display: inline;
+}
+
+.philips .advanceSearchContainer .advanceSearchContainerButtonIcon {
+	background: url(../../../theme/philips/images/ichmPortalSlice.png) no-repeat -450px -482px;
+	height: 20px;
+	width: 25px !important;
+	cursor: pointer !important;
+	display: inline-block;
+	outline: none;
+}
+
+
+.philips .advanceSearchContainer .dijitHover .advanceSearchContainerButtonIcon {
+	background: url(../../../theme/philips/images/ichmPortalSlice.png) no-repeat -524px -482px;
+	height: 20px;
+	width: 25px !important;
+	cursor: pointer !important;
+	display: inline-block;
+	outline: none;
+}
+
+/* 图标按钮的边缘 */
+.philips .advanceSearchContainer .dijitButtonContents{
+	outline: none;
+}
+
+/* tooltip 框的边缘 */
+.philips .advanceSearchTooltipDialog {
+		outline: none;
+}
+
+/* 三角连接 */
+.philips .advanceSearchTooltipDialog .dijitTooltipConnector {
+	border-bottom-width: 10px;
+	border-bottom-style: solid;
+	border-left: 10px solid rgba(0, 0, 0, 0);
+	border-right: 10px solid rgba(0, 0, 0, 0);
+	background-image: none;
+	color: #FFFFFF;
+	width: 0px;
+	height: 0px;
+	top: 4px;
+}
+
+/* tooltip border style */
+.philips .advanceSearchTooltipDialog .dijitTooltipContainer {
+  border: none !important;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.25);
+}

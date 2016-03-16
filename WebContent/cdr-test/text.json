@@ -1,0 +1,17 @@
+{
+	"field_component_type": "text",
+	"field_data_type": "text",
+	"field_name": "people_name",
+	"field_value": "",
+	"field_label": "姓名",
+	"field_desc": "这是一个填写姓名的组件",
+	"formatter": "",
+	"validation": "",
+	"is_required": false,
+	"is_hidden": false,
+	"is_predefine": true,
+	"sub_field_list": 
+	[
+		
+	]
+}

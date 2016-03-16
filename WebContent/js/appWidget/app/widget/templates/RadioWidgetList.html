@@ -1,0 +1,6 @@
+
+<div class="radioEnum">
+    <script type="dojo/require">at: "dojox/mvc/at"</script>
+    <span data-dojo-type="dijit/form/RadioButton" id="${parent.idPrefix}${indexAtStartup}" data-dojo-props="value: at('rel:', 'code'), checked: at('rel:', 'checked').transform(this.parent.bindingTransform())"></span>
+    <span data-dojo-type="dijit/_WidgetBase" data-dojo-props="_setValueAttr: {node: 'domNode', type: 'innerText'}, value: at('rel:', 'name')"></span>
+</div>

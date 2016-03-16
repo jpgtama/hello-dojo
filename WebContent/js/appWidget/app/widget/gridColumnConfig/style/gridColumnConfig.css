@@ -1,0 +1,29 @@
+/* baseClass: gridColumnConfig */
+.philips .gridColumnConfig {
+	display: inline;
+}
+
+.philips .gridColumnConfig .gridColunmConfigButton .dijitButtonContents {
+	outline: none;
+}
+
+.philips .gridColumnConfig .gridColunmConfigButton {
+	background: url(../../../theme/philips/images/ichmPortalSlice.png) no-repeat -45px -377px;
+	height: 25px;
+	width: 25px !important;
+	cursor: pointer !important;
+	display: inline-block;
+	outline: none;
+}
+
+.philips .gridColumnConfig .dijitButtonHover.dijitHover .gridColunmConfigButton {
+	background: url(../../../theme/philips/images/ichmPortalSlice.png) no-repeat -128px -377px;
+	height: 25px;
+	width: 25px !important;
+	cursor: pointer !important;
+	display: inline-block;
+	outline: none;
+}
+.philips .gridColumnConfig .dijitButtonFocused.dijitFocused .gridColunmConfigButton {
+	outline: none;
+}

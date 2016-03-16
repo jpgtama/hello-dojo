@@ -1,0 +1,49 @@
+[
+	[
+		{
+			"type": "text",
+			"label": "字段名称",
+			"key": "label",
+			"value": "民族sfsdfsdfsdfsdfsdfsdfsdfsfdsd"
+		},
+
+		{
+			"type": "boolean",
+			"label": "隐藏字段",
+			"key": "hidden",
+			"value": false
+		},
+
+		{
+			"type": "list",
+			"label": "字段选项",
+			"key": "options",
+			"value": 
+			[
+				{
+					"label":"汉族",
+					"value":"101"
+				}
+				,
+				{
+					"label":"蒙古族",
+					"value":"102"
+				}
+				,
+				{
+					"label":"回族",
+					"value":"103"
+				}
+			]
+		}
+	],
+
+	[
+		{
+			"type": "boolean",
+			"label": "必填项",
+			"key": "required",
+			"value": false
+		}
+	]
+]

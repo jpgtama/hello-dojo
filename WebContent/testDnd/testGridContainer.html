@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test Grid Container</title>
+
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojox/layout/resources/GridContainer.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojox/layout/resources/DndGridContainer.css" />
+
+<!-- <link rel="stylesheet" -->
+<!-- 	href="/dojo-release-1.10.4-src/dojo/resources/dojo.css" /> -->
+
+<!-- <link rel="stylesheet" -->
+<!-- 	href="/dojo-release-1.10.4-src/dojo/resources/dnd.css" /> -->
+
+<!-- <link rel="stylesheet" href="./styles/testBuilder.css" /> -->
+
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        paths : {
+            app : '/hello-dojo/js/appWidget/app',
+            js : '/hello-dojo/js/',
+            jquery : '/dojo-release-1.10.4-src/jquery/jquery'
+        }
+    };
+</script>
+<script src="/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+
+<script type="text/javascript">
+    require([
+        'dojox/mdnd/AreaManager',
+        'dojox/mdnd/DropIndicator',
+        'dojox/mdnd/dropMode/DefaultDropMode',
+        'dojo/_base/lang',
+        'dojo/topic',
+        'dojo/domReady!'
+    ], function(AreaManager, DropIndicator, DefaultDropMode, lang, topic) {
+
+        var am = new AreaManager();
+
+        am.areaClass = 'dndArea';
+        am.dragHandleClass = 'dragHandle';
+        am.registerByClass();
+
+        //
+        topic.subscribe("/dnd/drop/after", function() {
+            debugger;
+        });
+
+    });
+</script>
+
+<style>
+.wrapper {
+/* 	position: relative; */
+
+/* 	table-layout: fixed; */
+	width: 800px;
+}
+
+.dndArea {
+	border: 1px solid #444;
+/* 	position: absolute; */
+	padding: 8px;
+	width: 300px;
+	float: left;
+    margin: 10px;
+}
+
+.dndItem{
+	border: 3px solid #EAC291;;
+	    margin: 3px;
+}
+
+.dndItem .dragHandle{
+	    background-color: #EAC291;
+}
+
+.scrollConatiner{
+	width: 500px;
+	height: 500px;
+	overflow: scroll;
+}
+
+.scroll{
+	width: 500px;
+    height: 1200px;
+    float: left;
+}
+
+.scroll .dndArea{
+	float: none;
+	min-height: 200px;
+	
+}
+
+</style>
+
+</head>
+<body class="claro">
+	<h1>Test Grid Container</h1>
+	<hr />
+
+	<div class="wrapper">
+		<div class="dndArea container" accept="type1, type2">
+			<div class="dndItem" dndType="type1">
+				<div class="dragHandle">Item Type 1</div>
+				<div>
+					<p>Proin aliquet accumsan nunc. Duis nec tortor.</p>
+				</div>
+			</div>
+			<div class="dndItem" dndType="type1">
+				<div class="dragHandle">Item Type 1</div>
+				<div>
+					<p>Proin aliquet accumsan nunc. Duis nec tortor.</p>
+				</div>
+			</div>
+			<div class="dndItem" dndType="type1">
+				<div class="dragHandle">Item Type 1</div>
+				<div>
+					<p>Proin aliquet accumsan nunc. Duis nec tortor.</p>
+				</div>
+			</div>
+
+			<div class="dndItem simpleBlock" dndType="type2">
+				<div class="dragHandle">Item Type2</div>
+				<div>
+					<p>Proin aliquet accumsan nunc. Duis nec tortor.</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="dndArea container" accept="type2, type1">
+			<div class="dndItem" dndType="type1">
+				<div class="dragHandle">Item Type 1</div>
+				<div>
+					<p>Proin aliquet accumsan nunc. Duis nec tortor.</p>
+				</div>
+			</div>
+			<div class="dndItem" dndType="type1">
+				<div class="dragHandle">Item Type 1</div>
+				<div>
+					<p>Proin aliquet accumsan nunc. Duis nec tortor.</p>
+				</div>
+			</div>
+			<div class="dndItem" dndType="type1">
+				<div class="dragHandle">Item Type 1</div>
+				<div>
+					<p>Proin aliquet accumsan nunc. Duis nec tortor.</p>
+				</div>
+			</div>
+
+		</div>
+		
+		
+	</div>
+
+
+	<div class="scrollConatiner">
+		<div class="scroll">
+			<div class="dndArea" accept="type2, type1">
+		
+			</div>
+			
+			<div class="dndArea" accept="type2, type1">
+		
+			</div>
+			
+			<div class="dndArea" accept="type2, type1">
+		
+			</div>
+		
+		</div>
+	</div>
+
+<div class="dndArea container" style="float: none;" accept="type2, type1">
+			<div class="dndItem" dndType="type1">
+				<div class="dragHandle">Item Type 1</div>
+				<div>
+					<p>Proin aliquet accumsan nunc. Duis nec tortor.</p>
+				</div>
+			</div>
+			<div class="dndItem" dndType="type1">
+				<div class="dragHandle">Item Type 1</div>
+				<div>
+					<p>Proin aliquet accumsan nunc. Duis nec tortor.</p>
+				</div>
+			</div>
+			<div class="dndItem" dndType="type1">
+				<div class="dragHandle">Item Type 1</div>
+				<div>
+					<p>Proin aliquet accumsan nunc. Duis nec tortor.</p>
+				</div>
+			</div>
+
+		</div>
+		
+
+</body>
+</html>

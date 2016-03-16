@@ -1,0 +1,75 @@
+/* FieldWrapper has below structure:
+fieldWrapper:
+	iconBar:
+		properties
+		close
+	fieldContainer:
+		<field>
+
+*/
+
+/* ===================== fieldWrapper =====================  */
+.fieldWrapper {
+	display: inline-block;
+	position: relative;
+	border-style: dotted;
+	border-width: 2px;
+	border-color: lightgray;
+	min-width: 400px;
+}
+
+.fieldWrapper:hover {
+	border-color: black;
+}
+
+/* ===================== toolBar =====================  */
+.fieldWrapper .toolBar {
+	
+}
+
+/* set the width of the edit box to the same width of the label display width*/
+.fieldWrapper .toolBar .dijitTextBox {
+	width: 80% !important;
+}
+
+.fieldWrapper .title {
+	display: inline-block;
+	width: 80%;
+	word-break: break-all;
+}
+
+.fieldWrapper .iconBar {
+	position: absolute;
+	right: 3px;
+	top: 0px;
+}
+
+.fieldWrapper .iconBar>* {
+	/* 	margin-left: 5px; */
+	
+}
+
+/* url('/dojo-release-1.10.4-src/dijit/icons/images/commonIconsObjActEnabled.png') */
+.fieldWrapper .iconBar .close {
+	background: url('./delete.png') no-repeat;
+	width: 12px;
+	height: 12px;
+	display: inline-block;
+	cursor: pointer;
+}
+
+/* url('/dojo-release-1.10.4-src/dijit/icons/images/commonIconsObjActEnabled.png') */
+.fieldWrapper .iconBar .properties {
+	background: url('./property.png') no-repeat;
+	width: 12px;
+	height: 12px;
+	display: inline-block;
+	cursor: pointer;
+}
+
+/* ===================== fieldContainer =====================  */
+.fieldWrapper .fieldContainer {
+	position: relative;
+	display: inline-block;
+	display: inline-block;
+}

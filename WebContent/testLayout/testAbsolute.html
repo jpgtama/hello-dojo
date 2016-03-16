@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test Absolute Layout</title>
+<style>
+
+.container{
+	position: relative;
+	height: 700px;
+	border: 1px solid red;
+}
+
+.top, .center, .bottom{
+	position: absolute;
+	border: 1px dotted black;
+	width: 100%;
+}
+
+.top{
+	top: 0px;
+	height: 60px;
+}
+
+.bottom{
+	bottom: 0px;
+	height: 45px;
+}
+
+.center{
+	top: 60px;
+	bottom: 45px;
+}
+
+.content{
+	height: 1200px;
+	border: 2px solid blue;
+}
+
+</style>
+</head>
+<body>
+
+	<h1>Test Absolute Layout</h1>
+	<hr />
+
+	<div class="container">
+
+		<div class="top"> top </div>
+		<div class="center">
+			<div class="content">
+				center
+			</div>
+		</div>
+		<div class="bottom"> bottom </div>
+
+
+
+
+	</div>
+
+
+</body>
+</html>

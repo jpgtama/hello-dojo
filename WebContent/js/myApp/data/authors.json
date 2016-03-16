@@ -1,0 +1,23 @@
+[
+	{
+		"name": "Brian Arnold",
+		"avatar": "js/myApp/widget/images/002.jpg",
+		"bio": "Brian Arnold is a software engineer at SitePen, Inc., ..."
+	}
+	
+	,
+	
+	
+	{
+		"name": "Mike Jun",
+		"avatar": "js/myApp/widget/images/003.jpg",
+		"bio": "Mike Jun is a very skilled special who worked ten years ..."
+	}
+	,
+	
+	{
+		"name": "James King",
+		"avatar": "js/myApp/widget/images/004.jpg",
+		"bio": "James King is a the author of the famous widget ..."
+	}
+]

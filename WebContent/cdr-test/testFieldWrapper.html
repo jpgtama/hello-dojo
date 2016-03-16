@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test Select</title>
+<style>
+/* .dijitSelectLabel { */
+/* 	width: 200px; */
+/* 	overflow: hidden; */
+/* } */
+</style>
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojox/layout/resources/GridContainer.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojox/layout/resources/DndGridContainer.css" />
+
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        paths : {
+            app : '/hello-dojo/js/appWidget/app',
+            js : '/hello-dojo/js/',
+            jquery : '/dojo-release-1.10.4-src/jquery/jquery'
+        }
+    };
+</script>
+<script src="/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+
+<script>
+    require([
+        'app/widget/cdr/WrapperUtil',
+        'app/widget/cdr/select/CDRSelect',
+        'app/widget/cdr/FieldParser',
+        /* 'app/widget/cdr/Column', */
+        'app/widget/cdr/Section',
+        'app/widget/cdr/Section2',
+        'app/widget/cdr/Page',
+        'app/widget/cdr/Page2',
+        'app/widget/cdr/CDRForm',
+        'app/widget/cdr/CustomTabContainer',
+        'app/widget/TextBox',
+        'dojox/layout/GridContainer',
+        'dojox/layout/TableContainer',
+        'dojox/uuid',
+        "dijit/form/Select",
+        'dijit/form/NumberTextBox',
+        'dijit/layout/ContentPane',
+        'dijit/TitlePane',
+        'dijit/layout/TabContainer',
+        'dijit/registry',
+        "dojo/data/ObjectStore",
+        "dojo/dom-class",
+        "dojo/dom-geometry",
+        "dojo/dom-style",
+        "dojo/store/Memory",
+        'dojo/_base/array',
+        'dojo/parser',
+        "dojo/domReady!"
+    ], function(wrapperUtil, CDRSelect, fieldParser, /*Column, */Section, Section2, Page, Page2, CDRForm, CustomTabContainer, TextBox, GridContainer,
+            TableContainer, uuid, Select, NumberTextBox, ContentPane, TitlePane, TabContainer, registry, ObjectStore, domClass, domGeometry, domStyle, Memory,
+            dojoArray, parser) {
+
+        window.domClass = domClass;
+        window.registry = registry;
+        window.wrapperUtil = wrapperUtil;
+
+        //         var tc = new TabContainer({
+        //             style: "height: 100%; width: 100%;"
+        //         }, "tabContainer");
+
+        //         var cp1 = new ContentPane({
+        //             title: "Food",
+        //             content: "We offer amazing food"
+        //        });
+        //        tc.addChild(cp1);
+
+        //        var cp2 = new ContentPane({
+        //             title: "Drinks",
+        //             content: "We are known for our drinks."
+        //        });
+        //        tc.addChild(cp2);
+
+        //        tc.startup();
+
+        //                 var cpane1 = new ContentPane({ title:"cpane1", content: "Content Pane 1 : Drag Me !" }),
+        //                 cpane2 = new ContentPane({ title:"cpane2", content: "Content Pane 2 : Drag Me !" }),
+        //                 cpane3 = new ContentPane({ title:"cpane3", content: "Content Pane 3 : Drag Me !" });
+
+        //                 var widget = new GridContainer({
+        //                 nbZones: 3,
+        //                 isAutoOrganized: true
+        //                 }, 'tabContainer');
+        //                 widget.addChild(cpane1, 0, 0);
+        //                 widget.addChild(cpane2, 1, 0);
+        //                 widget.addChild(cpane3, 2, 1);
+        //                 widget.startup();
+
+        //         parser.parse();
+
+        // Create the TableContainer, and insert it into the DOM node with id "putWidgetHere".
+        // Add the custom class "labelsAndValues"
+        //      var programmatic = new TableContainer(
+        //      {
+        //        cols: 2,
+        //        customClass:"labelsAndValues",
+        //        "labelWidth": "150"
+        //      }, 'tableContainer');
+
+        //      // Create four text boxes
+        //      var text1 = new TextBox({label: "ProgText 1"});
+        //      var text2 = new TextBox({label: "ProgText 2"});
+        //      var text3 = new TextBox({label: "ProgText 3"});
+        //      var text4 = new TextBox({label: "ProgText 4"});
+
+        //      // Add the four text boxes to the TableContainer
+        //      programmatic.addChild(text1);
+        //      programmatic.addChild(text2);
+        //      programmatic.addChild(text3);
+        //      programmatic.addChild(text4);
+
+        //      // Start the table container. This initializes it and places
+        //      // the child widgets in the correct place.
+        //      programmatic.startup();
+
+    })
+</script>
+
+
+</head>
+<body class="claro">
+
+	<h1>Test FieldWrapper</h1>
+	<hr />
+
+	<div data-dojo-type="app/widget/cdr/fieldWrapper/FieldWrapper">
+
+		<div data-dojo-type="app/widget/cdr/select/CDRSelect"
+			data-dojo-props="label: '民族sfsdfsdfsdfsdfsdfsdfsdfsfdsd', options: [ { label: '汉族', value: '101' }, { label: '蒙古族', value: '102' }, { label: '回族', value: '103' }  ], hidden: false, required: false">
+		</div>
+	</div>
+
+
+	<!-- 	<span data-dojo-type="dijit/InlineEditBox" data-dojo-props="editor:'dijit/form/NumberTextBox'" title="quantity" width="70px"></span> -->
+
+	<hr />
+	<!-- 	<div style="display: table; table-layout: fixed; width: 100%;"> -->
+	<!-- 		<div style="display: table-cell;">Gross but sometimes useful.</div> -->
+	<!-- 		<div style="display: table-cell;"> -->
+	<!-- 			xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+	<!-- 			xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+	<!-- 			xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+	<!-- 			xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+	<!-- 			xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+	<!-- 			xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+	<!-- 		</div> -->
+	<!-- 		<div style="display: table-cell;"> -->
+	<!-- 			xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+	<!-- 			xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+	<!-- 			xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+	<!-- 			xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+	<!-- 			xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+	<!-- 			xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+	<!-- 		</div> -->
+	<!-- 	</div> -->
+
+	<hr />
+
+	<!-- 	<div data-dojo-type="app/widget/cdr/textbox/TextBox" -->
+	<!-- 		data-dojo-props="label: 'Hello'"></div> -->
+
+	<!-- 	<hr /> -->
+
+<!-- 	<div data-dojo-type="app/widget/cdr/columnForm/ColumnForm"></div> -->
+
+	<hr />
+
+	<!-- <div data-dojo-type="app/widget/cdr/booleanProperty/BooleanProperty"></div> -->
+
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+/*
+Structure:
+	columnForm
+		container
+			column, column
+
+*/
+
+.columnForm > .container{
+	display: table;
+	table-layout: fixed;
+	width: 800px;
+}
+
+.columnForm .container .column{
+	display: table-cell;
+	vertical-align: top;
+}
+
+.columnForm .container .column>*{
+	margin: 5px 5px 15px 5px;
+}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test Tab</title>
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojox/layout/resources/GridContainer.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojox/layout/resources/DndGridContainer.css" />
+
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        paths : {
+            app : '/hello-dojo/js/appWidget/app',
+            js : '/hello-dojo/js/',
+            jquery : '/dojo-release-1.10.4-src/jquery/jquery'
+        }
+    };
+</script>
+<script src="/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+
+<script type="text/javascript">
+    require([
+        'dijit/registry'
+    ], function(registry) {
+        window.registry = registry;
+    });
+</script>
+
+<style>
+#borderContainer {
+	width: 800px;
+	height: 400px;
+}
+</style>
+
+</head>
+<body class="claro">
+
+	<h1>Test Tab</h1>
+	<hr />
+
+	<span data-dojo-type="app/widget/Label"
+		value="HEllosdfsdfsdfsdfeifjowefjosfji"
+		data-dojo-props="displayWidth: 60"></span>
+
+	<hr />
+
+	<div data-dojo-type="dijit/layout/BorderContainer"
+		data-dojo-props="design:'sidebar', gutters:true, liveSplitters:true"
+		id="borderContainer">
+		<div data-dojo-type="dijit/layout/ContentPane"
+			data-dojo-props="splitter:true, region:'leading'"
+			style="width: 100px;">Hi, I'm leading pane</div>
+		<div data-dojo-type="dijit/layout/ContentPane"
+			data-attach-point="formNode"
+			data-dojo-props="splitter:true, region:'center'">
+
+			<div>
+				<div data-dojo-type="app/widget/cdr/CustomTabContainer"
+					data-dojo-props="titleWidth: 60, titleEditable: true, switchCheck: false, closeCheck: false">
+					<div data-dojo-type="dijit/layout/ContentPane"
+						title="Page 1dfksjfdsfjsdfhsdifhsdhdksdf" closable="true">Page
+						Content 1</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 2"
+						closable="true">Page Content 2</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 3"
+						closable="true">Page Content 3</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 4"
+						closable="true">Page Content 4</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 5"
+						closable="true">Page Content 5</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 6"
+						closable="true">Page Content 6</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 7"
+						closable="true">Page Content 7</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 8"
+						closable="true">Page Content 8</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 9"
+						closable="true">Page Content 9</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 10"
+						closable="true">Page Content 10</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 11"
+						closable="true">Page Content 11</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 12"
+						closable="true">Page Content 12</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 13"
+						closable="true">Page Content 13</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 14"
+						closable="true">Page Content 14</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 15"
+						closable="true">Page Content 15</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 16"
+						closable="true">Page Content 16</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 17"
+						closable="true">Page Content 17</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 18"
+						closable="true">Page Content 18</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 19"
+						closable="true">Page Content 19</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 20"
+						closable="true">Page Content 20</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 21"
+						closable="true">Page Content 21</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 22"
+						closable="true">Page Content 22</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 23"
+						closable="true">Page Content 23</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 24"
+						closable="true">Page Content 24</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 25"
+						closable="true">Page Content 25</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 26"
+						closable="true">Page Content 26</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 27"
+						closable="true">Page Content 27</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 28"
+						closable="true">Page Content 28</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 29"
+						closable="true">Page Content 29</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 30"
+						closable="true">Page Content 30</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 31"
+						closable="true">Page Content 31</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 32"
+						closable="true">Page Content 32</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 33"
+						closable="true">Page Content 33</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 34"
+						closable="true">Page Content 34</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 35"
+						closable="true">Page Content 35</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Page 36"
+						closable="true">Page Content 36</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<!-- <div data-dojo-type="app/widget/cdr/xxForm/XXForm"></div> -->
+
+
+
+</body>
+</html>

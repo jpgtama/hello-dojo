@@ -1,0 +1,24 @@
+/* baseClass: gridFuzzySearch */
+
+/* div display: inline */
+.philips .gridFuzzySearch {
+	display: inline;
+}
+
+/* search box */
+.philips .gridFuzzySearch .gridFuzzySearchTextBox {
+	background: url(../../../theme/philips/images/ichmPortalSlice.png) no-repeat -831px -180px
+		#FFFFFF;
+	padding-left: 20px;
+	width: 268px;
+}
+
+/* place holder */
+.philips .gridFuzzySearch .gridFuzzySearchTextBox .dijitPlaceHolder {
+	font-family: 黑体 !important;
+	font-size: 8px;
+	color: #666666;
+	font-style: normal;
+	line-height: 16px;
+	vertical-align: middle !important;
+}

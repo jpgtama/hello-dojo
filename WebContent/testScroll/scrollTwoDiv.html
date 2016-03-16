@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test Scrolling two divs</title>
+<style>
+/* reset margin and padding of body and html */
+html, body {
+	padding: 0;
+	margin: 0;
+	background: black;
+}
+
+/*     allows us to scale all panels inside to full width and height */
+#wrapper {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+
+/*      make all panels fullpage   */
+.panels {
+	position: relative;
+	height: 100%;
+	min-height: 100%;
+	width: 100%;
+	z-index: 1000;
+}
+
+/*     this is the fixed first panel  */
+#a {
+	background: #eee;
+	position: fixed;
+	color: red;
+	top: 0;
+	left: 0;
+	/* prevents your fixed panel from being on top of your subsequent panels */
+	z-index: -99;
+}
+
+/*      the second panel -> after the first fixed panel */
+/*      should get 100% top margin, thats the trick */
+#b {
+	margin-top: 100%;
+	background: yellow;
+}
+
+#c {
+	background: pink;
+}
+
+#d {
+	background: green;
+}
+</style>
+</head>
+<body>
+
+
+
+	<div id="wrapper">
+		<div id="a" class="panels">FIXED PANEL</div>
+		<div id="b" class="panels">Scrolling-Panel 1</div>
+		<div id="c" class="panels">Scrolling-Panel 2</div>
+		<div id="d" class="panels">Scrolling-Panel 3</div>
+	</div>
+
+
+
+</body>
+</html>

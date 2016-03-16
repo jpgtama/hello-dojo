@@ -1,0 +1,24 @@
+{
+	"formName": "",
+	"pages": 
+	[
+		{
+			"pageName": "",
+			"sections": 
+			[
+				{
+					"sectionName": "",
+					"cols": 2,
+					"fields": 
+					[
+						{
+							"fieldName": "gender",
+							"filedType": "select",
+							"column": 1
+						}
+					]
+				}
+			]
+		}
+	]
+}

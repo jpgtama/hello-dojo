@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+ .optionsPropery{
+ 	display: inline-block;
+ }
+
+ .optionsPropery > .container {
+	display: inline-block;
+	border-top: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+}
+ .optionsPropery .container ul{
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	display: table;
+}
+
+ .optionsPropery .container li:first-child{
+/* 	background-color: #ccc; */
+	font-weight: bold;
+}
+
+ .optionsPropery .container li{
+	display: table-row;
+}
+
+ .optionsPropery .container li> div{
+	display: table-cell;
+	padding: 3px 5px;
+	border-bottom: 1px solid #ccc;
+}
+
+ .optionsPropery .container li > div:first-child{
+	border-right: 1px solid #ccc;
+	text-align: center;
+}

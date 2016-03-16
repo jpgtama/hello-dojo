@@ -1,0 +1,31 @@
+<div>
+	<style type="text/css">
+@import
+	"app/widget/gridProfileSetting/style/grid-profile-setting.css";
+@import
+"lib/dijit/themes/claro/claro.css"
+</style>
+	<div data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline', gutters:false, region:'center'" class="gridConfigContainer"
+		data-dojo-attach-point="gridConfigContainer">
+		<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top',splitter:false" class="gridConfigContent"
+			data-dojo-attach-point="gridConfigContent">
+			<div data-dojo-type="dijit/layout/TabContainer" data-dojo-attach-point="gridColumnTab" data-dojo-props="gutters:false, region:'center', tabStrip:true">
+				<div data-dojo-type="app/widget/TabTitlePane" class="columnsSelect" data-dojo-props="title:'grid_column_selection',selected:true">
+				</div>
+				<div data-dojo-type="app/widget/TabTitlePane" class="sortSelect" data-dojo-props="title:'grid_sorting_method'"></div>
+			</div>
+		</div>
+		<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:false, region:'center'">
+			<div data-dojo-type="app/widget/multiSelect2Side/MultiSelect2Side" data-dojo-props="columnsOtherValue:true,selectedColumnsOtherValue:true" data-dojo-attach-point="gridColumnSetting"></div>
+			<div data-dojo-type="app/widget/multiSelect2Side/MultiSelect2Side" data-dojo-props="isSortSelect:true,columnsOtherValue:false,selectedColumnsOtherValue:true" data-dojo-attach-point="gridSortSetting"></div>
+		</div>
+	</div>
+	<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:false, region:'center'" class="gridConfigTools"
+		data-dojo-attach-point="gridConfigTools">
+		<div class="buttonTools">
+			<button data-dojo-type="app/widget/Button" type="button" data-dojo-props="" data-dojo-attach-point="cannelButton"
+				class="btns-outShadow btns-innerShadow-0a5dd6 white cannelButton">cancel</button>
+			<button data-dojo-type="app/widget/Button" type="button" data-dojo-attach-point="saveButton" class="btns-outShadow btns-innerShadow-0a5dd6 blue saveButton">save</button>
+		</div>
+	</div>
+</div>

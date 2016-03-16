@@ -1,0 +1,159 @@
+@CHARSET 'UTF-8';
+
+/* baseClass: dynamicGridCls */
+.philips .dynamicGridCls {
+	height: 100%;
+	overflow: hidden;
+}
+
+
+.philips .dynamicGridCls .dgrid {
+	height: 98%;
+	border-bottom: none;
+}
+
+.philips .dynamicGridCls .dgrid-content{
+	width:100% !important;
+}
+
+/* scroller */
+.philips .dynamicGridCls .dgrid-scroller {
+	background-color: white;
+	overflow-x: scroll;
+	margin-top: 34px !important; /* to keep header height */
+}
+/* checkbox column width */
+.philips .dynamicGridCls .selectColumn {
+	width: 25px;
+}
+
+/* loading message style */
+.philips .dynamicGridCls .dgrid-loading {
+	color: #aaa;
+	font-size: 3em;
+	padding: 3em;
+	text-align: center;
+}
+
+/* no data message style */
+.philips .dynamicGridCls .dgrid-no-data {
+	color: #aaa;
+	font-size: 3em;
+	padding: 3em;
+	text-align: center;
+}
+
+/* 没有记录时显示横向滚动条，抵消上面3em的padding */
+.philips .dynamicGridCls .dgrid-no-data .full-length{
+	margin-left: -3em;
+}
+
+/* grid header */
+.philips .dynamicGridCls .dgrid-header tr th {
+	height: 33px;
+	padding: 0px 0px 0px 9px !important;
+	vertical-align: middle !important;
+	line-height: 12pt;
+	border-width: 1px !important;
+	font-family: 黑体 !important;
+	font-size: 12px;
+	color: #666666;
+	background-color: rgb(224, 224, 224);
+	border-right-color: rgb(191, 191, 191);
+    border-right-style: solid;
+    border-right-width: 1.11111116409302px;
+    border-bottom-color: rgb(229, 218, 200);
+    border-bottom-style: solid;
+    border-bottom-width: 1.11111116409302px;
+}
+
+.philips .dynamicGridCls .dgrid-header-scroll {
+	display: none;
+}
+
+
+.philips .dynamicGridCls .dgrid .dgrid-header {
+	width: 100%;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+	z-index: 1;
+}
+
+
+/* grid content */
+.philips .dynamicGridCls .dgrid-content tr td {
+	height: 30px !important;
+	padding: 0px 0px 0px 9px !important;
+	vertical-align: middle !important;
+	line-height: 12pt;
+	border: 0 none !important;
+	font-family: 黑体 !important;
+	font-size: 12px;
+	color: #666666;
+	background-color: white;
+}
+
+/* grid content */
+.philips .dynamicGridCls .dgrid-content {
+	background-color: white;
+}
+
+.philips .dynamicGridCls .dgrid-content .dgrid-row-table {	
+	border-bottom: 1px solid #d8d8d8 !important;
+}
+
+
+/** 鼠标 Over start **/
+.philips .dynamicGridCls .dgrid-row-table tr td:first-child {
+	border-left: 5px solid #fff !important;
+}
+.philips .dynamicGridCls .dgridRowOver .dgrid-row-table tr td:first-child {
+	border-left: 5px solid #167fff !important;
+}
+
+.philips .dynamicGridCls .dgrid-content  .dgridRowOver .dgrid-cell {
+	background: rgba(041, 137, 255, 0.15) !important;
+}
+/** 鼠标 Over end **/
+
+
+/* grid cell */ 
+.philips .dynamicGridCls  .dgrid-content .dgrid-cell{
+	background: none !important;
+}
+
+/* grid bottom */
+.philips .dynamicGridCls .gridBottom {
+	height: 30%;
+	width: 100%;
+	background-color: white;
+}
+
+/* context menu */
+.philips .dynamicGridCls table#appointmentGridMenu td {
+	height: 20px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.philips .dynamicGridCls table#appointmentGridMenu td.dijitMenuItemIconCell
+	{
+	padding-left: 25px;
+}
+
+.philips .dynamicGridCls table#appointmentGridMenu td.dijitMenuItemLabel
+	{
+	padding-left: 30px;
+	padding-right: 35px;
+}
+
+.philips .dynamicGridCls table#appointmentGridMenu td.dijitMenuItemAccelKey,
+	table#appointmentGridMenu td.dijitMenuArrowCell {
+	display: none;
+}
+
+.philips .dynamicGridCls table#appointmentGridMenu {
+	border: none;
+	box-shadow: 0px 0px 15px #888888;
+	padding-top: 19px;
+	padding-bottom: 20px;
+}

@@ -1,0 +1,30 @@
+{
+	"type": "selectfield",
+	"key": "gender_1",
+	"label": "性别",
+	"desc": "选择患者的性别",
+	"required": false,
+	"hidden": false,
+	"predefined": false,
+	"defaultValue": null,
+	"permission": null,
+	"belongFields": null,
+	"options": 
+	[
+		{
+			"value": 101,
+			"label": "男",
+			"predefined": false
+		}, 
+		{
+			"value": 102,
+			"label": "女",
+			"predefined": false
+		}, 
+		{
+			"value": 103,
+			"label": "其他",
+			"predefined": false
+		}
+	]
+}

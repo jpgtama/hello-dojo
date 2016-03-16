@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test Builder</title>
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+<!-- <link rel="stylesheet" -->
+<!-- 	href="/dojo-release-1.10.4-src/dojo/resources/dojo.css" /> -->
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojo/resources/dnd.css" />
+
+<link rel="stylesheet" href="./styles/testBuilder.css" />
+
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        paths : {
+            app : '/hello-dojo/js/appWidget/app',
+            js : '/hello-dojo/js/',
+            jquery : '/dojo-release-1.10.4-src/jquery/jquery'
+        }
+    };
+</script>
+<script src="/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+
+<script type="text/javascript">
+    require(['dijit/form/TextBox',
+             'dojo/dom',
+             'dojo/dom-construct',
+             'dojo/query',
+        'dojo/string',
+        'dojo/_base/array',
+        'dojo/aspect',
+        'dojo/dnd/Source',
+        'dojo/domReady!'
+    ], function(TextBox, dom, domC, query, stringUtil, arrayUtil, aspect, Source) {
+
+        //         <span class="dojoDndItem control textbox">TextBox</span>
+
+        var itemTemplate = '<span class="control textbox">${label}</span>';
+
+        // creator function
+        var creator = function(item, hint) {
+            var nodeHTML = stringUtil.substitute(itemTemplate, item);
+            var node = domC.toDom(nodeHTML);
+            return {
+                node : node,
+                data : item,
+                type : [
+                    'text'
+                ]
+            }
+        }
+
+        var controlPane = new Source('controlPane', {
+            copyOnly : true,
+            creator : creator
+        });
+
+        controlPane.insertNodes(false, [
+            {
+                type : 'text',
+                label : 'TextBox'
+            }
+        ]);
+
+        
+        // form pane
+        var formPaneCreator = function(item, hint) {
+            // get type
+            var type = item.type;
+            
+            if(type === 'text'){
+                var nodeWidget = new TextBox();
+                return {
+                    node: nodeWidget.domNode,
+                    data: item,
+                    type: ['text']
+                }
+            }
+        }
+        
+        // get columns
+        var columnNodes = query('.column', 'formPane');
+        arrayUtil.forEach(columnNodes, function(item) {
+            new Source(item, {
+                skipForm: true,
+                creator: formPaneCreator
+            });
+        });
+        
+//         var formPane = new Source('formPane', {
+//             skipForm: true,
+//             creator: formPaneCreator
+//         });
+
+
+    });
+</script>
+
+</head>
+<body>
+
+	<h1>Test Builder</h1>
+	<hr />
+
+	<div class="container">
+
+		<div class="controlPane" id="controlPane">
+			<!-- 			<span class="dojoDndItem control textbox">TextBox</span> -->
+
+			<!-- 			<input  class="dojoDndItem" type="text" value="2"/> -->
+
+		</div>
+
+		<div class="formPane" id="formPane">
+			<div class="column"></div>
+			<div class="column"></div>
+
+		</div>
+
+	</div>
+
+
+</body>
+</html>

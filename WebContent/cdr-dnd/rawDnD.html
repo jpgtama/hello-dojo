@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Raw DnD</title>
+<style>
+/* Prevent the text contents of draggable elements from being selectable. */
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+
+
+.elementContainer{
+    position: fixed;
+    top: 120px;
+    right: 10px;
+    border: 7px solid #ABA5A7;
+    width: 200px;
+    height: 600px;
+}
+
+.elementList{
+	list-style-type: none;
+	padding-right: 40px;
+}
+
+.elementList > *{
+	margin-bottom: 5px;
+}
+
+.formArea{
+    position: fixed;
+    top: 120px;
+    right: 263px;
+    border: 7px solid #7DC56E;
+    width: 901px;
+    height: 600px;
+    display: table;
+}
+.column{
+	display: table-cell;
+	width: 450px;
+	padding: 10px;
+	    vertical-align: top;
+}
+
+.columnSeperator{
+	display: table-cell;
+	width: 0px;
+	border-right: 1px dashed blue;
+}
+
+.field{
+	margin: 5px;
+	width: 85%;
+
+}
+
+.placeHolder{
+    width: 97%;
+    border: 5px dashed #C5C0C0;
+    height: 40px;
+    pointer-events: none;
+}
+
+
+</style>
+</head>
+<body>
+<h1>Raw DnD</h1>
+<hr/>
+
+
+<div class="elementContainer">
+	<ul class="elementList">
+		<li draggable="true">TextBox</li>
+		<li draggable="true">DropDown</li>
+		<li draggable="true">Date</li>
+		<li draggable="true">DateTime</li>
+	</ul>
+</div>
+
+<div class="formArea" id="formArea">
+	<div class="column">
+		
+	</div>
+	<div class="columnSeperator"></div>
+	<div class="column"></div>
+
+</div>
+
+
+<script type="text/javascript">
+
+var columns = document.getElementById("formArea").querySelectorAll('.column');
+//Event Listener for when the dragged element is over the drop zone.
+[].forEach.call(columns, function(col) {
+    col.addEventListener('dragover', function(e) {
+        if (e.preventDefault) {
+          e.preventDefault();
+        }
+
+        console.log('dragover - column');
+        
+        e.dataTransfer.dropEffect = 'move';
+
+        return false;
+      });
+
+
+      col.addEventListener('drop', function(e) {
+          console.log('drop - column');
+          if (e.preventDefault) e.preventDefault(); 
+          if (e.stopPropagation) e.stopPropagation();
+          
+          var type = e.dataTransfer.getData('text');
+       	
+          removePlaceHolder(this);
+          
+          addField(this, type);
+          
+          this.style.backgroundColor = null;
+      });   
+      
+      
+      col.addEventListener('dragenter', function(e) {
+          console.log('dragenter - column');
+          this.style.backgroundColor = 'bisque';
+          
+          addPlaceHolder(this);
+    });
+      
+      col.addEventListener('dragleave', function(e) {
+          console.log('dragleave - column');
+          this.style.backgroundColor = null;
+          
+          removePlaceHolder(this);
+    });
+});
+
+/**
+ * add place holder
+ */
+function addPlaceHolder(domNode){
+    // <div class="placeHolder"></div>
+    var ph =  document.createElement('div');
+    
+    ph.classList.add('placeHolder');
+    
+    domNode.appendChild(ph);
+}
+
+/**
+ * remove place holder
+ */
+function removePlaceHolder(domNode){
+    
+    var phs = domNode.querySelectorAll('.placeHolder');
+    [].forEach.call(phs, function(ph) {
+        ph.remove();
+    });
+}
+
+function addField(formDom, type){
+    
+    var f = null;
+    
+	if(type === 'TextBox'){
+	    f = document.createElement('input');
+	} else	if(type === 'DropDown'){
+	    f = document.createElement('select');
+	    for(var i=1;i<=3;i++){
+	        var op = document.createElement('option')
+	        op.setAttribute('value', 'option'+ i);
+	        op.innerHTML =  'Option '+ i;
+	        f.appendChild(op);
+	    }
+	} else	if(type === 'Date'){
+	    f = document.createElement('input');
+	    f.setAttribute('type', 'date');
+	} else	if(type === 'DateTime'){
+	    f = document.createElement('input');
+	    f.setAttribute('type', 'datetime-local');
+	}
+	
+	
+	if(f){
+	    f.classList.add('field');
+	    formDom.appendChild(f);
+	    
+	}
+    
+}
+
+var elements = document.querySelectorAll(".elementList > *");
+
+[].forEach.call(elements, function(e) {
+    e.addEventListener('dragstart', handleDragStart, false);
+    e.addEventListener('dragend', handleDragEnd, false);
+});
+
+function handleDragStart(e) {
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text', this.innerHTML);
+    
+    this.style.opacity = '0.4';  // this / e.target is the source node.
+    this.style.backgroundColor = 'bisque';
+  }
+
+function handleDragEnd(e) {
+    // this/e.target is the source node.
+    this.style.opacity = '1.0'; 
+    this.style.backgroundColor = null;
+  }
+
+
+
+
+
+// -----------------------------------------------------------------------------------------
+
+    
+    
+
+</script>
+
+
+</body>
+</html>

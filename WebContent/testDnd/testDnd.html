@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test DnD</title>
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojox/layout/resources/GridContainer.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojox/layout/resources/DndGridContainer.css" />
+
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/dojo-release-1.10.4-src/dojo/',
+        // parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        paths : {
+            app : '/hello-dojo/js/appWidget/app',
+            js : '/hello-dojo/js/',
+            jquery : '/dojo-release-1.10.4-src/jquery/jquery'
+        }
+    };
+</script>
+<script src="/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+
+<script>
+    dojo.require("dojox.mdnd.AreaManager");
+    dojo.require("dojox.mdnd.DropIndicator");
+    dojo.require("dojox.mdnd.dropMode.DefaultDropMode");
+
+    dojo.ready(function() {
+        var m = dojox.mdnd.areaManager();
+        m.areaClass = "dndArea";
+        m.dragHandleClass = "dragHandle";
+        m.registerByClass();
+    });
+    
+    
+    
+</script>
+
+<style>
+</style>
+
+</head>
+<body>
+
+	<h1>Test Dnd</h1>
+	<hr />
+
+	<div style="position: relative">
+		<div style="position: absolute; top: 80px; left: 50px;">
+			<h2>Accepts Type1 items</h2>
+			<div class="dndArea container" accept="type1">
+				<div class="dndItem" dndType="type1">
+					<div class="dragHandle">Item Type 1</div>
+					<div>
+						<p>Proin aliquet accumsan nunc. Duis nec tortor.</p>
+					</div>
+				</div>
+				<div class="dndItem simpleBlock" dndType="type2">
+					<div class="dragHandle">Item Type2</div>
+					<div>
+						<p>Proin aliquet accumsan nunc. Duis nec tortor.</p>
+					</div>
+				</div>
+			</div>
+
+			<div style="position: absolute; top: 80px; left: 350px;">
+				<h2>Accepts Type2 items</h2>
+				<div class="dndArea container" accept="type2"></div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+
+
+
+</body>
+</html>

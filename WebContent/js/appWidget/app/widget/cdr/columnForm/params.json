@@ -1,0 +1,33 @@
+[
+	{
+		"label": "民族",
+		"options": 
+		[
+			{
+				"value": 101,
+				"label": "汉族",
+				"predefined": false
+			},
+
+			{
+				"value": 102,
+				"label": "蒙古族",
+				"predefined": false
+			},
+
+			{
+				"value": 103,
+				"label": "回族",
+				"predefined": false
+			}
+		],
+
+		"hidden": false
+	},
+
+	{
+		"required": false,
+		"subfields": null,
+		"groupby": null
+	}
+]

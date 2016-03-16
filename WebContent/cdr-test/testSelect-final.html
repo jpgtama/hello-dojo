@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test Select</title>
+<style>
+.dijitSelectLabel {
+	width: 200px;
+	overflow: hidden;
+}
+
+.cdrForm{
+
+height: 800px;
+
+}
+
+</style>
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojox/layout/resources/GridContainer.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojox/layout/resources/DndGridContainer.css" />
+
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        paths : {
+            app : '/hello-dojo/js/appWidget/app',
+            js : '/hello-dojo/js/',
+            jquery : '/dojo-release-1.10.4-src/jquery/jquery'
+        }
+    };
+</script>
+<script src="/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+
+<script>
+    require([
+        'app/widget/cdr/select/CDRSelect',
+        'app/widget/cdr/FieldParser',
+        /* 'app/widget/cdr/Column', */
+        'app/widget/cdr/Section',
+        'app/widget/cdr/Section2',
+        'app/widget/cdr/Page',
+        'app/widget/cdr/Page2',
+        'app/widget/cdr/CDRForm',
+        'app/widget/cdr/CustomTabContainer',
+        'dojox/layout/GridContainer',
+        'dojox/uuid',
+        "dijit/form/Select",
+        'dijit/layout/ContentPane',
+        'dijit/TitlePane',
+        'dijit/layout/TabContainer',
+        'dijit/registry',
+        "dojo/data/ObjectStore",
+        "dojo/dom-geometry",
+        "dojo/dom-style",
+        "dojo/request",
+        "dojo/store/Memory",
+        'dojo/_base/array',
+        'dojo/parser',
+        "dojo/domReady!"
+    ], function(CDRSelect, fieldParser, /*Column, */Section, Section2, Page, Page2, CDRForm, CustomTabContainer, GridContainer, uuid, Select, ContentPane,
+            TitlePane, TabContainer, registry, ObjectStore, domGeometry, domStyle, request, Memory, dojoArray, parser) {
+
+        request('form-final.json', {
+            handleAs : 'json'
+        }).then(function(data) {
+            var formDefObject = data;
+
+            var cdrForm = new CDRForm({
+                defObject : formDefObject
+            });
+
+            cdrForm.placeAt("cdrForm");
+            cdrForm.startup();
+        });
+
+    })
+</script>
+
+
+</head>
+<body class="claro">
+
+	<h1>Test Select widget for CDR Form</h1>
+	<hr />
+
+
+	<div id="cdrForm" class="cdrForm"></div>
+
+
+
+
+</body>
+</html>

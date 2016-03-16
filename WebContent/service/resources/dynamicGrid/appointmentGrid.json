@@ -1,0 +1,664 @@
+{
+	"gridName": "appointment",
+	"selectMode": "none",
+	"sourceTarget": "FollowupAppointment",
+	"useSQL": false,
+	"loadingMessage": "loading_data",
+	"noDataMessage": "no_data_found",
+	"rowsPerPage": 200,
+	"rowAction": 
+	[
+		{
+			"type": "context-menu",
+			"display": "",
+			"permission": "scheduler_manage_followup",
+			"actionList": 
+			[
+				{
+					"display": "appointment_sure",
+					"iconClass": "tocheckIcon",
+					"isDisabled": "appointmentGrid.rowActionFunctionScope.confirmPatientArrivalDisable",
+					"topic": "/appointment/confirmPatientArrival"
+				},
+
+				{
+					"display": "appointment_cancel",
+					"iconClass": "appointmentCancel",
+					"isDisabled": "appointmentGrid.rowActionFunctionScope.cancelPatientArrivalDisabled",
+					"topic": "/appointment/cancelPatientArrival"
+				},
+
+				{
+					"display": "appointment_add",
+					"iconClass": "appointmentAdd",
+					"isDisabled": "appointmentGrid.rowActionFunctionScope.addNextAppointmentDisabled",
+					"topic": "/appointment/addNextAppointment"
+				},
+
+				{
+					"display": "appointment_del",
+					"iconClass": "appointmentDel",
+					"isDisabled": "appointmentGrid.rowActionFunctionScope.cancelAppointmentDisabled",
+					"topic": "/appointment/cancelAppointment"
+				},
+
+				{
+					"display": "appointment_print",
+					"iconClass": "appointmentPrint",
+					"isDisabled": "appointmentGrid.rowActionFunctionScope.printAppointmentDisabled",
+					"topic": "/appointment/printAppointment",
+					"permission": "scheduler_manage_followup&scheduler_print_followup_app"
+				}
+			]
+		},
+
+		{
+			"type": "click",
+			"topic": "/appointment/click"
+		}
+	],
+
+	"columns": 
+	[
+		{
+			"display": "appointTime",
+			"field": "appointTime",
+			"dataType": "DateTime",
+			"formatter": "{procedureTime, date, yyyy/MM/dd}",
+			"width": 166,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1000
+		},
+
+		{
+			"display": "appointment_no",
+			"field": "appointmentNo",
+			"dataType": "String",
+			"formatter": "",
+			"width": 166,
+			"isOptional": true,
+			"isDisplay": true,
+			"sortable": true,
+			"index": 1001
+		},
+
+		{
+			"display": "patient_ideographic_name",
+			"field": "patientName",
+			"dataType": "String",
+			"formatter": "",
+			"width": 126,
+			"isOptional": true,
+			"isDisplay": true,
+			"sortable": true,
+			"index": 1002
+		},
+
+		{
+			"display": "patient_sex",
+			"field": "patientGenderCode",
+			"dataType": "String",
+			"formatter": "{patientGenderCode, enum, gender}",
+			"width": 72,
+			"isOptional": true,
+			"isDisplay": true,
+			"sortable": true,
+			"index": 1003
+		},
+
+		{
+			"display": "patient_age",
+			"field": "patientAge",
+			"dataType": "Integer",
+			"formatter": "",
+			"width": 72,
+			"isOptional": true,
+			"isDisplay": true,
+			"sortable": true,
+			"index": 1004
+		},
+
+		{
+			"display": "appointment_doctor",
+			"field": "resourceName",
+			"dataType": "String",
+			"formatter": "",
+			"width": 126,
+			"isOptional": true,
+			"isDisplay": true,
+			"sortable": true,
+			"index": 1005
+		},
+
+		{
+			"display": "patient_id",
+			"field": "patientId",
+			"dataType": "String",
+			"formatter": "",
+			"width": 100,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1006
+		},
+
+		{
+			"display": "patient_no",
+			"field": "patientNo",
+			"dataType": "String",
+			"formatter": "",
+			"width": 146,
+			"isOptional": true,
+			"isDisplay": true,
+			"sortable": true,
+			"index": 1007
+		},
+
+		{
+			"display": "inpatient_no",
+			"field": "encounterNo",
+			"dataType": "String",
+			"formatter": "",
+			"width": 146,
+			"isOptional": true,
+			"isDisplay": false,
+			"sortable": true,
+			"index": 1008
+		},
+
+		{
+			"display": "outpatient_no",
+			"field": "outpatientNo",
+			"dataType": "String",
+			"formatter": "",
+			"width": 146,
+			"isOptional": true,
+			"isDisplay": true,
+			"sortable": true,
+			"index": 1009
+		},
+
+		{
+			"display": "timeslot_id",
+			"field": "timeslotId",
+			"dataType": "Long",
+			"formatter": "",
+			"width": 100,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1010
+		},
+
+		{
+			"display": "procedure_time",
+			"field": "procedureTime",
+			"dataType": "DateTime",
+			"formatter": "{procedureTime, date, yyyy/MM/dd}",
+			"width": 164,
+			"isOptional": true,
+			"isDisplay": false,
+			"sortable": true,
+			"index": 1012
+		},
+
+		{
+			"display": "appoint_time",
+			"field": "appointTimeSort",
+			"dataType": "String",
+			"formatter": "{appointTime, date, yyyy/MM/dd} {timeslotDefDisplay}",
+			"width": 164,
+			"isOptional": true,
+			"isDisplay": true,
+			"sortable": true,
+			"index": 1013
+		},
+
+		{
+			"display": "appoint_create_time",
+			"field": "appointCreateTime",
+			"dataType": "DateTime",
+			"formatter": "{appointCreateTime, date, yyyy/MM/dd}",
+			"width": 164,
+			"isOptional": true,
+			"isDisplay": false,
+			"sortable": true,
+			"index": 1014
+		},
+
+		{
+			"display": "appointment_status",
+			"field": "followupStatus",
+			"dataType": "String",
+			"formatter": "{appointmentGrid.formatterScope.formatFollowUpStatus, fn}",
+			"width": 103,
+			"isOptional": true,
+			"isDisplay": true,
+			"sortable": true,
+			"index": 1015
+		},
+
+		{
+			"display": "followup_plan",
+			"field": "carePlanDefName",
+			"dataType": "String",
+			"formatter": "",
+			"width": 166,
+			"isOptional": true,
+			"isDisplay": false,
+			"sortable": true,
+			"index": 1016
+		},
+
+		{
+			"display": "care_plan_step",
+			"field": "carePlanStepLabel",
+			"dataType": "String",
+			"formatter": "{carePlanStepLabel}",
+			"width": 126,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1017
+		},
+
+		{
+			"display": "care_plan_step",
+			"field": "carePlanStepValue",
+			"dataType": "String",
+			"formatter": "{carePlanStepLabel}",
+			"width": 126,
+			"isOptional": true,
+			"isDisplay": false,
+			"sortable": true,
+			"index": 1017
+		},
+
+		{
+			"display": "followupId",
+			"field": "followupId",
+			"dataType": "Long",
+			"formatter": "",
+			"width": 126,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1019
+		},
+
+		{
+			"display": "id",
+			"field": "id",
+			"dataType": "Long",
+			"formatter": "",
+			"width": 126,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1020
+		},
+
+		{
+			"display": "timeslotDefDisplay",
+			"field": "timeslotDefDisplay",
+			"dataType": "String",
+			"formatter": "",
+			"width": 126,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1021
+		},
+
+		{
+			"display": "appointmentId",
+			"field": "appointmentId",
+			"dataType": "Long",
+			"formatter": "",
+			"width": 126,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1022
+		},
+
+		{
+			"display": "encounterId",
+			"field": "encounterId",
+			"dataType": "Long",
+			"formatter": "",
+			"width": 166,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1023
+		},
+
+		{
+			"display": "birthDate",
+			"field": "birthDate",
+			"dataType": "DateTime",
+			"formatter": "",
+			"width": 166,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1024
+		},
+
+		{
+			"display": "timeslotDefId",
+			"field": "timeslotDefId",
+			"dataType": "Long",
+			"formatter": "",
+			"width": 166,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1025
+		},
+
+		{
+			"display": "timeslotDefItemIndex",
+			"field": "timeslotDefItemIndex",
+			"dataType": "Long",
+			"formatter": "",
+			"width": 166,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1026
+		},
+
+		{
+			"display": "calendarTypeCode",
+			"field": "calendarTypeCode",
+			"dataType": "String",
+			"formatter": "",
+			"width": 166,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1027
+		},
+
+		{
+			"display": "resourceTypeCode",
+			"field": "resourceTypeCode",
+			"dataType": "String",
+			"formatter": "",
+			"width": 166,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1028
+		},
+
+		{
+			"display": "isCheck",
+			"field": "isCheck",
+			"dataType": "String",
+			"formatter": "",
+			"width": 166,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1029
+		},
+
+		{
+			"display": "isCompleted",
+			"field": "isCompleted",
+			"dataType": "String",
+			"formatter": "",
+			"width": 166,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1030
+		},
+
+		{
+			"display": "carePlanStep",
+			"field": "carePlanStep",
+			"dataType": "Integer",
+			"formatter": "",
+			"width": 166,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1031
+		},
+
+		{
+			"display": "occupy_no_status",
+			"field": "registrationSequenceStatus",
+			"dataType": "String",
+			"formatter": "{appointmentGrid.formatterScope.formatOccupyStatus,fn}",
+			"width": 90,
+			"isOptional": true,
+			"isDisplay": false,
+			"sortable": true,
+			"index": 1032
+		},
+
+		{
+			"display": "bill_status",
+			"field": "billingStatusCode",
+			"dataType": "String",
+			"formatter": "{appointmentGrid.formatterScope.formatBillStatus,fn}",
+			"width": 90,
+			"isOptional": true,
+			"isDisplay": false,
+			"sortable": true,
+			"index": 1033
+		},
+
+		{
+			"display": "careplan_id",
+			"field": "carePlanId",
+			"dataType": "Long",
+			"formatter": "",
+			"width": 90,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1035
+		},
+
+		{
+			"display": "carePlanDefId",
+			"field": "carePlanDefId",
+			"dataType": "Long",
+			"formatter": "",
+			"width": 90,
+			"isOptional": false,
+			"isDisplay": false,
+			"sortable": false,
+			"index": 1036
+		}
+	],
+
+	"sort": 
+	[
+		{
+			"field": "appointTimeSort",
+			"method": "desc"
+		},
+
+		{
+			"field": "procedureTime",
+			"method": "asc"
+		}
+	],
+
+	"criteria": 
+	[
+		{
+			"display": "appoint_time",
+			"field": "appointTime",
+			"dataType": "DateTime",
+			"operator": "range",
+			"widget": "app/widget/advanceSearch/DateType",
+			"module": "",
+			"service": "",
+			"displayLabel": "",
+			"displayValue": "",
+			"filter": ""
+		},
+
+		{
+			"display": "appoint_create_time",
+			"field": "appointCreateTime",
+			"dataType": "DateTime",
+			"operator": "range",
+			"widget": "app/widget/advanceSearch/DateType",
+			"module": "",
+			"service": "",
+			"displayLabel": "",
+			"displayValue": "",
+			"filter": ""
+		},
+
+		{
+			"display": "procedure_time",
+			"field": "procedureTime",
+			"dataType": "DateTime",
+			"operator": "range",
+			"widget": "app/widget/advanceSearch/DateType",
+			"module": "",
+			"service": "",
+			"displayLabel": "",
+			"displayValue": "",
+			"filter": ""
+		},
+
+		{
+			"display": "patient_age",
+			"field": "patientAge",
+			"dataType": "Integer",
+			"operator": "range",
+			"widget": "app/widget/advanceSearch/InputRangeType",
+			"module": "",
+			"service": "",
+			"displayLabel": "",
+			"displayValue": "",
+			"filter": "",
+			"pattern": "\\d{1,3}"
+		},
+
+		{
+			"display": "patient_gender",
+			"field": "patientGenderCode",
+			"dataType": "String",
+			"operator": "in",
+			"widget": "app/widget/advanceSearch/EnumType",
+			"module": "gender",
+			"service": "",
+			"displayLabel": "",
+			"displayValue": "",
+			"filter": ""
+		},
+
+		{
+			"display": "appointment_status",
+			"field": "followupStatus",
+			"dataType": "String",
+			"operator": "in",
+			"widget": "app/widget/advanceSearch/EnumType",
+			"module": "Business_Status",
+			"service": "",
+			"displayLabel": "",
+			"displayValue": "",
+			"filter": 
+			[
+				201,
+				205,
+				207,
+				901,
+				902
+			]
+		},
+
+		{
+			"display": "care_plan_type_display",
+			"field": "carePlanDefId",
+			"dataType": "Long",
+			"operator": "in",
+			"widget": "app/widget/advanceSearch/EnumType",
+			"module": "",
+			"service": "carePlanService",
+			"displayLabel": "name",
+			"displayValue": "id",
+			"filter": ""
+		},
+
+		{
+			"display": "care_plan_step",
+			"field": "carePlanStepLabel",
+			"dataType": "String",
+			"operator": "in",
+			"widget": "app/widget/advanceSearch/EnumType",
+			"module": "",
+			"service": "carePlanDefService",
+			"displayLabel": "unitTypeCode",
+			"displayValue": "unitTypeCode",
+			"filter": ""
+		},
+
+		{
+			"display": "appointment_doctor",
+			"field": "resourceName",
+			"dataType": "String",
+			"operator": "in",
+			"widget": "app/widget/advanceSearch/EnumType",
+			"module": "",
+			"service": "practitionerService",
+			"displayLabel": "ideographicName",
+			"displayValue": "ideographicName",
+			"filter": ""
+		},
+
+		{
+			"display": "occupy_no_status",
+			"field": "registrationSequenceStatus",
+			"dataType": "String",
+			"operator": "in",
+			"widget": "app/widget/advanceSearch/EnumType",
+			"module": "Registration_Sequence_Status",
+			"service": "",
+			"displayLabel": "",
+			"displayValue": "",
+			"filter": ""
+		},
+
+		{
+			"display": "bill_status",
+			"field": "billingStatusCode",
+			"dataType": "String",
+			"operator": "in",
+			"widget": "app/widget/advanceSearch/EnumType",
+			"module": "Billing_Status",
+			"service": "",
+			"displayLabel": "",
+			"displayValue": "",
+			"filter": ""
+		},
+
+		{
+			"display": "",
+			"field": "timeslotDefId",
+			"dataType": "String",
+			"operator": "in",
+			"widget": "app/widget/advanceSearch/EnumType",
+			"module": "",
+			"service": "timeslotDefService",
+			"displayLabel": "display",
+			"displayValue": "id",
+			"filter": "",
+			"isHidden": true
+		}
+	]
+}

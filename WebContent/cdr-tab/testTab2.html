@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test Tab</title>
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        paths : {
+            app : '/hello-dojo/js/appWidget/app',
+            js : '/hello-dojo/js/',
+            jquery : '/dojo-release-1.10.4-src/jquery/jquery'
+        }
+    };
+</script>
+<script src="/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+
+<script type="text/javascript">
+    require([
+        'app/widget/Label',
+        'dojo/Deferred',
+        'dojo/dom',
+        'dojo/dom-construct',
+        'dijit/layout/ContentPane',
+        'dijit/InlineEditBox',
+        'dijit/Dialog',
+        'dijit/form/TextBox',
+        'dijit/registry',
+        'dojo/_base/declare',
+        'dojo/domReady!'
+    ], function(Label, Deferred, dom, domC, ContentPane, InlineEditBox, Dialog, TextBox, registry, declare) {
+
+        window.registry = registry;
+
+//         var label = new Label({
+//             value : 'I am the new App Label',
+//             displayWidth : 60
+//         });
+
+//         var div = dom.byId('clickDiv');
+
+//         domC.place(label.domNode, div);
+
+
+        var cp = new ContentPane();
+        cp.set('content', '<div data-dojo-type="app/widget/cdr/booleanProperty/BooleanProperty"></div><div data-dojo-type="app/widget/cdr/booleanProperty/BooleanProperty"></div>');
+        
+        cp.placeAt('cp');
+        
+        var deferred = new Deferred();
+        setTimeout(function(){
+            deferred.resolve("success");
+          }, 3000);
+
+        var process = deferred.promise;
+        var r = process.then(function(result) {
+           console.log(result);
+           
+           return result;
+        });
+        console.log('r', r);
+    });
+</script>
+
+<style type="text/css">
+html, body {
+	height: 100%
+}
+
+.testHeight {
+	height: 100%;
+	border: 1px solid red;
+}
+
+.container, .dijitTitlePaneContentInner {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+	min-height: 400px;
+	border: 1px dotted blue;
+}
+
+.container>div, .dijitTitlePaneContentInner>div {
+	display: table-cell;
+	border: 1px dashed red;
+}
+</style>
+
+</head>
+<body class="claro">
+
+	<h1>Test Tab</h1>
+	<hr />
+
+<div id="cp"></div>
+<!-- 	<div id="clickDiv" onclick="alert('div clicked')"></div> -->
+<!-- 	<hr /> -->
+
+<!-- 	<div> -->
+<!-- 		<form data-dojo-type="dijit/form/Form"> -->
+<!-- 			<input data-dojo-type="dijit/form/RadioButton" type="radio" -->
+<!-- 				name="hidden" value="false" /> <label>否</label> <input -->
+<!-- 				data-dojo-type="dijit/form/RadioButton" type="radio" name="hidden" -->
+<!-- 				value="true" /> <label>是</label> -->
+
+<!-- 			<form data-dojo-type="dijit/form/Form"> -->
+<!-- 				<div> -->
+<!-- 				<input data-dojo-type="dijit/form/RadioButton" type="radio" -->
+<!-- 					name="required" value="false" /> <label>否</label> <input -->
+<!-- 					data-dojo-type="dijit/form/RadioButton" type="radio" name="required" -->
+<!-- 					value="true" /> <label>是</label> -->
+				
+				
+<!-- 				</div> -->
+
+
+
+<!-- 			</form> -->
+
+<!-- 		</form> -->
+
+<!-- 	</div> -->
+
+<!-- 	<hr/> -->
+	
+<!-- 	<div data-dojo-type="app/widget/cdr/booleanProperty/BooleanProperty"></div> -->
+	
+	
+
+</body>
+</html>

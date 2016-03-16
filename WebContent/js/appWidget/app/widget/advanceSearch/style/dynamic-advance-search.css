@@ -1,0 +1,175 @@
+@CHARSET "UTF-8";
+
+/**
+baseClass: dataType, dynamicAdvanceSearch
+*/
+.philips .dynamicAdvanceSearch {
+	background-color: #FFFFFF;
+}
+
+.philips .dynamicAdvanceSearch .tools {
+	margin-top: 20px;
+}
+
+.philips .dynamicAdvanceSearch .inputArea {
+	margin-top: 30px;
+}
+
+.philips .inputArea .dataType .fieldDisplay {
+	width: 230px;
+}
+
+.philips .dynamicAdvanceSearch .inputArea .dataType .fieldValueList {
+	margin-right: 30px;
+}
+
+.philips .dynamicAdvanceSearch .inputArea>div {
+	margin-bottom: 30px;
+	margin-left: 30px;
+	margin-right: 30px;
+}
+
+
+/* 枚举型按钮的宽度和高度*/
+.philips .dynamicAdvanceSearch .inputArea .enumType table {
+	width: 150px;
+}
+.philips .dynamicAdvanceSearch .inputArea .enumType .dijitButtonContents {
+	height: 19px;
+}
+
+.philips .dynamicAdvanceSearch .inputArea .enumType .dijitArrowButton {
+	width: 18px;
+}
+
+.philips .dynamicAdvanceSearch .inputArea .dojoxCheckedMultiSelectMenu table
+	{
+	width: 100%;
+}
+
+.philips .dynamicAdvanceSearch .inputArea .fieldDisplay {
+	display: inline-block;
+	width: 80px;
+}
+
+/* 下拉框宽度 样式 */
+.philips .dijitMenuTable {
+	width: 100%;
+}
+
+/* Tooltip 窗口样式 */
+.philips  .advanceSearchDialog {
+	outline: 0px;
+}
+
+/* 按钮样式, button styles  */
+.philips .dynamicAdvanceSearch .dijitActive.dijitButtonActive .dijitReset.dijitInline.dijitButtonText
+	{
+	outline: none;
+}
+
+.philips .dynamicAdvanceSearch .button  .dijitReset.dijitInline.dijitButtonText
+	{
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	outline: none;
+	padding: 2px 10px 2px 10px !important;
+	border-radius: 5px;
+	font-family: 黑体 !important;
+}
+
+/* 调整高度快捷查询名称  */
+.philips .dynamicAdvanceSearch .tools .input {
+	padding-top: 5px;
+	padding-left: 28px;
+}
+/* 调整 按钮  */
+.philips .dynamicAdvanceSearch .tools .button {
+	padding-right: 28px;
+}
+
+.philips .dynamicAdvanceSearch  .dijit.dijitReset.dijitButton.btns-outShadow.btns-innerShadow-0a5dd6.white .dijitReset.dijitInline.dijitButtonText
+	{
+	color: #878787;
+	border: none;
+}
+
+.philips .dynamicAdvanceSearch  .dijit.dijitReset.dijitButton.btns-outShadow.btns-innerShadow-0a5dd6.white.dijitButtonHover.dijitHover .dijitReset.dijitInline.dijitButtonText
+	{
+	color: #FFFFFF;
+}
+
+.philips .dynamicAdvanceSearch  .dijit.dijitReset.dijitButton.btns-outShadow.btns-innerShadow-0a5dd6.white.dijitButtonActive.dijitActive .dijitReset.dijitInline.dijitButtonText
+	{
+	color: #FFFFFF;
+}
+
+.philips .dynamicAdvanceSearch  .dijit.dijitReset.dijitButton.btns-outShadow.btns-innerShadow-0a5dd6.blue .dijitReset.dijitInline.dijitButtonText
+	{
+	color: #fff;
+	border: none;
+}
+
+/* 去掉多出的横条 */
+.philips .dynamicAdvanceSearch .dojoxCheckedMultiSelect .dojoxCheckedMultiSelectWrapper{
+	display: none;
+}
+
+.philips .dynamicAdvanceSearch .saveDialog{
+	padding: 28px;
+}
+
+.philips .dynamicAdvanceSearch .saveDialog .saveDialogButton{
+	text-align: right;
+	margin-top: 20px;
+}
+
+.philips .dynamicAdvanceSearch .dijitButtonText{
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  outline: none;
+  padding: 2px 10px 2px 10px !important;
+  border-radius: 5px;
+  font-family: 黑体 !important;
+}
+
+.philips .dynamicAdvanceSearch .btns-clear .dijitButtonNode{
+    padding: 0px 25px 0px 25px !important;
+}
+
+.philips .dynamicAdvanceSearch .btns-query .dijitButtonNode{
+    padding: 0px 25px 0px 25px !important;
+}
+
+.philips .dynamicAdvanceSearch .saveDialog .dijitPlaceHolder {
+  font-family: simhei !important;
+  font-size: 8px;
+  color: #666666;
+  font-style: normal;
+  line-height: 16px;
+  vertical-align: middle !important;
+  padding-left: 5px;
+}
+
+.philips .dynamicAdvanceSearch .saveDialog .personalQueryLabel{
+  font-size: 18px;
+  line-height: 16px;
+  margin-bottom: 20px;
+  font-family: CentraleSans Condensed, Microsoft YaHei, 黑体;
+  color: #333333;
+}
+
+.philips .dynamicAdvanceSearch .saveDialog .queryNameLabel{
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-family: CentraleSans Condensed, Microsoft YaHei, 黑体;
+  color: #333333;
+}
+
+
+/* 高级查询下拉框 最大高度 the max height of the dropdown menu of advance search*/
+.philips .dijitMenuPopup .dojoxCheckedMultiSelectMenu {
+	max-height: 400px;
+}

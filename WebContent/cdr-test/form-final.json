@@ -1,0 +1,753 @@
+{
+	"name": "表单名称",
+	"pages": 
+	[
+		{
+			"name": "分页名称",
+			"sections": 
+			[
+				{
+					"name": "分段名称",
+					"columns": 
+					[
+						{
+							"fields": 
+							[
+								{
+									"type": "select",
+									"key": "minzu",
+									"label": "民族",
+									"desc": "这是一个选择民族的组件",
+									"required": false,
+									"hidden": false,
+									"predefined": true,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "汉族",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "蒙古族",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "回族",
+											"predefined": false
+										}
+									]
+								},
+
+								{
+									"type": "select",
+									"key": "gender_1",
+									"label": "性别",
+									"desc": "选择患者的性别",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "男",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "女",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "其他",
+											"predefined": false
+										}
+									]
+								}
+							]
+						},
+						
+						{
+							"fields": 
+							[
+								{
+									"type": "select",
+									"key": "minzu",
+									"label": "民族",
+									"desc": "这是一个选择民族的组件",
+									"required": false,
+									"hidden": false,
+									"predefined": true,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "汉族",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "蒙古族",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "回族",
+											"predefined": false
+										}
+									]
+								},
+
+								{
+									"type": "select",
+									"key": "gender_1",
+									"label": "性别",
+									"desc": "选择患者的性别",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "男",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "女",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "其他",
+											"predefined": false
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "分段名称",
+					"columns": 
+					[
+						{
+							"fields": 
+							[
+								{
+									"type": "select",
+									"key": "minzu",
+									"label": "民族",
+									"desc": "这是一个选择民族的组件",
+									"required": false,
+									"hidden": false,
+									"predefined": true,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "汉族",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "蒙古族",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "回族",
+											"predefined": false
+										}
+									]
+								},
+
+								{
+									"type": "select",
+									"key": "gender_1",
+									"label": "性别",
+									"desc": "选择患者的性别",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "男",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "女",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "其他",
+											"predefined": false
+										}
+									]
+								}
+							]
+						},
+						
+						{
+							"fields": 
+							[
+								{
+									"type": "select",
+									"key": "minzu",
+									"label": "民族",
+									"desc": "这是一个选择民族的组件",
+									"required": false,
+									"hidden": false,
+									"predefined": true,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "汉族",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "蒙古族",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "回族",
+											"predefined": false
+										}
+									]
+								},
+
+								{
+									"type": "select",
+									"key": "gender_1",
+									"label": "性别",
+									"desc": "选择患者的性别",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "男",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "女",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "其他",
+											"predefined": false
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "分页名称",
+			"sections": 
+			[
+				{
+					"name": "分段名称",
+					"columns": 
+					[
+						{
+							"fields": 
+							[
+								{
+									"type": "select",
+									"key": "minzu",
+									"label": "民族",
+									"desc": "这是一个选择民族的组件",
+									"required": false,
+									"hidden": false,
+									"predefined": true,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "汉族",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "蒙古族",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "回族",
+											"predefined": false
+										}
+									]
+								},
+
+								{
+									"type": "select",
+									"key": "gender_1",
+									"label": "性别",
+									"desc": "选择患者的性别",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "男",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "女",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "其他",
+											"predefined": false
+										}
+									]
+								}
+							]
+						},
+						
+						{
+							"fields": 
+							[
+								{
+									"type": "select",
+									"key": "minzu",
+									"label": "民族",
+									"desc": "这是一个选择民族的组件",
+									"required": false,
+									"hidden": false,
+									"predefined": true,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "汉族",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "蒙古族",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "回族",
+											"predefined": false
+										}
+									]
+								},
+
+								{
+									"type": "select",
+									"key": "gender_1",
+									"label": "性别",
+									"desc": "选择患者的性别",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "男",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "女",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "其他",
+											"predefined": false
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "分段名称",
+					"columns": 
+					[
+						{
+							"fields": 
+							[
+								{
+									"type": "select",
+									"key": "minzu",
+									"label": "民族",
+									"desc": "这是一个选择民族的组件",
+									"required": false,
+									"hidden": false,
+									"predefined": true,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "汉族",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "蒙古族",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "回族",
+											"predefined": false
+										}
+									]
+								},
+
+								{
+									"type": "select",
+									"key": "gender_1",
+									"label": "性别",
+									"desc": "选择患者的性别",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "男",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "女",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "其他",
+											"predefined": false
+										}
+									]
+								}
+							]
+						},
+						
+						{
+							"fields": 
+							[
+								{
+									"type": "select",
+									"key": "minzu",
+									"label": "民族",
+									"desc": "这是一个选择民族的组件",
+									"required": false,
+									"hidden": false,
+									"predefined": true,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "汉族",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "蒙古族",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "回族",
+											"predefined": false
+										}
+									]
+								},
+
+								{
+									"type": "select",
+									"key": "gender_1",
+									"label": "性别",
+									"desc": "选择患者的性别",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "男",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "女",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "其他",
+											"predefined": false
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "分段名称",
+					"columns": 
+					[
+						{
+							"fields": 
+							[
+								{
+									"type": "select",
+									"key": "minzu",
+									"label": "民族",
+									"desc": "这是一个选择民族的组件",
+									"required": false,
+									"hidden": false,
+									"predefined": true,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "汉族",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "蒙古族",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "回族",
+											"predefined": false
+										}
+									]
+								},
+
+								{
+									"type": "select",
+									"key": "gender_1",
+									"label": "性别",
+									"desc": "选择患者的性别",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "男",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "女",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "其他",
+											"predefined": false
+										}
+									]
+								}
+							]
+						},
+						
+						{
+							"fields": 
+							[
+								{
+									"type": "select",
+									"key": "minzu",
+									"label": "民族",
+									"desc": "这是一个选择民族的组件",
+									"required": false,
+									"hidden": false,
+									"predefined": true,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "汉族",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "蒙古族",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "回族",
+											"predefined": false
+										}
+									]
+								},
+
+								{
+									"type": "select",
+									"key": "gender_1",
+									"label": "性别",
+									"desc": "选择患者的性别",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"value": 101,
+											"label": "男",
+											"predefined": false
+										},
+
+										{
+											"value": 102,
+											"label": "女",
+											"predefined": false
+										},
+
+										{
+											"value": 103,
+											"label": "其他",
+											"predefined": false
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

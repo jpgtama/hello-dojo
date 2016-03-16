@@ -1,0 +1,250 @@
+{
+	"name": "患者基本信息",
+	"pages": 
+	[
+		{
+			"name": "患者信息",
+			"sections": 
+			[
+				{
+					"name": "基本信息",
+					"columns": 
+					[
+						{
+							"fields": 
+							[
+								{
+									"type": "text",
+									"key": "patientName",
+									"label": "患者姓名",
+									"desc": "患者姓名",
+									"required": true,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": "",
+									"permission": "",
+									"maxlength": "128",
+									"groupby": ""
+								},
+
+								{
+									"type": "date",
+									"key": "birthDate",
+									"label": "出生日期",
+									"desc": "出生日期",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": "",
+									"permission": "",
+									"pattern": "yyyy/MM/dd",
+									"groupby": ""
+								},
+
+								{
+									"type": "text",
+									"key": "ethnic",
+									"label": "民族",
+									"desc": "民族",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": "",
+									"permission": "",
+									"maxlength": "32",
+									"groupby": ""
+								},
+
+								{
+									"type": "text",
+									"key": "mrn",
+									"label": "患者编号",
+									"desc": "患者编号",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": "",
+									"permission": "",
+									"maxlength": "64",
+									"groupby": ""
+								},
+
+								{
+									"type": "text",
+									"key": "socialSecurity",
+									"label": "社保号",
+									"desc": "社保号",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": "",
+									"permission": "",
+									"maxlength": "30",
+									"groupby": ""
+								},
+
+								{
+									"type": "text",
+									"key": "inpatientNo",
+									"label": "住院号",
+									"desc": "住院号",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": "",
+									"permission": "",
+									"maxlength": "30",
+									"groupby": ""
+								},
+
+								{
+									"type": "text",
+									"key": "allergies",
+									"label": "过敏史",
+									"desc": "过敏史",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": "",
+									"permission": "",
+									"maxlength": "200",
+									"groupby": ""
+								}
+							]
+						},
+
+						{
+							"fields": 
+							[
+								{
+									"type": "radio",
+									"key": "gender",
+									"label": "性别",
+									"desc": "性别",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"optionsmodule": "Gender"
+								},
+
+								{
+									"type": "text",
+									"key": "patientAge",
+									"label": "年龄",
+									"desc": "年龄",
+									"required": false,
+									"hidden": false,
+									"predefined": true,
+									"defaultvalue": "",
+									"permission": "",
+									"maxlength": "30",
+									"groupby": ""
+								},
+
+								{
+									"type": "radio",
+									"key": "maritalStatus",
+									"label": "婚姻状态",
+									"desc": "婚姻状态",
+									"required": false,
+									"hidden": false,
+									"predefined": true,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"optionsmodule": "Marital_Status"
+								},
+
+								{
+									"type": "text",
+									"key": "idCard",
+									"label": "身份证号",
+									"desc": "身份证号",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": "",
+									"permission": "",
+									"maxlength": "64",
+									"groupby": ""
+								},
+
+								{
+									"type": "text",
+									"key": "outpatientNo",
+									"label": "门诊号",
+									"desc": "门诊号",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": "",
+									"permission": "",
+									"maxlength": "100",
+									"groupby": ""
+								},
+
+								{
+									"type": "text",
+									"key": "empi",
+									"label": "EMPI",
+									"desc": "EMPI",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": "",
+									"permission": "",
+									"maxlength": "100",
+									"groupby": ""
+								},
+
+								{
+									"type": "radio",
+									"key": "isDeceased",
+									"label": "死亡状态",
+									"desc": "死亡状态",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": null,
+									"permission": null,
+									"groupby": null,
+									"options": 
+									[
+										{
+											"label": "否",
+											"value": "0",
+											"predefined": true
+										},
+
+										{
+											"label": "是",
+											"value": "1",
+											"predefined": true
+										}
+									]
+								},
+
+								{
+									"type": "date",
+									"key": "deceasedTime",
+									"label": "死亡时间",
+									"desc": "死亡时间",
+									"required": false,
+									"hidden": false,
+									"predefined": false,
+									"defaultvalue": "",
+									"permission": "",
+									"pattern": "yyyy/MM/dd",
+									"groupby": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

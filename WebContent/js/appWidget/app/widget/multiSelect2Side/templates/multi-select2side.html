@@ -1,0 +1,25 @@
+<div>
+	<style type="text/css">
+		@import "app/widget/multiSelect2Side/style/multi-select2side.css";
+	</style>
+	<div class="row">
+		<div class="toSelect cell">
+			<div class="title"><label data-dojo-type="app/widget/Label" value="optional_column"></label></div>
+			<div class="content"><select data-dojo-type="dijit/form/MultiSelect" data-dojo-attach-point="columns" class="toSelectList" size="15"></select></div>
+		</div>
+		<div class="centerBar cell">
+			<div><a data-dojo-attach-point="rightButton" class="rightButton"></a></div>
+			<div><a data-dojo-attach-point="leftButton" class="leftButton"></a></div>
+		</div>
+		<div class="selected cell">
+			<div class="title"><label data-dojo-type="app/widget/Label" value="selected_column"></label></div>
+			<div class="content"><select data-dojo-type="dijit/form/MultiSelect" data-dojo-attach-point="selectedColumns" class="selectedList" size="15"></select></div>
+		</div>
+		<div class="cell rightBar">
+			<div><a data-dojo-attach-point="upButton" class="upButton"></a></div>
+			<div><a data-dojo-attach-point="downButton" class="downButton"></a></div>
+			<div style="margin-top:30px;"><a data-dojo-attach-point="ascButton" class="ascButton"><label data-dojo-type="app/widget/Label" value="order_asc"></label>(asc)</a></div>
+			<div><a data-dojo-attach-point="descButton" class="descButton"><label data-dojo-type="app/widget/Label" value="order_desc"></label>(desc)</a></div>
+		</div>
+	</div>
+</div>

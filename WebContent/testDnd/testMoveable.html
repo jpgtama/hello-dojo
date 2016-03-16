@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test DnD</title>
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojox/layout/resources/GridContainer.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojox/layout/resources/DndGridContainer.css" />
+
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/dojo-release-1.10.4-src/dojo/',
+        // parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        paths : {
+            app : '/hello-dojo/js/appWidget/app',
+            js : '/hello-dojo/js/',
+            jquery : '/dojo-release-1.10.4-src/jquery/jquery'
+        }
+    };
+</script>
+<script src="/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+
+<script>
+    require(["dojo/dnd/Moveable", "dojo/dom", "dojo/on", 'dojo/dom-attr', 'dojo/dom-style', "dojo/domReady!"],
+            function(Moveable, dom, on, domAttr, domStyle){
+              on(dom.byId("doIt"), "click", function(){
+                var dnd = new Moveable(dom.byId("dndOne"));
+              });
+              
+              on(dom.byId('doIt2'), 'click', function(){
+                  domStyle.set(dom.byId('dndTwo'), 'cursor', 'move');
+                  new Moveable(dom.byId('dndTwo'));
+              });
+              
+            });
+    
+</script>
+
+<style>
+#dndOne, .dndObject {
+	width: 100px;
+	height: 100px;
+	padding: 10px;
+	border: 1px solid #000;
+	background: red;
+}
+
+#dndArea {
+	height: 200px;
+	padding: 10px;
+	border: 1px solid #000;
+	position: relative;
+}
+</style>
+
+</head>
+<body>
+
+	<h1>Test Moveable</h1>
+	<hr />
+
+
+	<div id="dndArea">
+		<div id="dndOne">Hi, I am moveable when you want to.</div>
+		
+		<div id="dndTwo" class="dndObject">Hi , I am another movable div you can move.</div>
+		
+	</div>
+	<p>
+		<button id="doIt" type="button">Make moveable 1</button>
+		<button id="doIt2" type="button">Make moveable 2</button>
+	</p>
+
+
+
+
+
+
+
+</body>
+</html>

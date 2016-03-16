@@ -1,0 +1,16 @@
+/* baseClass: gridTotalCount */
+
+/*div style: inline*/
+.philips .gridTotalCount {
+	display: inline;
+} 
+
+/* label style */
+.philips .gridTotalCount .gridCountLabel {
+	font-family: 黑体;
+	font-size: 8px;
+	color: #666666;
+	text-align: right;
+	padding-right: 10px;
+	padding-left: 10px;
+}

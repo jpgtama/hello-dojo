@@ -1,0 +1,15 @@
+<div>
+<script type="dojo/require">at: "dojox/mvc/at"</script>
+<style>
+.CDRSelect .dijitSelectLabel {
+	width: 200px;
+	overflow: hidden;
+}
+
+</style>
+
+	<div data-dojo-type="app/widget/Label" data-dojo-attach-point="labelNode" data-dojo-props="value: this.defData.label"></div>
+
+	<div data-dojo-type="dijit/form/Select" data-dojo-attach-point="selectNode" data-dojo-props="name: this.defData.key"></div>
+
+</div>

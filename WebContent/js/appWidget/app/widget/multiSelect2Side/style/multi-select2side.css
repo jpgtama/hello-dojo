@@ -1,0 +1,86 @@
+/* multiSelect2Side 为 baseClass*/
+.philips .multiSelect2Side{
+	margin-left:20px;
+	
+}
+.philips .multiSelect2Side .row .cell{
+	float:left;
+}
+.philips .multiSelect2Side .toSelect,
+.philips .multiSelect2Side .selected{
+	width:180px;
+}
+.philips .multiSelect2Side .toSelectList
+,.philips .multiSelect2Side .selectedList{
+	width:180px;
+	height:270px;
+	font-size: 12px;
+}
+.philips .multiSelect2Side .centerBar{
+	padding-top: 20%;
+	width:40px;
+}
+.philips .multiSelect2Side .centerBar,
+.philips .multiSelect2Side .rightBar{
+	width:40px;
+}
+.philips .multiSelect2Side .centerBar div{
+	padding-top:10px;
+}
+.philips .multiSelect2Side .rightBar div{
+	padding-top:20px;
+}
+.philips .multiSelect2Side .leftButton{
+  border-right-width: 8px;
+  border-right-style: solid;
+  border-top: 8px solid rgba(0, 0, 0, 0);
+  border-bottom: 8px solid rgba(0, 0, 0, 0);
+  display: block;
+  width: 0px;
+  margin: auto;
+  cursor: pointer;
+}
+.philips .multiSelect2Side .rightButton{
+  border-left-width: 8px;
+  border-left-style: solid;
+  border-top: 8px solid rgba(0, 0, 0, 0);
+  border-bottom: 8px solid rgba(0, 0, 0, 0);
+  display: block;
+  width: 0px;
+  margin: auto;
+  cursor: pointer;
+}
+.philips .multiSelect2Side .downButton{
+  border-top: 8px solid black;
+  border-left: 8px solid rgba(0,0,0,0);
+  border-right: 8px solid rgba(0,0,0,0);
+  border-bottom: none;
+  display: block;
+  width: 0px;
+  margin: auto;
+  cursor: pointer;
+}
+.philips .multiSelect2Side .upButton{
+  border-top: none;
+  border-left: 8px solid rgba(0,0,0,0);
+  border-right: 8px solid rgba(0,0,0,0);
+  border-bottom: 8px solid black;
+  display: block;
+  width: 0px;
+  margin: auto;
+  cursor: pointer;
+}
+
+.philips .multiSelect2Side .ascButton{
+  display: block;
+  cursor: pointer;
+  margin-left:8px;
+}
+.philips .multiSelect2Side .descButton{
+  display: block;
+  cursor: pointer;
+  margin-left:8px;
+}
+.philips .multiSelect2Side label{
+	cursor:pointer;
+}

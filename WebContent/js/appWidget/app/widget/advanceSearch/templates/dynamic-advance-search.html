@@ -1,0 +1,50 @@
+<div>
+	<style type="text/css">
+		@import 	"app/widget/advanceSearch/style/dynamic-advance-search.css";
+	
+	</style>
+	<div data-dojo-attach-point="advanceSearchForm"
+		data-dojo-type="dijit/form/Form">
+		
+	<div class="tools">
+		<script type="dojo/require">at: "dojox/mvc/at"</script>
+		<!-- 
+		<div class="input" style="display: inline-block; float: left;">
+			<input data-dojo-type="app/widget/TextBox" type="text"
+				placeholder="shortcut_query_name" /> 
+				
+				<input
+				data-dojo-type="dijit/form/CheckBox" type="checkbox" /> 
+				
+				<label
+				data-dojo-type="app/widget/Label" value="default"></label>
+		</div>
+		 -->
+
+		<div class="button"
+			style="text-align: right; display: inline-block; float: right;">
+			<button data-dojo-type="app/widget/Button" type="button"
+				label="clear" data-dojo-props=""
+				data-dojo-attach-point="clearButton"
+				class="btns-outShadow btns-innerShadow-0a5dd6 white btns-clear"></button>
+
+			<!--  
+			-->
+			<button data-dojo-type="app/widget/Button" type="button"
+				label="save_personal_search" data-dojo-props=""
+				data-dojo-attach-point="savePersonalSearchButton"
+				class="btns-outShadow btns-innerShadow-0a5dd6 blue"></button>
+
+			<button data-dojo-type="app/widget/Button" type="button"
+				label="query" data-dojo-props=""
+				data-dojo-attach-point="queryButton"
+				class="btns-outShadow btns-innerShadow-0a5dd6 blue btns-query"></button>
+		</div>
+
+		<div>&nbsp;</div>
+
+	</div>
+	<div class="inputArea" data-dojo-attach-point="inputArea"></div>
+	
+	</div>
+</div>

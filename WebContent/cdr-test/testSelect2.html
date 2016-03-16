@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test Select</title>
+<style>
+.dijitSelectLabel {
+	width: 200px;
+	overflow: hidden;
+}
+</style>
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojox/layout/resources/GridContainer.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojox/layout/resources/DndGridContainer.css" />
+
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug: true,
+        paths : {
+            app : '/hello-dojo/js/appWidget/app',
+            js : '/hello-dojo/js/',
+            jquery : '/dojo-release-1.10.4-src/jquery/jquery'
+        }
+    };
+</script>
+<script src="/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+
+<script>
+    require([
+        'app/widget/cdr/select2/CDRSelect2',
+        'app/widget/cdr/FieldParser',
+        /* 'app/widget/cdr/Column', */
+        'app/widget/cdr/Section',
+        'app/widget/cdr/Section2',
+        'app/widget/cdr/Page',
+        'app/widget/cdr/Page2',
+        'app/widget/cdr/CDRForm',
+        'app/widget/cdr/CustomTabContainer',
+        'dojox/layout/GridContainer',
+        'dojox/uuid',
+        "dijit/form/Select",
+        'dijit/layout/ContentPane',
+        'dijit/TitlePane',
+        'dijit/layout/TabContainer',
+        'dijit/registry',
+        "dojo/data/ObjectStore",
+        "dojo/dom-geometry", 
+        "dojo/dom-style",
+        "dojo/store/Memory",
+        'dojo/_base/array',
+        'dojo/parser',
+        "dojo/domReady!"
+    ], function(CDRSelect2, fieldParser, /*Column, */ Section, Section2, Page, Page2, CDRForm, CustomTabContainer, GridContainer, uuid, Select, ContentPane, TitlePane, TabContainer, registry, 
+            ObjectStore, domGeometry, domStyle, Memory, dojoArray, parser) {
+
+        //         var store = new Memory({
+        //             data : [
+        //                 {
+        //                     id : "bar",
+        //                     label : "-- SELECT --"
+        //                 },
+        //                 {
+        //                     id : "foo",
+        //                     label : "Foooooooooooooooooooooooooooooooooooooo"
+        //                 },
+        //                 {
+        //                     id : "bar",
+        //                     label : "Bar"
+        //                 }
+        //             ]
+        //         });
+
+        //         var os = new ObjectStore({
+        //             objectStore : store
+        //         });
+
+        //         var s = new Select({
+        //             name : "select2",
+        //             options : [
+        //                 {
+        //                     label : "TN",
+        //                     value : "Tennessee"
+        //                 },
+        //                 {
+        //                     label : "VA",
+        //                     value : "Virginia",
+        //                     selected : true
+        //                 },
+        //                 {
+        //                     label : "WA",
+        //                     value : "Washington"
+        //                 },
+        //                 {
+        //                     label : "FL",
+        //                     value : "Florida"
+        //                 },
+        //                 {
+        //                     label : "CA",
+        //                     value : "California"
+        //                 }
+        //             ]
+        //         }, "selectEl");
+        //         s.startup();
+
+        //         s.on("change", function() {
+        //             console.log("my value: ", this.get("value"))
+        //         });
+
+//         window.registry = registry;
+//         window.domStyle = domStyle;
+//         window.domGeometry = domGeometry;
+        
+        
+        var fieldList = [
+			{
+				"type": "select",
+				"key": "gender_1",
+				"label": "性别",
+				"desc": "选择患者的性别",
+				"required": false,
+				"hidden": false,
+				"predefined": false,
+				"defaultvalue": null,
+				"permission": null,
+				"groupby": null,
+				"options": 
+				[
+					{
+						"value": 101,
+						"label": "男",
+						"predefined": false
+					}, 
+					{
+						"value": 102,
+						"label": "女",
+						"predefined": false
+					}, 
+					{
+						"value": 103,
+						"label": "其他",
+						"predefined": false
+					}
+				]
+			}
+
+
+        ];
+        
+        var select2 = new CDRSelect2(fieldList[0]);
+
+        select2.placeAt('select2');
+        
+//         var columnDefObject = {
+//             "columnName" : "column001",
+//             "fields" : fieldList
+//         };
+
+//         var sectionDefObject = {
+//             "sectionName" : "section 001",
+//             "columns" : [
+//                 columnDefObject
+//             ]
+//         };
+
+//         var pageDefObject = {
+//             "pageName" : "page 001",
+//             "sections" : [
+//                 sectionDefObject,
+
+//                 {
+//                     "sectionName" : "section 002",
+//                     "columns" : [
+//                         columnDefObject
+//                     ]
+//                 }
+//             ]
+//         };
+
+        // TODO this has some problems
+        // TabContainer can't be extended.
+//         var formDefObject = {
+//             "formName" : "",
+//             "pages" : [
+//                 pageDefObject
+//             ]
+//         };
+
+        // column
+        //        var columnWidget = new Column({
+        //            column : columnDefObject
+        //        });
+
+        //column.placeAt('column');
+
+        //        var titlePane = new TitlePane({
+        //            title : 'section name'
+        //        });
+        //        titlePane.addChild(columnWidget);
+
+        //         var formWidget = new CDRForm({
+        //             defObject : formDefObject
+        //         });
+
+        //         formWidget.placeAt('cdrform');
+
+        //         formWidget.startup();
+
+//         var page001 = new Page({
+//             defObject : pageDefObject
+//         });
+
+//         var page002 = new Page({
+//             defObject : {
+//                 "pageName" : "page 002",
+//                 "sections" : [
+//                     sectionDefObject
+//                 ]
+//             }
+//         })
+
+//         var tc = new TabContainer({
+//             style : "height: 100%; width: 100%;"
+//         }, "tc1-prog");
+
+//         tc.addChild(page001);
+//         tc.addChild(page002);
+
+//         tc.startup();
+
+        // grid container
+//         var sectionGC = new GridContainer({
+//             nbZones : 3,
+//             hasResizableColumns : false,
+//             acceptTypes : [
+//                 'CDR_Element'
+//             ]
+//         });
+
+        
+//         dojoArray.forEach(fieldList, function(item) {
+//             var fieldWidget = fieldParser.parse(item);
+// 	        sectionGC.addChild(fieldWidget);
+//         });
+        
+        
+        
+//         sectionGC.placeAt('gc');
+//         sectionGC.startup();
+//         sectionGC.disableDnd();
+        
+//         var titlePane = new TitlePane({
+//             title: 'section001'
+//         });
+        
+//         titlePane.addChild(sectionGC);
+        
+//         titlePane.placeAt('gc');
+//         sectionGC.startup();
+//         sectionGC.disableDnd();
+        
+//         var sectionDefObject = {
+//             "sectionName" : "section 001",
+//             "cols" : 3, 
+//             "fields": fieldList
+//         };
+        
+//         var pageDefObject = {
+//             "pageName" : "page 001",
+//             "sections" : [
+//                 sectionDefObject,
+
+//                 {
+//                     "sectionName" : "section 002",
+//                     "cols" : 3, 
+//                     "fields": fieldList
+//                 }
+//             ]
+//         };
+        
+        
+//         var section2 = new Section2({
+//             defObject: sectionDefObject
+//         });
+        
+        // --------------------
+        
+        
+//         var page2 = new Page2({
+//             defObject: pageDefObject
+//         });
+        
+        
+//         var form2 = new TabContainer({
+// 	         style : "height: 100%; width: 100%;"
+// 	     });
+        
+//         form2.placeAt("form2");
+        
+        
+//         form2.addChild(page2);
+        
+//        page2.startup();
+//        form2.startup();
+        
+       // ------------
+        
+//         var cp = new ContentPane();
+        
+//         cp.addChild(form2);
+        
+//         cp.placeAt("form2");
+        
+//         page2.startup();
+//         cp.startup();
+        
+        // cdr form -------------------
+//         var formDefObject = {
+//             "formName" : "",
+//             "pages" : [
+//                 pageDefObject
+//             ]
+//         };
+        
+//         var cdrForm = new CDRForm({
+//             defObject: formDefObject
+//         });
+        
+//         cdrForm.placeAt("cdrForm");
+//         cdrForm.startup();
+        
+        //parser.parse({template: true});
+        
+        
+        
+        
+    })
+</script>
+
+
+</head>
+<body class="claro">
+
+	<h1>Test Select widget for CDR Form</h1>
+	<hr />
+
+	<!--
+<p>Dojo widget:</p>
+<div id="selectEl" style="width: 200px"></div>
+
+<hr />
+<p>HTML element:</p>
+<select id="htmlSelect" style="width: 200px">
+    <option value="">-- SELECT --</option>
+    <option value="bar">Bar</option>
+    <option value="foo">Foooooooooooooooooooooooooooooo</option>
+
+</select>
+<hr />
+
+ -->
+
+	
+	<div id="select2"> </div>
+
+
+<hr/>
+
+
+</body>
+</html>
