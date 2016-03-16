@@ -33,7 +33,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
@@ -43,8 +42,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-
-import com.evan.example.hello_dojo.servlet.writeexcel.PaginationUtil.Page;
 
 /**
  * WriteExcel
@@ -121,140 +118,244 @@ public class UsingPOI extends HttpServlet {
 		// file path
 		String filePath = "C:/Users/310199253/Documents/Philips/CDR/export_data/poi_hssf_resume.xls";
 		
-		File outputFile = new File(filePath);
-		
-		// check if file exist
-		// if exist, append data to it
-		if (outputFile.exists()) {
-			try {
+		try {
+			File outputFile = new File(filePath);
+			HSSFWorkbook workbook = null;
+			if (!outputFile.exists() || outputFile.length() == 0) {
+				outputFile.createNewFile();
+				workbook = new HSSFWorkbook();
+			} else {
 				FileInputStream fis = new FileInputStream(outputFile);
-				final HSSFWorkbook workbook = new HSSFWorkbook(fis);
-				int numberOfSheets = workbook.getNumberOfSheets();
-				HSSFSheet sheet = workbook.getSheetAt(numberOfSheets - 1);
-				int lastRowNumber = sheet.getLastRowNum();
-				System.out.println(lastRowNumber);
-				
-				fis.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+				workbook = new HSSFWorkbook(fis);
 			}
-			
-		} else {
-			// else, create new file
-			final HSSFWorkbook workbook = new HSSFWorkbook();
 			
 			createSheets(workbook, titleRowData, data, rowsPerSheet);
 			
-			try {
-				FileOutputStream out = new FileOutputStream(new File(filePath));
-				workbook.write(out);
-				out.close();
-				System.out.println("Excel written successfully..");
-				
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			FileOutputStream out = new FileOutputStream(outputFile);
+			workbook.write(out);
+			out.close();
+			System.out.println("Excel written successfully..");
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
 	}
 	
-	private static void createSheets(final Workbook workbook, final List<Object> titleRowData, final List<Object> data, int rowsPerSheet) {
+	/**
+	 * createTitleRow
+	 * 
+	 * @param sheet
+	 * @param titleRow
+	 * @param rowNum
+	 */
+	private static void createTitleRow(Workbook workbook, Sheet sheet, int rowNum, List<Object> titleRowData) {
+		// create title row
+		Row titleRow = createRow(sheet, rowNum, titleRowData);
 		
-		// get already exist sheets
+		// add style
+		for (int i = 0; i < titleRow.getLastCellNum(); i++) {
+			Cell cell = titleRow.getCell(i);
+			Font font = workbook.createFont();
+			font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+			CellStyle style = workbook.createCellStyle();
+			style.setFont(font);
+			// style.setFillForegroundColor(HSSFColor.GREY_50_PERCENT.index);
+			style.setFillPattern(CellStyle.FINE_DOTS);
+			style.setFillBackgroundColor(HSSFColor.LIGHT_GREEN.index);
+			// style.setFillForegroundColor(HSSFColor.WHITE.index);
+			cell.setCellStyle(style);
+		}
 		
-		PaginationUtil.doPagination(data.size(), rowsPerSheet, new Page() {
+	}
+	
+	/**
+	 * createRow
+	 * 
+	 * @param sheet
+	 * @param rowNum
+	 * @param rowData
+	 * @return
+	 */
+	private static Row createRow(Sheet sheet, int rowNum, List<Object> rowData) {
+		Row row = sheet.createRow(rowNum);
+		
+		// start cell number
+		int cellnum = 0;
+		
+		// create cell
+		for (Object obj : rowData) {
+			Cell cell = row.createCell(cellnum++);
 			
-			@Override
-			public void onPage(Long pageNumber, Long startIndex, Long rowsOnPage) {
-				// create a new sheet
-				Sheet sheet = workbook.createSheet(String.format("%s - %s", startIndex + 1, startIndex + rowsOnPage));
-				
-				// start row number
-				int rownum = 0;
-				
+			// set cell value
+			if (obj instanceof Date)
+				cell.setCellValue((Date) obj);
+			else if (obj instanceof Boolean)
+				cell.setCellValue((Boolean) obj);
+			else if (obj instanceof String)
+				cell.setCellValue((String) obj);
+			else if (obj instanceof Double)
+				cell.setCellValue((Double) obj);
+			
+		}
+		
+		// return row
+		return row;
+	}
+	
+	private static String getSheetName(int sheetIndex, int defaultDataRowSize, int dataRowsOnSheet) {
+		int startNumber = (sheetIndex * defaultDataRowSize) + 1;
+		int endNumber = startNumber + dataRowsOnSheet - 1;
+		String sheetName = String.format("%s - %s", startNumber, endNumber);
+		System.out.println(String.format("%s, %s, %s, %s", sheetIndex, dataRowsOnSheet, startNumber, endNumber));
+		
+		return sheetName;
+	}
+	
+	private static void createSheets(final Workbook workbook, final List<Object> titleRowData, final List<Object> data, int defaultDataRowSize) {
+		
+		// get last sheet
+		int numberOfSheets = workbook.getNumberOfSheets();
+		
+		Sheet sheet = null;
+		
+		if (numberOfSheets > 0) {
+			sheet = workbook.getSheetAt(numberOfSheets - 1);
+			workbook.setSheetName(numberOfSheets - 1,
+					getSheetName(numberOfSheets - 1, defaultDataRowSize, Math.min(defaultDataRowSize, sheet.getPhysicalNumberOfRows() + data.size())));
+		} else {
+			sheet = workbook.createSheet();
+			workbook.setSheetName(0, getSheetName(0, defaultDataRowSize, Math.min(defaultDataRowSize, data.size())));
+			createTitleRow(workbook, sheet, 0, titleRowData);
+		}
+		
+		// get sheet index & row index on this sheet
+		int sheetIndex = workbook.getSheetIndex(sheet); // point to current sheet
+		int rowNum = sheet.getPhysicalNumberOfRows(); // row numbers
+		
+		// loop data
+		int alreadyUsedDataSize = 0;
+		while (alreadyUsedDataSize < data.size()) {
+			// create new sheet
+			if (rowNum >= defaultDataRowSize + 1) {
+				sheetIndex++;
+				sheet = workbook.createSheet();
+				rowNum = 0;
 				// create title row
-				createTitleRow(sheet, rownum++, titleRowData);
+				createTitleRow(workbook, sheet, rowNum++, titleRowData);
 				
-				// create data rows
-				for (int i = startIndex.intValue(); i < startIndex + rowsOnPage; i++) {
-					List<Object> rowData = null;
-					if (data.get(i) instanceof ArrayList) {
-						rowData = (List<Object>) data.get(i);
-					} else if (data.get(i) instanceof Object[]) {
-						rowData = Arrays.asList((Object[]) data.get(i));
-					}
-					
-					if (rowData != null) {
-						createRow(sheet, rownum++, rowData);
-					}
-				}
-				
+				// set sheet name
+				int leftDataSize = data.size() - alreadyUsedDataSize;
+				workbook.setSheetName(sheetIndex, getSheetName(sheetIndex, defaultDataRowSize, Math.min(defaultDataRowSize, leftDataSize)));
 			}
 			
-			/**
-			 * createTitleRow
-			 * 
-			 * @param sheet
-			 * @param titleRow
-			 * @param rowNum
-			 */
-			private void createTitleRow(Sheet sheet, int rowNum, List<Object> titleRowData) {
-				// create title row
-				Row titleRow = createRow(sheet, rowNum, titleRowData);
-				
-				// add style
-				for (int i = 0; i < titleRow.getLastCellNum(); i++) {
-					Cell cell = titleRow.getCell(i);
-					Font font = workbook.createFont();
-					font.setBoldweight(Font.BOLDWEIGHT_BOLD);
-					CellStyle style = workbook.createCellStyle();
-					style.setFont(font);
-					// style.setFillForegroundColor(HSSFColor.GREY_50_PERCENT.index);
-					style.setFillPattern(CellStyle.FINE_DOTS);
-					style.setFillBackgroundColor(HSSFColor.LIGHT_GREEN.index);
-					// style.setFillForegroundColor(HSSFColor.WHITE.index);
-					cell.setCellStyle(style);
-				}
-				
+			// add data row
+			Object rawRowData = data.get(alreadyUsedDataSize++);
+			List<Object> rowData = null;
+			if (rawRowData instanceof ArrayList) {
+				rowData = (List<Object>) rawRowData;
+			} else if (rawRowData instanceof Object[]) {
+				rowData = Arrays.asList((Object[]) rawRowData);
 			}
 			
-			/**
-			 * createRow
-			 * 
-			 * @param sheet
-			 * @param rowNum
-			 * @param rowData
-			 * @return
-			 */
-			private Row createRow(Sheet sheet, int rowNum, List<Object> rowData) {
-				Row row = sheet.createRow(rowNum);
-				
-				// start cell number
-				int cellnum = 0;
-				
-				// create cell
-				for (Object obj : rowData) {
-					Cell cell = row.createCell(cellnum++);
-					
-					// set cell value
-					if (obj instanceof Date)
-						cell.setCellValue((Date) obj);
-					else if (obj instanceof Boolean)
-						cell.setCellValue((Boolean) obj);
-					else if (obj instanceof String)
-						cell.setCellValue((String) obj);
-					else if (obj instanceof Double)
-						cell.setCellValue((Double) obj);
-					
-				}
-				
-				// return row
-				return row;
+			if (rowData != null) {
+				createRow(sheet, rowNum++, rowData);
 			}
-			
-		});
+		}
+		
+		// PaginationUtil.doPagination(data.size(), rowsPerSheet, new Page() {
+		//
+		// @Override
+		// public void onPage(Long pageNumber, Long startIndex, Long rowsOnPage) {
+		// // create a new sheet
+		// Sheet sheet = workbook.createSheet(String.format("%s - %s", startIndex + 1, startIndex + rowsOnPage));
+		//
+		// // start row number
+		// int rownum = 0;
+		//
+		// // create title row
+		// createTitleRow(sheet, rownum++, titleRowData);
+		//
+		// // create data rows
+		// for (int i = startIndex.intValue(); i < startIndex + rowsOnPage; i++) {
+		// List<Object> rowData = null;
+		// if (data.get(i) instanceof ArrayList) {
+		// rowData = (List<Object>) data.get(i);
+		// } else if (data.get(i) instanceof Object[]) {
+		// rowData = Arrays.asList((Object[]) data.get(i));
+		// }
+		//
+		// if (rowData != null) {
+		// createRow(sheet, rownum++, rowData);
+		// }
+		// }
+		//
+		// }
+		//
+		// /**
+		// * createTitleRow
+		// *
+		// * @param sheet
+		// * @param titleRow
+		// * @param rowNum
+		// */
+		// private void createTitleRow(Sheet sheet, int rowNum, List<Object> titleRowData) {
+		// // create title row
+		// Row titleRow = createRow(sheet, rowNum, titleRowData);
+		//
+		// // add style
+		// for (int i = 0; i < titleRow.getLastCellNum(); i++) {
+		// Cell cell = titleRow.getCell(i);
+		// Font font = workbook.createFont();
+		// font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+		// CellStyle style = workbook.createCellStyle();
+		// style.setFont(font);
+		// // style.setFillForegroundColor(HSSFColor.GREY_50_PERCENT.index);
+		// style.setFillPattern(CellStyle.FINE_DOTS);
+		// style.setFillBackgroundColor(HSSFColor.LIGHT_GREEN.index);
+		// // style.setFillForegroundColor(HSSFColor.WHITE.index);
+		// cell.setCellStyle(style);
+		// }
+		//
+		// }
+		//
+		// /**
+		// * createRow
+		// *
+		// * @param sheet
+		// * @param rowNum
+		// * @param rowData
+		// * @return
+		// */
+		// private Row createRow(Sheet sheet, int rowNum, List<Object> rowData) {
+		// Row row = sheet.createRow(rowNum);
+		//
+		// // start cell number
+		// int cellnum = 0;
+		//
+		// // create cell
+		// for (Object obj : rowData) {
+		// Cell cell = row.createCell(cellnum++);
+		//
+		// // set cell value
+		// if (obj instanceof Date)
+		// cell.setCellValue((Date) obj);
+		// else if (obj instanceof Boolean)
+		// cell.setCellValue((Boolean) obj);
+		// else if (obj instanceof String)
+		// cell.setCellValue((String) obj);
+		// else if (obj instanceof Double)
+		// cell.setCellValue((Double) obj);
+		//
+		// }
+		//
+		// // return row
+		// return row;
+		// }
+		//
+		// });
 		
 	}
 	
