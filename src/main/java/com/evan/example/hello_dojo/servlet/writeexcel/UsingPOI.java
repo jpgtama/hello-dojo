@@ -41,7 +41,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  * WriteExcel
@@ -53,23 +53,50 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 @WebServlet("/excel/poi")
 public class UsingPOI extends HttpServlet {
 	
+	/**
+	 * serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		resp.getOutputStream().println("Hello excel");
 	}
 	
-	public static void generateExcelFileUsingSXSSF(final List<Object> titleRowData, final List<Object> data) {
+	/**
+	 * generate .xlsx file.
+	 * 
+	 * Limit: 1,048,576 rows by 16,384 columns
+	 * 
+	 * The default rows per sheet will be 10k.
+	 * 
+	 * Data can be appended to file.
+	 * 
+	 * @param titleRowData
+	 * @param data
+	 */
+	public static void generateXlsx(final List<Object> titleRowData, final List<Object> data) {
 		// check rows per sheet
 		int rowsPerSheet = 100;
 		
-		SXSSFWorkbook workbook = new SXSSFWorkbook(100);
-		workbook.setCompressTempFiles(true);
-		
-		createSheets(workbook, titleRowData, data, rowsPerSheet);
+		// file path
+		String filePath = "C:/Users/310199253/Documents/Philips/CDR/export_data/poi_xssf.xlsx";
 		
 		try {
-			FileOutputStream out = new FileOutputStream(new File("C:/Users/310199253/Documents/Philips/CDR/export_data/poi_sxssf.xlsx"));
+			File outputFile = new File(filePath);
+			XSSFWorkbook workbook = null;
+			if (!outputFile.exists() || outputFile.length() == 0) {
+				outputFile.createNewFile();
+				workbook = new XSSFWorkbook();
+			} else {
+				FileInputStream fis = new FileInputStream(outputFile);
+				workbook = new XSSFWorkbook(fis);
+			}
+			
+			createSheets(workbook, titleRowData, data, rowsPerSheet);
+			
+			FileOutputStream out = new FileOutputStream(outputFile);
 			workbook.write(out);
 			out.close();
 			System.out.println("Excel written successfully..");
@@ -83,40 +110,22 @@ public class UsingPOI extends HttpServlet {
 	}
 	
 	/**
-	 * generateExcelFileUsingHSSF, generate .xls file and the maximum rows per sheet is 65536.
+	 * generate .xls file and the maximum rows per sheet is 65536.
 	 * 
 	 * The default rows per sheet will be 10k.
 	 * 
+	 * Data can be appended to file.
+	 * 
+	 * 
+	 * @param titleRowData
 	 * @param data
 	 */
-	public static void generateExcelFileUsingHSSF(final List<Object> titleRowData, final List<Object> data) {
-		// check rows per sheet
-		int rowsPerSheet = 100;
-		
-		final HSSFWorkbook workbook = new HSSFWorkbook();
-		
-		createSheets(workbook, titleRowData, data, rowsPerSheet);
-		
-		try {
-			FileOutputStream out = new FileOutputStream(new File("C:/Users/310199253/Documents/Philips/CDR/export_data/poi_hssf.xls"));
-			workbook.write(out);
-			out.close();
-			System.out.println("Excel written successfully..");
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	public static void generateExcelFileUsingHSSF_Resume(final List<Object> titleRowData, final List<Object> data) {
+	public static void generateXls(final List<Object> titleRowData, final List<Object> data) {
 		// check rows per sheet
 		int rowsPerSheet = 100;
 		
 		// file path
-		String filePath = "C:/Users/310199253/Documents/Philips/CDR/export_data/poi_hssf_resume.xls";
+		String filePath = "C:/Users/310199253/Documents/Philips/CDR/export_data/poi_hssf.xls";
 		
 		try {
 			File outputFile = new File(filePath);
@@ -264,98 +273,6 @@ public class UsingPOI extends HttpServlet {
 				createRow(sheet, rowNum++, rowData);
 			}
 		}
-		
-		// PaginationUtil.doPagination(data.size(), rowsPerSheet, new Page() {
-		//
-		// @Override
-		// public void onPage(Long pageNumber, Long startIndex, Long rowsOnPage) {
-		// // create a new sheet
-		// Sheet sheet = workbook.createSheet(String.format("%s - %s", startIndex + 1, startIndex + rowsOnPage));
-		//
-		// // start row number
-		// int rownum = 0;
-		//
-		// // create title row
-		// createTitleRow(sheet, rownum++, titleRowData);
-		//
-		// // create data rows
-		// for (int i = startIndex.intValue(); i < startIndex + rowsOnPage; i++) {
-		// List<Object> rowData = null;
-		// if (data.get(i) instanceof ArrayList) {
-		// rowData = (List<Object>) data.get(i);
-		// } else if (data.get(i) instanceof Object[]) {
-		// rowData = Arrays.asList((Object[]) data.get(i));
-		// }
-		//
-		// if (rowData != null) {
-		// createRow(sheet, rownum++, rowData);
-		// }
-		// }
-		//
-		// }
-		//
-		// /**
-		// * createTitleRow
-		// *
-		// * @param sheet
-		// * @param titleRow
-		// * @param rowNum
-		// */
-		// private void createTitleRow(Sheet sheet, int rowNum, List<Object> titleRowData) {
-		// // create title row
-		// Row titleRow = createRow(sheet, rowNum, titleRowData);
-		//
-		// // add style
-		// for (int i = 0; i < titleRow.getLastCellNum(); i++) {
-		// Cell cell = titleRow.getCell(i);
-		// Font font = workbook.createFont();
-		// font.setBoldweight(Font.BOLDWEIGHT_BOLD);
-		// CellStyle style = workbook.createCellStyle();
-		// style.setFont(font);
-		// // style.setFillForegroundColor(HSSFColor.GREY_50_PERCENT.index);
-		// style.setFillPattern(CellStyle.FINE_DOTS);
-		// style.setFillBackgroundColor(HSSFColor.LIGHT_GREEN.index);
-		// // style.setFillForegroundColor(HSSFColor.WHITE.index);
-		// cell.setCellStyle(style);
-		// }
-		//
-		// }
-		//
-		// /**
-		// * createRow
-		// *
-		// * @param sheet
-		// * @param rowNum
-		// * @param rowData
-		// * @return
-		// */
-		// private Row createRow(Sheet sheet, int rowNum, List<Object> rowData) {
-		// Row row = sheet.createRow(rowNum);
-		//
-		// // start cell number
-		// int cellnum = 0;
-		//
-		// // create cell
-		// for (Object obj : rowData) {
-		// Cell cell = row.createCell(cellnum++);
-		//
-		// // set cell value
-		// if (obj instanceof Date)
-		// cell.setCellValue((Date) obj);
-		// else if (obj instanceof Boolean)
-		// cell.setCellValue((Boolean) obj);
-		// else if (obj instanceof String)
-		// cell.setCellValue((String) obj);
-		// else if (obj instanceof Double)
-		// cell.setCellValue((Double) obj);
-		//
-		// }
-		//
-		// // return row
-		// return row;
-		// }
-		//
-		// });
 		
 	}
 	

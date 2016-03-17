@@ -68,12 +68,6 @@ public class DataSource {
 		List<Object> excelTitle = (List<Object>) resultMap.get("title");
 		List<Object> excelData = (List<Object>) resultMap.get("data");
 		
-		//
-		// List<Object[]> testingData = new ArrayList<>();
-		// for (Object[] d : resultArray) {
-		// testingData.add(d);
-		// }
-		
 		// 1000 K
 		for (int i = 0; i < 1 * 1000; i++) {
 			Object[] d = new Object[] { "Hello", "Hello", "Hello", "Hello", "Hello", "Hello", "Hello", "Hello", "Hello", "Hello", "Hello", "Hello", "Hello",
@@ -81,9 +75,8 @@ public class DataSource {
 			excelData.add(d);
 		}
 		
-		// UsingPOI.generateExcelFileUsingSXSSF(excelTitle, excelData);
-		// UsingPOI.generateExcelFileUsingHSSF(excelTitle, excelData);
-		UsingPOI.generateExcelFileUsingHSSF_Resume(excelTitle, excelData);
+		// UsingPOI.generateXls(excelTitle, excelData);
+		UsingPOI.generateXlsx(excelTitle, excelData);
 		
 	}
 }
