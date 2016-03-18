@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Export Data to Excel</title>
+
+<style>
+
+</style>
+
+</head>
+<body>
+
+<h1>导出数据到 Excel </h1>
+<hr/>
+
+<h2>选择 或者 新建</h2>
+
+
+
+<label for="userName">用户名: </label>
+
+<input id="userNameInput" type="text"  list="userNameList"/>
+
+<button id="exportButton">导出</button>
+
+
+<h2>导出任务列表：</h2>
+
+<ol id="exportList">
+</ol>
+
+
+
+<datalist id="userNameList">
+
+</datalist>
+
+<script type="text/javascript">
+// reset user name list
+// userNameList
+function resetUserNameList(/* Array */ nameList){
+	var userNameList = document.getElementById('userNameList');
+	userNameList.innerHTML = '';
+	
+	[].forEach.call(nameList, function(name) {
+        var option = document.createElement('option');
+        option.setAttribute('value', name);
+        userNameList.appendChild(option);
+    });
+    
+}
+
+// load user names
+function loadUserNames() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState == 4 && xhttp.status == 200) {
+         var nameList = JSON.parse(xhttp.responseText);
+         resetUserNameList(nameList);
+      }
+    };
+    xhttp.open("GET", "/hello-dojo/excelExport/userName", true);
+    xhttp.send();
+  }
+
+function ajax(url, method, success){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState == 4 && xhttp.status == 200) {
+         var retValue = xhttp.responseText;
+         if(success){
+	         success(retValue);
+         }
+      }
+    };
+    xhttp.open(method, url, true);
+    xhttp.send();
+}
+
+window.addEventListener('load', function() {
+    loadUserNames();
+});
+
+
+
+//export Button
+var exportButton = document.getElementById('exportButton');
+exportButton.addEventListener('click', function() {
+ 	// check user name 
+	var userNameInput = document.getElementById('userNameInput');
+ 	var userName = userNameInput.value;
+ 	
+ 	if(userName){
+	 	// call service to do export
+ 	   ajax('/hello-dojo/excelExport/export?userName='+userName, 'GET', function(returnValue) {
+        	console.log(returnValue);
+        	// set export list
+        	var exportList = document.getElementById('exportList');
+        	exportList.innerHTML = '';
+        	var fileNameList = JSON.parse(returnValue);
+        	fileNameList.forEach(function(fileName) {
+                var li = document.createElement('li');
+                li.innerHTML = fileName;
+                exportList.appendChild(li);
+            });
+   		});
+ 	}
+ 	
+ 	
+ 	
+ 	
+});
+
+
+
+
+</script>
+
+</body>
+</html>
