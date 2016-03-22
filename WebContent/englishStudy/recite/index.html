@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Recite</title>
+
+<style>
+.sentence {
+	display: inline;
+	border-bottom: 1px dashed;
+	margin-right: 13px;
+}
+
+.sentence:after {
+	content: '.'
+}
+
+.word{
+	display: inline;
+}
+
+.word:after{
+	content: ' '
+}
+
+.dimmed {
+  position: relative;
+}
+
+.dimmed:after {
+  content: " ";
+  z-index: 10;
+  display: block;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+</style>
+
+</head>
+<body>
+
+	<h1>Recite</h1>
+	
+	<ul class="instruction">
+		<li>Word
+			<ul>
+				<li>&larr; privious , next &rarr;</li>
+			</ul>
+		</li>
+		
+		<li>Sentence
+			<ul>
+				<li>&uarr; privious , next &darr;</li>
+			</ul>
+		</li>
+		
+	</ul>
+	<hr />
+
+	<div class="paragraph" id='testParagraph'>
+	</div>
+
+<script>
+	// 
+	var paragraph = {};
+	
+
+
+	// one paragraph
+	paragraph.content = 'Continuous Integration is a software development practice where members of a team integrate their work frequently, usually each person integrates at least daily - leading to multiple integrations per day. Each integration is verified by an automated build (including test) to detect integration errors as quickly as possible. Many teams find that this approach leads to significantly reduced integration problems and allows a team to develop cohesive software more rapidly. This article is a quick overview of Continuous Integration summarizing the technique and its current usage.';
+	
+	
+	// get sentence list
+	paragraph.sentences = [];
+	paragraph.content.split('\.').forEach(function(sentence) {
+	    sentence = sentence.trim();
+        if(sentence){
+            paragraph.sentences.push({
+                content: sentence, 
+                words: splitSentence(sentence)
+            });
+        }
+    });
+	
+	// return word array
+	function splitSentence(sentence){
+	    var words = [];
+	    
+	    sentence.split(' ').forEach(function(word){
+	        word = word.trim();
+	        if(word){
+			    words.push(word);
+	        }
+		});
+	    
+	    return words;
+	}
+	
+	
+	// add blank word
+	var testParagraph = document.getElementById('testParagraph');
+	var currentSentenceDom = null;
+	paragraph.sentences.forEach(function(sentence){
+	    
+	    // add sentence dom to paragraph dom
+	    var sentenceDom = createSentenceDom();
+	    testParagraph.appendChild(sentenceDom);
+	    
+	    // set current sentence
+	    if(!currentSentenceDom){
+	        currentSentenceDom = sentenceDom;
+	    }
+	    
+	    // add blank word to sentence
+	    sentence.words.forEach(function(word) {
+	        sentenceDom.appendChild(createBlankWordDom(word.length));
+        });
+	});
+	
+	// createSentenceDom
+	function createSentenceDom() {
+	    var div = document.createElement('div');
+	    div.classList.add('sentence');
+	    return div;
+    }
+	
+	// createBlankWordDom
+	function createBlankWordDom(blankLength){
+	    var div = document.createElement('div');
+	    div.classList.add('word');
+	    div.classList.add('blank');
+	    for(var i=0;i<blankLength; i++){
+	        div.innerHTML = div.innerHTML + '&nbsp;';
+	    }
+	    
+	    return div;
+	}
+	
+	// createWordDom
+	function createWordDom(word){
+	    var div = document.createElement('div');
+	    div.classList.add('word');
+	    div.innerHTML = word;
+	    
+	    return div;
+	}
+	
+	// key event
+	// ->: 39, <-: 37
+	// down: 40, up: 38
+	window.addEventListener('keyup', function(e){
+	    var key = e.keyCode ? e.keyCode : e.which;
+	    
+	    console.log(key);
+	    
+	    if(key === 39){
+	        showNextWord();
+	    }else if(key === 37){
+	        hideCurrentWord();
+	    }else if(key === 40){
+	        showNextSentence();
+	    }else if(key === 38){
+	        hideCurrentSentence();
+	    }
+	    
+	});
+	
+	var currentSentence = paragraph.sentences.shift();
+	
+	function showNextWord(){
+
+        // if no words left in current sentence, then move to next sentence
+        if(currentSentence.words.length === 0){
+            var sentence = paragraph.sentences.shift();
+            if(sentence){
+                currentSentence = sentence;
+                currentSentenceDom = currentSentenceDom.nextElementSibling;
+            }
+        }
+
+        if(currentSentence.words.length > 0){
+            // current word
+	    	var word = currentSentence.words.shift(); 
+	        
+	   		// insert word
+	   		insertWordToSentence(currentSentenceDom, word);
+	    }
+	}
+	
+	// insertWordToSentence
+	function insertWordToSentence(sentenceDom, word) {
+	    // all blanks
+	    var blanks =  sentenceDom.querySelectorAll('.blank');
+	    
+	    if(blanks && blanks.length > 0){
+		    // the first blank dom
+		    var firstBlankDom = blanks[0];
+		    // get the first word in wordlist 
+		    var wordToInsert = word;
+		    // create word dom
+		    var wordDom = createWordDom(wordToInsert);
+		    
+	        // insert into the place
+		    sentenceDom.insertBefore(wordDom, firstBlankDom);
+	        
+	        // remove first blank dom
+		    firstBlankDom.remove();
+	    }
+    }
+	
+	// hideCurrentWord
+	// if there is no word in current sentenceDom, then switch to previous sentenceDom
+	function hideCurrentWord() {
+        // current sentence dom
+        var wordDoms =  currentSentenceDom.querySelectorAll('.word:not(.blank)');
+        
+        if(wordDoms.length === 0){
+            // switch to previous sentence dom
+            var previousSentenceDom = currentSentenceDom.previousElementSibling;
+            if(previousSentenceDom){
+                currentSentenceDom = previousSentenceDom;
+	         	// unshift current sentence to paragraph
+		        unshiftCurrentSentence();
+                hideCurrentWord();
+            }
+        }else{
+         	// remove word
+            var word = removeWordFromSentence(currentSentenceDom);
+         	
+         	// unshift word
+            currentSentence.words.unshift(word);
+        }
+    }
+	
+	// unshiftCurrentSentence
+	function unshiftCurrentSentence() {
+	    paragraph.sentences.unshift(currentSentence);
+        currentSentence = {
+            words: []
+        };
+    }
+	
+	// removeWordFromSentence
+	function removeWordFromSentence(sentenceDom) {
+        // the the last displayed word
+	    var displayedWordDoms =  sentenceDom.querySelectorAll('.word:not(.blank)');
+        
+        if(displayedWordDoms && displayedWordDoms.length > 0){
+            var lastDisplayedWordDom = displayedWordDoms[displayedWordDoms.length - 1];
+            var lastDisplayedWord = lastDisplayedWordDom.innerHTML;
+            
+            // create blank dom
+            var blankDom = createBlankWordDom(lastDisplayedWord.length);
+            
+            // insert blank dom
+            sentenceDom.insertBefore(blankDom, lastDisplayedWordDom);
+            lastDisplayedWordDom.remove();
+            
+            return lastDisplayedWord;
+        }
+    }
+
+	// showNextSentence, if current sentence words are not all displayed, then display them all
+	// if all words are displayed, then display next sentence
+	function showNextSentence() {
+        if(currentSentence){
+            
+            if(currentSentence.words.length > 0){
+                while(currentSentence.words.length > 0){
+                    showNextWord();
+                }
+            }else{
+                showNextWord();
+                showNextSentence();
+            }
+        }
+    }
+	
+	// hideCurrentSentence
+	// if current sentence words are not all hidden, then hide left word
+	// if all words are hidden ,then hide previous sentence
+	function hideCurrentSentence() {
+	    
+	    if(currentSentenceDom.querySelectorAll('.word:not(.blank)').length > 0){
+	        while(currentSentenceDom.querySelectorAll('.word:not(.blank)').length > 0){
+	            hideCurrentWord();
+	        }
+	    }else if(currentSentenceDom.previousElementSibling){
+	        hideCurrentWord();
+	        hideCurrentSentence();
+	    }
+    }
+	
+</script>
+
+</body>
+</html>
+
+
