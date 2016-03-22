@@ -9,6 +9,14 @@ this.currentSentenceIndex = 0;
 this.currentParagraphDom = null;
 this.currentSentenceDom = null;
 
+// 3 dimension array to store words
+this.data = [];
+
+// 2 index: current index and next index
+this.currentIndex = null;
+this.nextIndex = null;
+
+
 // main
 function main() {
     // load article
@@ -17,6 +25,9 @@ function main() {
     // split article
     splitArticle();
 
+    // initial index
+    initIndex();
+    
     // add blank word
     addBlankWord();
     
@@ -26,7 +37,14 @@ function main() {
 
 main();
 
-debugger;
+/**
+ * initial index
+ */
+function initIndex(){
+	this.currentIndex = null;
+	this.nextIndex = [0,0,0];
+}
+
 // loadArticle
 function loadArticle() {
     var xhttp = new XMLHttpRequest();
@@ -42,154 +60,119 @@ function loadArticle() {
 
 // splitArticle
 function splitArticle() {
-    article.paragraphs = [];
+	// splitSentence, return word array
+	var splitSentence = function (sentence) {
+	    var words = [];
+
+	    sentence.split(' ').forEach(function(word) {
+	        word = word.trim();
+	        if (word) {
+	            words.push(word);
+	        }
+	    });
+
+	    return words;
+	};
+	
+    var pIndex = 0;
     article.content.split('\n').forEach(function(paragraphContent) {
         paragraphContent = paragraphContent.trim();
         if (paragraphContent) {
-            // create paragraph
-            var paragraph = {
-                content : paragraphContent
-            };
-
-            // splitSentence
-            paragraph.sentences = [];
-            paragraph.content.split('\.').forEach(function(sentence) {
+        	this.data[pIndex] = [];
+            var sIndex = 0;
+            paragraphContent.split('\.').forEach(function(sentence) {
                 sentence = sentence.trim();
                 if (sentence) {
-                    paragraph.sentences.push({
-                        content : sentence,
-                        words : splitSentence(sentence)
-                    });
+                	this.data[pIndex][sIndex] = splitSentence(sentence);
+                	sIndex++;
                 }
             });
 
-            // push
-            article.paragraphs.push(paragraph);
+            pIndex++;
         }
     });
 }
 
-// splitSentence, return word array
-function splitSentence(sentence) {
-    var words = [];
 
-    sentence.split(' ').forEach(function(word) {
-        word = word.trim();
-        if (word) {
-            words.push(word);
-        }
-    });
-
-    return words;
-}
-
-// addBlankWord
+/**
+ * addBlankWord, add word and blankword together, hidden word.
+ * 
+ * blank word is after the word.
+ * 
+ * both have a index, but have different class name
+ * 
+ */
 function addBlankWord() {
     var articleDom = document.getElementById('article');
     
-    for(var i=0;i<article.paragraphs.length; i++){
+    // add data
+    for(var p=0;p<data.length;p++){
+    	// add paragraph dom node
+    	var pDomNode = this.createParagraphDom(p);
+    	articleDom.appendChild(pDomNode);
+    	
+    	for(var s=0;s<data[p].length; s++){
+    		// add sentence dom node
+    		var sDomNode = this.createSentenceDom(s);
+    		pDomNode.appendChild(sDomNode);
+    		
+    		for(var w=0;w<data[p][s].length; w++){
+    			// add word dom node, hide it
+    			var wDomNode = this.createWordDom(data[p][s][w], getWordId([p, s, w]));
+    			wDomNode.classList.add('hidden');
+    			sDomNode.appendChild(wDomNode);
 
-        var paragraph = article.paragraphs[i];
-        
-        // add paragraph dom
-        var paragraphDom = createParagraphDom(i);
-        articleDom.appendChild(paragraphDom);
-
-
-        // add sentenceDom
-        for(var j = 0;j< paragraph.sentences.length; j++){
-            var sentence = paragraph.sentences[j];
-
-            // add sentence dom to paragraph dom
-            var sentenceDom = createSentenceDom(j);
-            paragraphDom.appendChild(sentenceDom);
-
-            // set current sentence
-            if (!currentSentenceDom) {
-                currentSentenceDom = sentenceDom;
-            }
-
-            // add blank word to sentence
-            for(var k=0;k<sentence.words.length; k++){
-                var word = sentence.words[k];
-                sentenceDom.appendChild(createBlankWordDom(word.length, k));
-            }
-//            sentence.words.forEach(function(word) {
-//                sentenceDom.appendChild(createBlankWordDom(word.length));
-//            });
-        
-        }
-        
-// paragraph.sentences.forEach(function(sentence) {
-//
-// // add sentence dom to paragraph dom
-// var sentenceDom = createSentenceDom();
-// paragraphDom.appendChild(sentenceDom);
-//
-// // set current sentence
-// if (!currentSentenceDom) {
-// currentSentenceDom = sentenceDom;
-// }
-//
-// // add blank word to sentence
-// sentence.words.forEach(function(word) {
-// sentenceDom.appendChild(createBlankWordDom(word.length));
-// });
-// });
-
-    
+    			// add blank word node
+    			var bwDomNode = this.createBlankWordDom(data[p][s][w].length, getBlankWordId([p, s, w]));
+    			sDomNode.appendChild(bwDomNode);
+    		}
+    	}
     }
-    
-// article.paragraphs.forEach(function(paragraph) {
-// // add paragraph dom
-// var paragraphDom = createParagraphDom();
-// articleDom.appendChild(paragraphDom);
-//
-// // currentSentenceDom
-// var currentSentenceDom = null;
-//
-// // add blank words
-// paragraph.sentences.forEach(function(sentence) {
-//
-// // add sentence dom to paragraph dom
-// var sentenceDom = createSentenceDom();
-// paragraphDom.appendChild(sentenceDom);
-//
-// // set current sentence
-// if (!currentSentenceDom) {
-// currentSentenceDom = sentenceDom;
-// }
-//
-// // add blank word to sentence
-// sentence.words.forEach(function(word) {
-// sentenceDom.appendChild(createBlankWordDom(word.length));
-// });
-// });
-//
-// });
 }
 
-// createParagraphDom
-function createParagraphDom(i){
+function getWordId(index){
+	return 'p'+index[0]+'s'+index[1]+'w'+index[2];
+}
+
+function getBlankWordId(index){
+	return 'p'+index[0]+'s'+index[1]+'bw'+index[2];
+}
+
+/**
+ * createParagraphDom
+ * @param p
+ * @returns
+ */
+function createParagraphDom(p){
     var paragraphDom = document.createElement('div');
     paragraphDom.classList.add('paragraph');
-    paragraphDom.setAttribute('index', i);
+    paragraphDom.setAttribute('index', p);
     return paragraphDom;
 }
 
-// createSentenceDom
-function createSentenceDom(j) {
+/**
+ * createSentenceDom
+ * @param s
+ * @returns
+ */
+function createSentenceDom(s) {
     var div = document.createElement('div');
     div.classList.add('sentence');
-    div.setAttribute('index', j);
+    div.setAttribute('index', s);
     return div;
 }
 
-// createBlankWordDom
-function createBlankWordDom(blankLength, k) {
+/**
+ * createBlankWordDom
+ * @param blankLength
+ * @param b
+ * @returns {___anonymous3570_3572}
+ */
+function createBlankWordDom(blankLength, b) {
     var div = document.createElement('div');
     div.classList.add('blankWord');
-    div.setAttribute('index', k);
+//    div.setAttribute('index', b);
+    div.id = b;
     for (var i = 0; i < blankLength; i++) {
         div.innerHTML = div.innerHTML + '&nbsp;';
     }
@@ -198,9 +181,11 @@ function createBlankWordDom(blankLength, k) {
 }
 
 // createWordDom
-function createWordDom(word) {
+function createWordDom(word, w) {
     var div = document.createElement('div');
     div.classList.add('word');
+//    div.setAttribute('index', w);
+    div.id = w;
     div.innerHTML = word;
 
     return div;
@@ -237,6 +222,19 @@ function setCurrentSentence(){
 
 // showNextWord
 function showNextWord() {
+	// make the next index data visible
+	var nextWord =  document.getElementById(getWordId(this.nextIndex));
+	nextWord.classList.remove('hidden');
+	
+	// hide the next index blank data 
+	var nextBlankWord =  document.getElementById(getBlankWordId(this.nextIndex));
+	nextBlankWord.classList.add('hidden');
+	
+	
+	// update both indice
+	increaseIndex(this.currentIndex);
+	increaseIndex(this.nextIndex);
+	
 
     // get current sentence dom
     var sentenceDomToInsert =  getSentenceDomToInsert();
@@ -264,6 +262,70 @@ function showNextWord() {
         // insert word
         insertWordToSentence(currentSentenceDom, word);
     }
+}
+
+function increaseIndex(index){
+	
+	if(data[index[0]][index[1]][index[2] + 1]){
+		index[2] = index[2] + 1;
+	}else if(data[index[0]][index[1] + 1]){
+		index[1] = index[1] + 1;
+		index[2] = 0;
+	}else if(data[index[0] + 1]){
+		index[0] = index[0] + 1;
+		// set s = 0
+		index[1] = 0;
+
+		// set w = 0
+		index[2] = 0;
+	}else{
+		//index[2] = index[2] + 1;
+	}
+	
+//	if(index[2] < data[index[0]][index[1]].length){
+//		index[2] = index[2] + 1;
+//	}else if(index[1] < data[index[0]].length){
+//		index[1] = index[1] + 1;
+//		index[2] = 0;
+//	}else if(index[0] < data.length){
+//		index[0] = index[0] + 1;
+//		// set s = 0
+//		index[1] = 0;
+//
+//		// set w = 0
+//		index[2] = 0;
+//	}else{
+//		index[0] = -1;
+//	}
+}
+
+function increaseIndex2(index){
+	if(index[2] < data[index[0]][index[1]].length){
+		index[2] = index[2] + 1;
+	}else if(index[1] < data[index[0]].length){
+		index[1] = index[1] + 1;
+		if(data[index[0]][index[1]].length > 0){
+			index[2] = 0;
+		}else{
+			index[2] = -1;
+		}
+	}else if(index[0] < data.length){
+		index[0] = index[0] + 1;
+		// set s = 0
+		if(data[index[0]].length > 0){
+			index[1] = 0;
+		}else{
+			index[1] = -1;
+		}
+		// set w = 0
+		if(data[index[0]][index[1]].length > 0){
+			index[2] = 0;
+		}else{
+			index[2] = -1;
+		}
+	}else{
+		index[0] = -1;
+	}
 }
 
 /**
