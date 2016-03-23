@@ -17,8 +17,11 @@ function main() {
     // initial index
     initIndex();
     
-    // add blank word
-    addBlankWord();
+    // prepare read area
+    prepareReadArea(this.data);
+    
+    // prepare practice area
+    preparePracticeArea(this.practiceData);
     
     // addKeyupEvent
     addKeyupEvent();
@@ -32,6 +35,9 @@ main();
 function initIndex(){
 	this.currentIndex = [];
 	this.nextIndex = [0,0,0];
+	
+	// practice index
+	this.practiceIndex = [];
 }
 
 /**
@@ -54,54 +60,123 @@ function loadArticle() {
  */
 function splitArticle() {
     // 3 dimension array to store words
-    this.data = [];
+    this.data = splitStringWithMultipleSpliters(article.content, ['\n', '.', ' ']);
+    
+    // 4 dimension array to store every character 
+    this.practiceData = splitStringWithMultipleSpliters(article.content, ['\n', '.', ' ', '']);
     
 	// splitSentence, return word array
-	var splitSentence = function (sentence) {
-	    var words = [];
+//	var splitSentence = function (sentence) {
+//	    var words = [];
+//
+//	    sentence.split(' ').forEach(function(word) {
+//	        word = word.trim();
+//	        if (word) {
+//	            words.push(word);
+//	        }
+//	    });
+//
+//	    return words;
+//	};
+//	
+//    var pIndex = 0;
+//    article.content.split('\n').forEach(function(paragraphContent) {
+//        paragraphContent = paragraphContent.trim();
+//        if (paragraphContent) {
+//        	this.data[pIndex] = [];
+//        	this.practiceData[pIndex] = [];
+//            var sIndex = 0;
+//            paragraphContent.split('\.').forEach(function(sentence) {
+//                sentence = sentence.trim();
+//                if (sentence) {
+//                	this.data[pIndex][sIndex] = [];
+//                	this.practiceData[pIndex][sIndex] = [];
+//                	var wIndex = 0;
+//                	sentence.split(' ').forEach(function(word) {
+//                        word = word.trim();
+//                        if(word){
+//                            this.data[pIndex][sIndex][wIndex] = word;
+//                            this.practiceData[pIndex][sIndex][wIndex] = [];
+//                            
+//                            for(var cIndex = 0; cIndex < word.length; cIndex++){
+//                                this.practiceData[pIndex][sIndex][wIndex][cIndex] = word.charAt(cIndex);
+//                            }
+//                            wIndex++;
+//                        }
+//                    });
+//                	
+//                	sIndex++;
+//                }
+//            });
+//
+//            pIndex++;
+//        }
+//    });
+}
 
-	    sentence.split(' ').forEach(function(word) {
-	        word = word.trim();
-	        if (word) {
-	            words.push(word);
-	        }
-	    });
-
-	    return words;
-	};
-	
-    var pIndex = 0;
-    article.content.split('\n').forEach(function(paragraphContent) {
-        paragraphContent = paragraphContent.trim();
-        if (paragraphContent) {
-        	this.data[pIndex] = [];
-            var sIndex = 0;
-            paragraphContent.split('\.').forEach(function(sentence) {
-                sentence = sentence.trim();
-                if (sentence) {
-                	this.data[pIndex][sIndex] = splitSentence(sentence);
-                	sIndex++;
+/**
+ * splitStringInArray
+ * @param arr
+ * @param spliter
+ */
+function splitStringInArray(arr, spliter){
+    for(var i=0;i<arr.length; i++){
+        // recursive call
+         if(typeof arr[i] !== 'string'){
+             splitStringInArray(arr[i], spliter);
+         }else{
+             // string
+             var s = arr[i];
+             arr[i] = [];
+             
+             s.split(spliter).forEach(function(item) {
+                 item = item.trim();
+                if(item){
+                    arr[i].push(item);
                 }
             });
+         }
+    }
+}
 
-            pIndex++;
+/**
+ * splitStringWithMultipleSpliters
+ * @param spliters, an array of spliters, like ['\n', '\.', ' ', '']
+ */
+function splitStringWithMultipleSpliters(s, /*array*/ spliters) {
+    var retObject=null;
+    
+    spliters.forEach(function(spliter) {
+        // first time
+        if(!retObject){
+            retObject = [];
+            s.split(spliter).forEach(function(item) {
+                item = item.trim();
+                if(item){
+                    retObject.push(item);
+                }
+            });
+        }else{
+            splitStringInArray(retObject, spliter);
         }
     });
+    
+    return retObject;
 }
 
 
 /**
- * addBlankWord, add word and blankword together, hidden word.
+ * prepareReadArea, add word and blankword together, hidden word.
  * 
  * blank word is after the word.
  * 
  * both have a index, but have different class name
  * 
  */
-function addBlankWord() {
+function prepareReadArea(data) {
     var articleDom = document.getElementById('article');
     
-    // add data
+    // add data to read area
     for(var p=0;p<data.length;p++){
     	// add paragraph dom node
     	var pDomNode = this.createParagraphDom(p);
@@ -126,6 +201,41 @@ function addBlankWord() {
     }
 }
 
+
+function preparePracticeArea(data) {
+    var practiceArticleDom = document.getElementById('practiceArticle');
+    
+    // add data to read area
+    for(var p=0;p<data.length;p++){
+        // add paragraph dom node
+        var pDomNode = this.createParagraphDom(p);
+        practiceArticleDom.appendChild(pDomNode);
+        
+        for(var s=0;s<data[p].length; s++){
+            // add sentence dom node
+            var sDomNode = this.createSentenceDom(s);
+            pDomNode.appendChild(sDomNode);
+            
+            for(var w=0;w<data[p][s].length; w++){
+                // add word dom node
+                var wDomNode = createDiv('word', getWordId([p, s, w]) );
+                sDomNode.appendChild(wDomNode);
+
+                // add character dom
+                for(var c=0;c<data[p][s][w].length; c++){
+                    var cDomNode = createDiv('character', getCharacterId([p, s, w, c]), data[p][s][w][c]);
+                    cDomNode.classList.add('hidden');
+                    wDomNode.appendChild(cDomNode);
+                    
+                    // add blank character node
+                    var bcDomNode = this.createBlankWordDom(1, getBlankCharacterId([p, s, w, c]));
+                    wDomNode.appendChild(bcDomNode);
+                }
+            }
+        }
+    }
+}
+
 /**
  * getWordId
  * @param index
@@ -142,6 +252,14 @@ function getWordId(index){
  */
 function getBlankWordId(index){
 	return index? 'p'+index[0]+'s'+index[1]+'bw'+index[2] : undefined;
+}
+
+function getCharacterId(index){
+    return  index?'p'+index[0]+'s'+index[1]+'w'+index[2]+'c'+index[3]: undefined;
+}
+
+function getBlankCharacterId(index){
+    return  index?'p'+index[0]+'s'+index[1]+'w'+index[2]+'bc'+index[3]: undefined;
 }
 
 /**
@@ -177,10 +295,10 @@ function createSentenceDom(s) {
  * @param b
  * @returns {___anonymous3570_3572}
  */
-function createBlankWordDom(blankLength, b) {
+function createBlankWordDom(blankLength, id) {
     var div = document.createElement('div');
     div.classList.add('blankWord');
-    div.id = b;
+    div.id = id;
     for (var i = 0; i < blankLength; i++) {
         div.innerHTML = div.innerHTML + '&nbsp;';
     }
@@ -203,6 +321,65 @@ function createWordDom(word, w) {
 
     return div;
 }
+
+/**
+ * createDiv
+ */
+function createDiv(className, id, content) {
+    var div = document.createElement('div');
+    
+    if(className){
+        div.classList.add(className);
+    }
+
+    if(id){
+        div.id = id;
+    }
+    
+    if(content){
+        div.innerHTML = content;
+    }
+
+    return div;
+}
+
+/**
+ * createHierarchyDiv
+ * @param parentNode
+ * @param data
+ * @param classNameArray
+ * @param isWithBlank, with blank leaf after every leaf
+ */
+//function createHierarchyDiv(/*dom*/ parentNode, /*array*/ data, /*array*/ classNameArray, /*boolean*/ isWithBlank){
+//    var className = classNameArray.shift();
+//    for(var i=0;i<data.length; i++){
+//        var d = data[i];
+//        
+//        if(typeof d === 'string'){
+//            var leafNode = createDiv(className, parentNode.id+i, d);
+//            parentNode.appendChild(leafNode);
+//            
+//            // add blank 
+//            if(isWithBlank){
+//                var blankContent = '';
+//                for(var i=0;i< d.length; i++){
+//                    blankContent += '&nbsp;';
+//                }
+//                var blankLeafNode = createDiv('blankWord', 'blank' + parentNode.id+i, blankContent);
+//                parentNode.appendChild(blankLeafNode);
+//            }
+//            
+//            
+//            
+//        }else{
+//            var middleNode =  createDiv(className, parentNode.id+i);
+//            parentNode.appendChild(middleNode);
+//            var cloneClassNameArray = classNameArray.slice(0);
+//            createHierarchyDiv(/*dom*/ middleNode, /*array*/ d, /*array*/ cloneClassNameArray, isWithBlank)
+//        }
+//        
+//    }
+//}
 
 /**
  * addKeyupEvent

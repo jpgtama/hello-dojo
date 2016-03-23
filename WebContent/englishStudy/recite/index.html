@@ -6,6 +6,15 @@
 
 <style>
 
+
+.articleTitle{
+	font-size: 33px;
+    font-weight: bold;
+    padding-left: 20px;
+    text-decoration: underline;
+    margin-bottom: 20px;
+}
+
 .paragraph{
 	margin-bottom: 25px;
 }
@@ -28,8 +37,32 @@
 	content: ' '
 }
 
+.character{
+	display: inline;
+}
+
 .hidden {
   display: none;
+}
+
+
+.function {
+/* 	font-size: 33px; */
+/*     font-weight: bold; */
+    padding-left: 20px;
+    height: 40px;
+}
+
+.function > *{
+	vertical-align: middle;
+	margin-right: 20px;
+}
+
+.function:before{
+	content: '';
+	display: inline-block;
+	border: 10px solid transparent;
+	border-left-color: #ccc;
 }
 
 
@@ -38,25 +71,96 @@
 </head>
 <body>
 
-	<h1>Read</h1>
-	
-	<ul class="instruction">
-		<li>Word
-			<ul>
-				<li>&larr; privious , next &rarr;</li>
-			</ul>
-		</li>
-		
-		<li>Sentence
-			<ul>
-				<li>&uarr; privious , next &darr;</li>
-			</ul>
-		</li>
-		
-	</ul>
-	<hr />
+	<div class="articleTitle">
+			Continuous Integration from Martin Fowler
+	</div>
 
-	<div class="article" id="article"></div>
+	<div class="function">
+		<span id="read" class="hidden">Read</span>
+		<button id="readButton" onclick='onRead()'>Read</button>
+		<span id="practice" class="hidden">Practice</span>
+		<button id="practiceButton" onclick="onPractice()">Practice</button>
+	</div>
+	
+	<script type="text/javascript">
+		// switch function
+		function onRead(){
+		    hideMode('practice');
+		    showMode('read');
+		    
+		    // area
+		    hideArea('practiceArea');
+		    showArea('readArea');
+		}
+		
+		function onPractice(){
+		    hideMode('read');
+		    showMode('practice');
+		    
+			// area
+		    hideArea('readArea');
+		    showArea('practiceArea');
+		}
+		
+		// util function
+		function showMode(/*String*/ modeId){
+		    var mode = document.getElementById(modeId);
+			var modeButton = document.getElementById(modeId + 'Button');
+			
+			// show mode text and hide mode button
+			mode.classList.remove('hidden');
+			modeButton.classList.add('hidden');
+		}
+		
+		
+		function hideMode(/*String*/ modeId){
+		    var mode = document.getElementById(modeId);
+			var modeButton = document.getElementById(modeId + 'Button');
+			
+			// hide mode text and show mode button
+			mode.classList.add('hidden');
+			modeButton.classList.remove('hidden');
+		}
+		
+		function showArea(areaId) {
+		    var area = document.getElementById(areaId);
+		    area.classList.remove('hidden');
+        }
+		
+		function hideArea(areaId) {
+		    var area = document.getElementById(areaId);
+		    area.classList.add('hidden');
+        }
+		
+		
+	</script>
+	
+	
+	<div class="hidden" id="readArea">
+		<ul class="instruction">
+			<li>Word
+				<ul>
+					<li>&larr; privious , next &rarr;</li>
+				</ul>
+			</li>
+			
+			<li>Sentence
+				<ul>
+					<li>&uarr; privious , next &darr;</li>
+				</ul>
+			</li>
+			
+		</ul>
+		<hr />
+	
+		<div class="article" id="article"></div>
+	</div>
+	
+	
+	<div class="hidden" id="practiceArea">
+		<div class="practiceArticle" id="practiceArticle"></div>
+	
+	</div>
 
 <script src="js/index.js">
 
