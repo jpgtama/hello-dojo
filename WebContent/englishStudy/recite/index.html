@@ -141,6 +141,16 @@
         }
 		
 		
+		// stop backspace key
+		window.addEventListener('keydown', function(e) {
+		    var key = e.keyCode ? e.keyCode : e.which;
+		    
+		    if(key === 8){
+		        e.preventDefault();
+		    }
+		    
+        });
+		
 	</script>
 	
 	
