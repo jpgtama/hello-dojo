@@ -91,6 +91,10 @@
 		    // area
 		    hideArea('practiceArea');
 		    showArea('readArea');
+		    
+		    // key event
+		    window.removeEventListener('keypress', practiceKeyEventListener);
+		    window.addEventListener('keyup', readKeyEventListener);
 		}
 		
 		function onPractice(){
@@ -100,6 +104,10 @@
 			// area
 		    hideArea('readArea');
 		    showArea('practiceArea');
+
+		    // key event
+		    window.removeEventListener('keyup', readKeyEventListener);
+		    window.addEventListener('keypress', practiceKeyEventListener);
 		}
 		
 		// util function
