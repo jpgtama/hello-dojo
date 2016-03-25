@@ -98,6 +98,11 @@
 
 <script type="text/javascript">
 
+window.addEventListener('mousemove', function(e) {
+    console.log('mouse move');
+});
+
+
 var columns = document.getElementById("formArea").querySelectorAll('.column');
 //Event Listener for when the dragged element is over the drop zone.
 [].forEach.call(columns, function(col) {
@@ -132,7 +137,7 @@ var columns = document.getElementById("formArea").querySelectorAll('.column');
       col.addEventListener('dragenter', function(e) {
           console.log('dragenter - column');
           this.style.backgroundColor = 'bisque';
-          
+          debugger;
           addPlaceHolder(this);
     });
       

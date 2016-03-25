@@ -15,7 +15,7 @@
  * ORIGINAL AUTHOR(S): 310199253
  *
  ***************************************************************************/
-package com.evan.example.hello_dojo.servlet.writeexcel;
+package com.evan.example.hello_dojo.writeexcel;
 
 /**
  * PaginationUtil
