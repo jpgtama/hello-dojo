@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+.table, .row, .cell {
+	border: 1px solid;
+}
+
+.table {
+	display: table;
+	width: 900px;
+}
+
+.row {
+	display: table-row;
+}
+
+.cell {
+	display: table-cell;
+	width: 50%;
+}
+
+.options, .options tr, .options td {
+	border: 1px solid;
+}
+</style>
+</head>
+<body>
+
+	<div class="table">
+		<div class="row">
+
+			<div class="cell">
+				<div>
+					<p>Field Name:</p>
+
+					<input />
+
+				</div>
+
+				<div>
+					<p>Field options:</p>
+
+					<!-- table here -->
+					<table class="options">
+						<tr>
+							<td id="td1">Option 1</td>
+							<td id="td2">Option 2</td>
+							<td id="td3">Option 3</td>
+						</tr>
+					</table>
+
+				</div>
+
+				<div>
+					<p>Group Fields</p>
+					<input />
+				</div>
+
+
+			</div>
+
+
+			<div class="cell">
+				<div>
+					<p>Field Key:</p>
+					<input />
+				</div>
+
+				<div>
+					<p>Required:</p>
+					<label><input type="radio" name="r" value="yes" /> Yes</label> <label><input
+						type="radio" name="r" value="no" /> No</label>
+				</div>
+
+			</div>
+
+		</div>
+
+
+	</div>
+
+	<script>
+        var td1 = document.getElementById("td1");
+
+        td1.addEventListener('dblclick', function(e) {
+
+            var v = this.innerHTML;
+            this.innerHTML = '';
+
+            var textbox = document.createElement('input');
+
+            textbox.value = v;
+
+            this.appendChild(textbox);
+
+            textbox.focus();
+
+            var td1 = this;
+
+            var endEdit = function(e) {
+                if (e.type === 'blur' || (e.type === 'keyup' && e.key === 'Enter')) {
+                    // remove event, if not, an error will come: Failed to set the 'innerHTML' property on 'Element': The node to be removed is no longer a child of this node
+                    this.removeEventListener('blur', endEdit);
+                    this.removeEventListener('keyup', endEdit);
+
+                    var v = this.value;
+                    this.style.display = 'none';
+                    td1.innerHTML = v;
+
+                    // remove textbox
+                    this.remove();
+                }
+
+            };
+
+            // end edit
+            textbox.addEventListener('blur', endEdit);
+            textbox.addEventListener('keyup', endEdit);
+
+            // stop bubbling
+            textbox.addEventListener('dblclick', function(e) {
+                e.stopPropagation();
+            });
+
+        });
+    </script>
+
+
+</body>
+</html>

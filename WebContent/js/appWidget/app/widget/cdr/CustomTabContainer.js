@@ -90,20 +90,20 @@ define([
             });
 
             // make closing tab not to invoke switch check
-            aspect.around(this, 'removeChild', function(originalFunction) {
-                return function() {
-                    // before
-                    customTabContainer.switchDueToClose = true;
-
-                    // call original function
-                    var result = originalFunction.apply(customTabContainer, arguments);
-
-                    // after
-                    customTabContainer.switchDueToClose = false;
-
-                    return result;
-                };
-            });
+//            aspect.around(this, 'removeChild', function(originalFunction) {
+//                return function() {
+//                    // before
+//                    customTabContainer.switchDueToClose = true;
+//
+//                    // call original function
+//                    var result = originalFunction.apply(customTabContainer, arguments);
+//
+//                    // after
+//                    customTabContainer.switchDueToClose = false;
+//
+//                    return result;
+//                };
+//            });
 
             // call inheritance
             this.inherited(arguments);
@@ -193,47 +193,17 @@ define([
          */
         _addCheckBeforeSwitchAndClose : function(customTabContainer, tabController) {
             var _this = this;
-            // tab switch check
-            declare.safeMixin(customTabContainer, {
+            // tab leave check
+            declare.safeMixin(tabController, {
                 /**
                  * Override
                  */
-                selectChild : function(/* dijit/_WidgetBase|String */page, /* Boolean */animate) {
-                    if (customTabContainer.selectedChildWidget === page) {
-                        // self click, directly call inheritance
-                        this.inherited(arguments);
-                    } else {
-                        // check switch
-                        if (_this.switchCheck && !customTabContainer.switchDueToClose) {
-                            // super method
-                            var args = arguments;
-                            var superClassFunction = function() {
-                                customTabContainer.inherited('selectChild', args);
-                            };
-
-                            // confirm dialog before switch
-                            myDialog = new ConfirmDialog({
-                                title : "My ConfirmDialog",
-                                content : "确定切换吗？",
-                                style : "width: 300px",
-
-                                onCancel : function() {
-
-                                },
-
-                                onExecute : function() {
-                                    superClassFunction();
-                                }
-
-                            });
-
-                            // show dialog
-                            myDialog.show();
-                        } else {
-                            // call inheritance directly
+                onButtonClick : function(/*dijit/_WidgetBase*/ page) {
+                    if(this._currentChild.id !== page.id){
+                        // trigger page leave event on current child
+                        if(!this._currentChild.onLeave || this._currentChild.onLeave()){
                             this.inherited(arguments);
                         }
-
                     }
                 }
             });

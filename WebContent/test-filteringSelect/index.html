@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test Filtering Select</title>
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+	
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        paths : {
+            app : '/hello-dojo/js/appWidget/app',
+            js : '/hello-dojo/js/',
+            jquery : '/dojo-release-1.10.4-src/jquery/jquery'
+        }
+    };
+</script>
+<script src="/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+
+<script type="text/javascript">
+    require([
+        'dijit/registry'
+    ], function(registry) {
+        window.registry = registry;
+    });
+</script>
+
+
+<style>
+.table {
+	display: table;
+	border-collapse: seperate;
+	border-spacing: 28px;
+	width: 900px;
+	border: 3px dashed red;
+}
+
+.table-row {
+	display: table-row;
+}
+
+.table-cell {
+	display: table-cell;
+	border: 2px solid #CCC;
+}
+</style>
+
+</head>
+<body class="claro">
+
+
+
+
+
+<div data-dojo-type="dijit/Dialog" data-dojo-id="myDialog" title="Name and Address">
+<!--     <table class="dijitDialogPaneContentArea"> -->
+<!--         <tr> -->
+<!--             <td><label for="name">Name:</label></td> -->
+<!--             <td><input data-dojo-type="dijit/form/TextBox" name="name" id="name"></td> -->
+<!--         </tr> -->
+<!--         <tr> -->
+<!--             <td><label for="address">Address:</label></td> -->
+<!--             <td><input data-dojo-type="dijit/form/TextBox" name="address" id="address"></td> -->
+<!--         </tr> -->
+<!--     </table> -->
+
+	<div class="table">
+
+		<div class="table-row">
+			<div class="table-cell">
+				First Cell
+				<div data-dojo-type="dojo/store/Memory" data-dojo-id="stateStore"
+					data-dojo-props="data: [{id: 'y', name: 'yes'}, {id: 'n', name: 'no'}]"></div>
+				<input data-dojo-type="dijit/form/FilteringSelect" value="y"
+					data-dojo-props="store:stateStore, searchAttr:'name'" name="state"
+					id="stateInput" />
+
+			</div>
+			<div class="table-cell">Second Cell</div>
+
+		</div>
+
+
+	</div>
+	
+
+
+
+    <div class="dijitDialogPaneActionBar">
+        <button data-dojo-type="dijit/form/Button" type="submit" id="ok">OK</button>
+        <button data-dojo-type="dijit/form/Button" type="button" data-dojo-props="onClick:function(){myDialog.hide();}"
+                id="cancel">Cancel</button>
+    </div>
+</div>
+
+<button data-dojo-type="dijit/form/Button" type="button" onClick="myDialog.show();">
+    Show me!
+</button>
+
+
+<button onclick="showDialog()">Click me!</button>
+
+
+<script type="text/javascript">
+
+
+function showDialog(){
+    
+    
+    
+    
+}
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CheckBox</title>
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        paths : {
+            app : '/hello-dojo/js/appWidget/app',
+            js : '/hello-dojo/js/',
+            jquery : '/dojo-release-1.10.4-src/jquery/jquery'
+        }
+    };
+</script>
+<script src="/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+<script type="text/javascript">
+    require([
+        'dijit/registry',
+        "dojo/_base/window", "dojo/store/Memory",
+        "dijit/tree/ObjectStoreModel", "dijit/Tree",
+        "dojo/domReady!"
+    ], function(registry, win, Memory, ObjectStoreModel, Tree) {
+        window.registry = registry;
+    });
+</script>
+</head>
+<body class="claro">
+
+	<h1>Check Box</h1>
+	<hr />
+
+
+<!-- 	<div> -->
+<!-- 		<input type="checkbox" role="checkbox" -->
+<!-- 			style="-webkit-user-select: none;"> -->
+<!-- 	</div> -->
+
+	<div data-dojo-type="dijit/form/CheckBox" id="checkbox"></div>
+</body>
+</html>

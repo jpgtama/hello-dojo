@@ -65,12 +65,12 @@
 
 			<div>
 				<div data-dojo-type="app/widget/cdr/CustomTabContainer"
-					data-dojo-props="titleWidth: 60, titleEditable: true, switchCheck: false, closeCheck: false">
-					<div data-dojo-type="dijit/layout/ContentPane"
+					data-dojo-props="titleWidth: 60, titleEditable: true, switchCheck: true, closeCheck: true">
+					<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="onClose: function(){  return confirm('Close?') }"
 						title="Page 1dfksjfdsfjsdfhsdifhsdhdksdf" closable="true">Page
 						Content 1</div>
 					<div data-dojo-type="dijit/layout/ContentPane" title="Page 2"
-						closable="true">Page Content 2</div>
+						closable="true" data-dojo-props="onLeave: function(){return false;}">Page Content 2</div>
 					<div data-dojo-type="dijit/layout/ContentPane" title="Page 3"
 						closable="true">Page Content 3</div>
 					<div data-dojo-type="dijit/layout/ContentPane" title="Page 4"
@@ -148,6 +148,34 @@
 
 	<!-- <div data-dojo-type="app/widget/cdr/xxForm/XXForm"></div> -->
 
+	<div id="myevent">Hello</div>
+	<button onclick="triggerMyEvent()">My Event</button>
+
+<script type="text/javascript">
+
+myevent.addEventListener('bagayalu', function(e) {
+    console.log(e);
+});
+
+
+function triggerMyEvent(){
+    
+    var event = new CustomEvent('bagayalu', { 'detail': 'hello' });
+    
+    document.getElementById('myevent').dispatchEvent(event);
+}
+
+	
+</script>
+
+
+
+<form id="myform">
+
+		<input type="radio" name="choice" value="1">One<br/>
+<input type="radio" name="choice" value="2">Two<br/>
+<input type="radio" name="choice" value="3">Three<br/>
+</form>
 
 
 </body>

@@ -14,7 +14,7 @@
         isDebug : true,
         paths : {
             app : '/hello-dojo/js/appWidget/app',
-            js : '/hello-dojo/js/',
+            js : '/hello-dojo/js',
             jquery : '/dojo-release-1.10.4-src/jquery/jquery'
         }
     };
@@ -23,61 +23,705 @@
 
 <script type="text/javascript">
     require([
+             'dojo/aspect', 'dojo/query', 'dojo/_base/array', 'dojo/Stateful',
         'dijit/registry',
-        "dojo/_base/window", "dojo/store/Memory",
-        "dijit/tree/ObjectStoreModel", "dijit/Tree",
+        "dojo/_base/window", 'dojo/_base/lang', "dojo/store/Memory", 
+        "dijit/tree/ObjectStoreModel", "dijit/Tree", 'js/appWidget/app/widget/tree/Tree', 'dojo/store/Observable',  'dojo/_base/declare',
         "dojo/domReady!"
-    ], function(registry, win, Memory, ObjectStoreModel, Tree) {
+    ], function(aspect, query, arrayUtil, Stateful, registry, win, lang,  Memory, ObjectStoreModel, Tree, AppTree, Observable, declare) {
+        
+        
+        // data
+        var data = [
+                    {
+                        "name": "US Government",
+                        "id": "root"
+                    },
+                        {
+                            "name": "Congress",
+                            "id": "congress",
+                            "parent": "root"
+                        },
+                            {
+                                "name": "House of Representatives",
+                                "id": "house",
+                                "parent": "congress"
+                            },
+                            {
+                                "name": "Senate",
+                                "id": "senate",
+                                "parent": "congress"
+                            },
+                        {
+                            "name": "Executive",
+                            "id": "exec",
+                            "parent": "root"
+                        },
+                            {
+                                "name": "President",
+                                "id": "pres",
+                                "parent": "exec"
+                            },
+                            {
+                                "name": "Vice President",
+                                "id": "vice-pres",
+                                "parent": "exec"
+                            },
+                            {
+                                "name": "Secretary of State",
+                                "id": "state",
+                                "parent": "exec"
+                            },
+                            {
+                                "name": "Cabinet",
+                                "id": "cabinet",
+                                "parent": "exec"
+                            },
+                                {
+                                    "name": "National Security Council",
+                                    "id": "security",
+                                    "parent": "cabinet"
+                                },
+                                {
+                                    "name": "Council of Economic Advisers",
+                                    "id": "economic",
+                                    "parent": "cabinet"
+                                },
+                                {
+                                    "name": "Office of Management and Budget",
+                                    "id": "budget",
+                                    "parent": "cabinet"
+                                },
+                        {
+                            "name": "Judicial",
+                            "id": "judicial",
+                            "parent": "root"
+                        }
+                ];
+        
+        
+        
         window.registry = registry;
-        
         window.switchForm = true;
+        window.data = data;
+        window.arrayUtil = arrayUtil;
         
+		var FildterMemory = declare([Memory], {
+		    filter: null,
+		    
+		    
+		    
+		    constructor: function(options){
+				// summary:
+				//		Creates a memory object store.
+				// options: dojo/store/Memory
+				//		This provides any configuration information that will be mixed into the store.
+				//		This should generally include the data property to provide the starting set of data.
+				for(var i in options){
+					this[i] = options[i];
+				}
+
+				// original data
+				this.originalData = this.data;
+				
+				// find out leaf id
+				var parentIds = arrayUtil.map(this.originalData, function(obj){ return obj.parent; });
+				parentIds = arrayUtil.filter(parentIds, function(id){return id;});
+				
+				var idProperty = this.idProperty;
+				var leafIds = arrayUtil.filter(this.originalData, function(obj){ return parentIds.indexOf(obj[idProperty]) === -1; });
+				leafIds = arrayUtil.map(leafIds, function(obj){ return obj[idProperty]; });
+				
+				
+				// copy data
+				this.data = this.originalData.slice(0);
+				
+				// index data
+				this.setData(this.data || []);
+				
+				
+			},
+			
+			setFilter: function(filter){
+				    // find out filtered data, including parent
+				    var filteredData = this.queryEngine(filter)(this.originalData);
+
+				    if(filteredData.length === 0){
+				        return;
+				    }
+				    
+				    // parent id
+			    	var parentIds = this.getAllParentIds();
+			    
+				    // only leaf
+				    var idProperty = this.idProperty;
+				    filteredData = arrayUtil.filter(filteredData, function(obj){
+				        return parentIds.indexOf(obj[idProperty]) === -1;
+				    });
+			    
+				    // find out parent
+				    var parentData = {};
+				    for(var i=0;i<filteredData.length; i++){
+				        lang.mixin(parentData, this.getParentData(filteredData[i]));
+				    }
+			    
+				    // data to display = leaf + parent
+				    var dataDisplay = filteredData;
+				    for(var i in parentData){
+				        dataDisplay.push(parentData[i]);
+				    }
+			    
+				    var dataDisplayIds = arrayUtil.map(dataDisplay, function(obj){
+				        return obj[idProperty];
+				    });
+				    
+				    // find out elements need to be removed
+			    	var dataToRemove = arrayUtil.filter(this.originalData, function(obj){
+			    	    return dataDisplayIds.indexOf(obj[idProperty]) === -1;
+			    	});
+				    
+				    var dataToRemoveIds = arrayUtil.map(dataToRemove, function(obj){
+				        return obj[idProperty];
+				    });
+				    
+				    // remove elements
+			    	for(var i=0; i<dataToRemoveIds.length; i++){
+			    	    console.log('remove: ', dataToRemoveIds[i]);
+			    	    this.remove(dataToRemoveIds[i]);
+			    	}
+				    
+				    
+				    // put elements
+				    for(var i=0;i<dataDisplay.length; i++){
+				        var id = dataDisplay[i][idProperty];
+				        
+				        if(!this.get(id)){
+				            console.log('put: ', id);
+					        this.put(dataDisplay[i]);
+				        }
+				        
+				    }
+				    
+				    
+			},
+			
+			
+			getAllParentIds: function(){
+// 				// find out parent id
+// 				var parentIds = arrayUtil.map(this.originalData, function(obj){ return obj.parent; });
+// 				parentIds = arrayUtil.filter(parentIds, function(id){return id;});
+				
+// 				// find leaf ids
+// 				var idProperty = this.idProperty;
+// 				var leafIds = arrayUtil.filter(this.originalData, function(obj){ return parentIds.indexOf(obj[idProperty]) === -1; });
+// 				leafIds = arrayUtil.map(leafIds, function(obj){ return obj[idProperty]; });
+				
+// 				return leafIds;
+
+				var parentIds = [];
+
+				for(var i=0;i<this.originalData.length; i++){
+				    var d = this.originalData[i];
+				    if(d.parent && parentIds.indexOf(d.parent) === -1){
+				        parentIds.push(d.parent);			        
+				    }
+				}
+
+				return parentIds;
+
+			},
+			
+			getParentData : function(child){
+			    
+			    var parentData = {};
+			    
+		        var query = {};
+		        query[this.idProperty] = child.parent;
+				var p = this.queryEngine(query)(this.originalData);
+		        
+		        if(p && p.length > 0){
+		            p = p[0];
+			        parentData[p[this.idProperty]] = p;
+			        
+					if(p.parent){
+					    lang.mixin(parentData, this.getParentData(p));
+					}					        
+		        }
+		        
+// 		        var parentDataArray = [];
+		        
+// 		        for(var i in parentData){
+// 		            parentDataArray.push(parentData[i]);
+// 		        }
+		        
+		        return parentData;
+		    }
+			
+		});
         
-        // Create test store, adding the getChildren() method required by ObjectStoreModel
-        var myStore = new Memory({
-            data: [
-                { id: 'world', name:'The earth', type:'planet', population: '6 billion'},
-                { id: 'AF', name:'Africa', type:'continent', population:'900 million', area: '30,221,532 sq km',
-                        timezone: '-1 UTC to +4 UTC', parent: 'world'},
-                    { id: 'EG', name:'Egypt', type:'country', parent: 'AF' },
-                    { id: 'KE', name:'Kenya', type:'country', parent: 'AF' },
-                        { id: 'Nairobi', name:'Nairobi', type:'city', parent: 'KE' },
-                        { id: 'Mombasa', name:'Mombasa', type:'city', parent: 'KE' },
-                    { id: 'SD', name:'Sudan', type:'country', parent: 'AF' },
-                        { id: 'Khartoum', name:'Khartoum', type:'city', parent: 'SD' },
-                { id: 'AS', name:'Asia', type:'continent', parent: 'world' },
-                    { id: 'CN', name:'China', type:'country', parent: 'AS' },
-                    { id: 'IN', name:'India', type:'country', parent: 'AS' },
-                    { id: 'RU', name:'Russia', type:'country', parent: 'AS' },
-                    { id: 'MN', name:'Mongolia', type:'country', parent: 'AS' },
-                { id: 'OC', name:'Oceania', type:'continent', population:'21 million', parent: 'world'},
-                { id: 'EU', name:'Europe', type:'continent', parent: 'world' },
-                    { id: 'DE', name:'Germany', type:'country', parent: 'EU' },
-                    { id: 'FR', name:'France', type:'country', parent: 'EU' },
-                    { id: 'ES', name:'Spain', type:'country', parent: 'EU' },
-                    { id: 'IT', name:'Italy', type:'country', parent: 'EU' },
-                { id: 'NA', name:'North America', type:'continent', parent: 'world' },
-                { id: 'SA', name:'South America', type:'continent', parent: 'world' }
-            ],
+ 
+        // set up the store to get the tree data, plus define the method
+        // to query the children of a node
+        var governmentStore = new FildterMemory({
+            data: data,
             getChildren: function(object){
                 return this.query({parent: object.id});
             }
         });
 
-        // Create the model
-        var myModel = new ObjectStoreModel({
-            store: myStore,
-            query: {id: 'world'}
+        window.governmentStore = governmentStore;
+        
+        // To support dynamic data changes, including DnD,
+        // the store must support put(child, {parent: parent}).
+        // But dojo/store/Memory doesn't, so we have to implement it.
+        // Since our store is relational, that just amounts to setting child.parent
+        // to the parent's id.
+        aspect.around(governmentStore, "put", function(originalPut){
+            return function(obj, options){
+                if(options && options.parent){
+                    obj.parent = options.parent.id;
+                }
+                return originalPut.call(governmentStore, obj, options);
+            }
         });
 
-        // Create the Tree.
-        var tree = new Tree({
-            model: myModel
+        // give store Observable interface so Tree can track updates
+        var obStore = new Observable(governmentStore);
+
+        window.obStore = obStore;
+        
+        // set up the model, assigning governmentStore, and assigning method to identify leaf nodes of tree
+        var governmentModel = new ObjectStoreModel({
+            store: obStore,
+            query: {id: 'root'},
+            mayHaveChildren: function(item){
+                return this.store.query({parent: item.id }).length > 0;
+            }
         });
-        tree.placeAt('testTree');
-        tree.startup();
+
+        // set up the tree, assigning governmentModel;
+        var governmentTree = new AppTree({
+            model: governmentModel,
+            onOpenClick: true,
+            onLoad: function(){
+                //dom.byId('image').src = '../resources/images/root.jpg';
+            },
+            onClick: function(item){
+                //dom.byId('image').src = '../resources/images/'+item.id+'.jpg';
+
+            }
+        }, "testTree");
+        governmentTree.startup();
+        
+        
+        window.governmentTree = governmentTree;
+        window.query = query;
+        
+        
+        // update data
+        query("#add-new-child").on("click", function(){
+            // get the selected object from the tree
+            var selectedObject = governmentTree.get("selectedItems")[0];
+            if(!selectedObject){
+                return alert("No object selected");
+            }
+
+            // add a new child item
+            var chidlName = query("#childName")[0].value;
+            var childItem = {
+                name: chidlName,
+                id: Math.random()
+            };
+            obStore.put(childItem, {
+                overwrite: true,
+                parent: selectedObject
+            });
+        });
+        
+        
+        // observer
+        var res = obStore.query(function(obj){
+            return obj.name.indexOf('as') !== -1;
+        });
+        
+        
+        res.forEach(function(obj){
+            console.log(obj.name);
+        });
+        
+        res.observe(function(obj, removedFrom, insertedInto){
+            
+            console.log(obj.name, ' is inserted.');
+            
+            
+        }, true);
+        
+        //
+        
+//         var form = {id: "root", "name":"患者基本信息","pages":[{"name":"患者信息","sections":[{"name":"基本信息","columns":[{"fields":[{"type":"text","key":"patientName","label":"患者姓名","desc":"患者姓名","required":true,"hidden":false,"predefined":false,"defaultvalue":"","permission":"","maxlength":"100","groupby":""},{"type":"date","key":"birthDate","label":"出生日期","desc":"出生日期","required":false,"hidden":false,"predefined":false,"defaultvalue":"","permission":"","pattern":"yyyy/MM/dd","groupby":""},{"type":"text","key":"ethnic","label":"民族","desc":"民族","required":false,"hidden":false,"predefined":false,"defaultvalue":"","permission":"","maxlength":"20","groupby":""},{"type":"text","key":"mrn","label":"患者编号","desc":"患者编号","required":false,"hidden":false,"predefined":false,"defaultvalue":"","permission":"","maxlength":"50","groupby":""},{"type":"text","key":"socialSecurity","label":"社保号","desc":"社保号","required":false,"hidden":false,"predefined":false,"defaultvalue":"","permission":"","maxlength":"50","groupby":""},{"type":"text","key":"inpatientNo","label":"住院号","desc":"住院号","required":false,"hidden":false,"predefined":false,"defaultvalue":"","permission":"","maxlength":"50","groupby":""},{"type":"text","key":"allergies","label":"过敏史","desc":"过敏史","required":false,"hidden":false,"predefined":false,"defaultvalue":"","permission":"","maxlength":"100","groupby":""}]},{"fields":[{"type":"radio","key":"gender","label":"性别","desc":"性别","required":false,"hidden":false,"predefined":false,"defaultvalue":null,"permission":null,"groupby":null,"options":[{"label":"女","value":"0","predefined":true},{"label":"男","value":"1","predefined":true},{"label":"其他","value":"2","predefined":true},{"label":"未知","value":"9","predefined":true}]},{"type":"text","key":"patientAge","label":"年龄","desc":"年龄","required":false,"hidden":false,"predefined":true,"defaultvalue":"","permission":"","maxlength":"20","groupby":""},{"type":"radio","key":"maritalStatus","label":"婚姻状态","desc":"婚姻状态","required":false,"hidden":false,"predefined":true,"defaultvalue":null,"permission":null,"groupby":null,"options":[{"label":"未婚","value":"10","predefined":true},{"label":"已婚","value":"20","predefined":true},{"label":"初婚","value":"21","predefined":true},{"label":"再婚","value":"22","predefined":true},{"label":"复婚","value":"23","predefined":true},{"label":"丧偶","value":"30","predefined":true},{"label":"离婚","value":"40","predefined":true},{"label":"未说明的婚姻状况","value":"90","predefined":true}]},{"type":"text","key":"idCard","label":"身份证号","desc":"身份证号","required":false,"hidden":false,"predefined":false,"defaultvalue":"","permission":"","maxlength":"50","groupby":""},{"type":"text","key":"outpatientNo","label":"门诊号","desc":"门诊号","required":false,"hidden":false,"predefined":false,"defaultvalue":"","permission":"","maxlength":"50","groupby":""},{"type":"text","key":"empi","label":"EMPI","desc":"EMPI","required":false,"hidden":false,"predefined":false,"defaultvalue":"","permission":"","maxlength":"50","groupby":""},{"type":"radio","key":"isDeceased","label":"死亡状态","desc":"死亡状态","required":false,"hidden":false,"predefined":false,"defaultvalue":null,"permission":null,"groupby":null,"options":[{"label":"否","value":"0","predefined":true},{"label":"是","value":"1","predefined":true}]},{"type":"date","key":"deceasedTime","label":"死亡时间","desc":"死亡时间","required":false,"hidden":false,"predefined":false,"defaultvalue":"","permission":"","pattern":"yyyy/MM/dd","groupby":""}]}]}]}]};
+        
+        
+        
+//         // set up the store to get the tree data
+//         var governmentStore = new Memory({
+//             idProperty: 'name',
+//             data: [ form ],
+//             getChildren: function(object){
+//                 return object.pages || object.sections || object.columns || object.fileds || [];
+//             }
+//         });
+
+//         // set up the model, assigning governmentStore, and assigning method to identify leaf nodes of tree
+//         var governmentModel = new ObjectStoreModel({
+//             store: governmentStore,
+//             query: {id: 'root'},
+//             mayHaveChildren: function(item){
+//                 return true;
+//             }
+//         });
+
+//         // set up the tree, assigning governmentModel;
+//         var governmentTree = new Tree({
+//             model: governmentModel,
+//             onOpenClick: true,
+//             onLoad: function(){
+// //                 dom.byId('image').src = '../resources/images/root.jpg';
+//             },
+//             onClick: function(item){
+// //                 dom.byId('image').src = '../resources/images/'+item.id+'.jpg';
+
+//             }
+//         }, "testTree");
+//         governmentTree.startup();
+        
+        
         
     });
+</script>
+
+
+
+<script type="text/javascript">
+var states = [
+              {name:"Alabama", state:"AL"},
+              {name:"Alaska", state:"AK"},
+              {name:"American Samoa", state:"AS"},
+              {name:"Arizona", state:"AZ"},
+              {name:"Arkansas", state:"AR"},
+              {name:"Armed Forces Europe", state:"AE"},
+              {name:"Armed Forces Pacific", state:"AP"},
+              {name:"Armed Forces the Americas", state:"AA"},
+              {name:"California", state:"CA"},
+              {name:"Colorado", state:"CO"},
+              {name:"Connecticut", state:"CT"},
+              {name:"Delaware", state:"DE"},
+              {name:"District of Columbia", state:"DC"},
+              {name:"Federated States of Micronesia", state:"FM"},
+              {name:"Florida", state:"FL"},
+              {name:"Georgia", state:"GA"},
+              {name:"Guam", state:"GU"},
+              {name:"Hawaii", state:"HI"},
+              {name:"Idaho", state:"ID"},
+              {name:"Illinois", state:"IL"},
+              {name:"Indiana", state:"IN"},
+              {name:"Iowa", state:"IA"},
+              {name:"Kansas", state:"KS"},
+              {name:"Kentucky", state:"KY"},
+              {name:"Louisiana", state:"LA"},
+              {name:"Maine", state:"ME"},
+              {name:"Marshall Islands", state:"MH"},
+              {name:"Maryland", state:"MD"},
+              {name:"Massachusetts", state:"MA"},
+              {name:"Michigan", state:"MI"},
+              {name:"Minnesota", state:"MN"},
+              {name:"Mississippi", state:"MS"},
+              {name:"Missouri", state:"MO"},
+              {name:"Montana", state:"MT"},
+              {name:"Nebraska", state:"NE"},
+              {name:"Nevada", state:"NV"},
+              {name:"New Hampshire", state:"NH"},
+              {name:"New Jersey", state:"NJ"},
+              {name:"New Mexico", state:"NM"},
+              {name:"New York", state:"NY"},
+              {name:"North Carolina", state:"NC"},
+              {name:"North Dakota", state:"ND"},
+              {name:"Northern Mariana Islands", state:"MP"},
+              {name:"Ohio", state:"OH"},
+              {name:"Oklahoma", state:"OK"},
+              {name:"Oregon", state:"OR"},
+              {name:"Pennsylvania", state:"PA"},
+              {name:"Puerto Rico", state:"PR"},
+              {name:"Rhode Island", state:"RI"},
+              {name:"South Carolina", state:"SC"},
+              {name:"South Dakota", state:"SD"},
+              {name:"Tennessee", state:"TN"},
+              {name:"Texas", state:"TX"},
+              {name:"Utah", state:"UT"},
+              {name:"Vermont", state:"VT"},
+              {name: "Virgin Islands, U.S.",state:"VI"},
+              {name:"Virginia", state:"VA"},
+              {name:"Washington", state:"WA"},
+              {name:"West Virginia", state:"WV"},
+              {name:"Wisconsin", state:"WI"},
+              {name:"Wyoming", state:"WY"}
+          ];
+
+          var cities =  [
+              { name:"Albany", state:"NY" },
+              { name:"Albuquerque", state:"NM" },
+              { name:"Alexandria", state:"VA" },
+              { name:"Amarillo", state:"TX" },
+              { name:"Amherst", state:"MA" },
+              { name:"Anaheim", state:"CA" },
+              { name:"Anchorage", state:"AK" },
+              { name:"Ann Arbor", state:"MI" },
+              { name:"Annapolis", state:"MD" },
+              { name:"Ashland", state:"OR" },
+              { name:"Aspen", state:"CO" },
+              { name:"Athens", state:"GA" },
+              { name:"Atlanta", state:"GA" },
+              { name:"Auburn", state:"AL" },
+              { name:"Augusta", state:"GA" },
+              { name:"Austin", state:"TX" },
+              { name:"Baltimore", state:"MD" },
+              { name:"Bangor", state:"ME" },
+              { name:"Baton Rouge", state:"LA" },
+              { name:"Bethlehem", state:"PA" },
+              { name:"Beverly Hills", state:"CA" },
+              { name:"Billings", state:"MT" },
+              { name:"Biloxi", state:"MS" },
+              { name:"Birmingham", state:"AL" },
+              { name:"Bloomington", state:"IN" },
+              { name:"Boca Raton", state:"FL" },
+              { name:"Boise", state:"ID" },
+              { name:"Boston", state:"MA" },
+              { name:"Boulder", state:"CO" },
+              { name:"Branson", state:"MO" },
+              { name:"Buffalo", state:"NY" },
+              { name:"Burbank", state:"CA" },
+              { name:"Burlington", state:"VT" },
+              { name:"Butte", state:"MT" },
+              { name:"Cambridge", state:"MA" },
+              { name:"Carmel", state:"CA" },
+              { name:"Cedar Rapids", state:"IA" },
+              { name:"Champaign-Urbana", state:"IL" },
+              { name:"Chapel Hill", state:"NC" },
+              { name:"Charleston", state:"SC" },
+              { name:"Charleston", state:"WV" },
+              { name:"Charlotte", state:"NC" },
+              { name:"Chattanooga", state:"TN" },
+              { name:"Chicago", state:"IL" },
+              { name:"Cincinnati", state:"OH" },
+              { name:"Clearwater Beach", state:"FL" },
+              { name:"Cleveland", state:"OH" },
+              { name:"Cody", state:"WY" },
+              { name:"College Station", state:"TX" },
+              { name:"Colorado Springs", state:"CO" },
+              { name:"Columbia", state:"SC" },
+              { name:"Columbus", state:"GA" },
+              { name:"Columbus", state:"OH" },
+              { name:"Concord", state:"NH" },
+              { name:"Corpus Christi", state:"TX" },
+              { name:"Dallas", state:"TX" },
+              { name:"Dayton", state:"OH" },
+              { name:"Daytona Beach", state:"FL" },
+              { name:"Denver", state:"CO" },
+              { name:"Des Moines", state:"IA" },
+              { name:"Destin", state:"FL" },
+              { name:"Detroit", state:"MI" },
+              { name:"Dover", state:"DE" },
+              { name:"Duluth", state:"MN" },
+              { name:"Durham", state:"NC" },
+              { name:"El Paso", state:"TX" },
+              { name:"Erie", state:"PA" },
+              { name:"Eugene", state:"OR" },
+              { name:"Evansville", state:"IN" },
+              { name:"Fairbanks", state:"AK" },
+              { name:"Fargo", state:"ND" },
+              { name:"Fayetteville", state:"NC" },
+              { name:"Flagstaff", state:"AZ" },
+              { name:"Fort Lauderdale", state:"FL" },
+              { name:"Fort Wayne", state:"IN" },
+              { name:"Fresno", state:"CA" },
+              { name:"Ft. Worth", state:"TX" },
+              { name:"Galveston", state:"TX" },
+              { name:"Gatlinburg", state:"TN" },
+              { name:"Grand Forks", state:"ND" },
+              { name:"Greensboro", state:"NC" },
+              { name:"Greenville", state:"SC" },
+              { name:"Gulf Shores", state:"AL" },
+              { name:"Hanover", state:"NH" },
+              { name:"Harrisburg", state:"PA" },
+              { name:"Hartford", state:"CT" },
+              { name:"Hershey", state:"PA" },
+              { name:"Hollywood", state:"CA" },
+              { name:"Hot Springs", state:"AR" },
+              { name:"Houston", state:"TX" },
+              { name:"Huntsville", state:"AL" },
+              { name:"Indianapolis", state:"IN" },
+              { name:"Iowa City", state:"IA" },
+              { name:"Ithaca", state:"NY" },
+              { name:"Jackson", state:"MS" },
+              { name:"Jacksonville", state:"FL" },
+              { name:"Juneau", state:"AK" },
+              { name:"Kalamazoo", state:"MI" },
+              { name:"Kansas City", state:"KS" },
+              { name:"Kansas City", state:"MO" },
+              { name:"Kennebunkport", state:"ME" },
+              { name:"Key West", state:"FL" },
+              { name:"Knoxville", state:"TN" },
+              { name:"Kodiak", state:"AK" },
+              { name:"Laguna Beach", state:"CA" },
+              { name:"Lansing", state:"MI" },
+              { name:"Las Cruces", state:"NM" },
+              { name:"Las Vegas", state:"NV" },
+              { name:"Lexington", state:"KY" },
+              { name:"Lincoln", state:"NE" },
+              { name:"Little Rock", state:"AR" },
+              { name:"Los Alamos", state:"NM" },
+              { name:"Los Angeles", state:"CA" },
+              { name:"Louisville", state:"KY" },
+              { name:"Lynchburg", state:"VA" },
+              { name:"Macon", state:"GA" },
+              { name:"Madison", state:"WI" },
+              { name:"Manchester", state:"NH" },
+              { name:"Mankato", state:"MN" },
+              { name:"Memphis", state:"TN" },
+              { name:"Miami", state:"FL" },
+              { name:"Milwaukee", state:"WI" },
+              { name:"Minneapolis", state:"MN" },
+              { name:"Mobile", state:"AL" },
+              { name:"Moline", state:"IL" },
+              { name:"Monterey", state:"CA" },
+              { name:"Montgomery", state:"AL" },
+              { name:"Montpelier", state:"VT" },
+              { name:"Morgantown", state:"WV" },
+              { name:"Myrtle Beach", state:"SC" },
+              { name:"Naples", state:"FL" },
+              { name:"Nashville", state:"TN" },
+              { name:"New Haven", state:"CT" },
+              { name:"New Orleans", state:"LA" },
+              { name:"New York City", state:"NY" },
+              { name:"Newark", state:"NJ" },
+              { name:"Newport Beach", state:"CA" },
+              { name:"Niagara Falls", state:"NY" },
+              { name:"Norfolk", state:"VA" },
+              { name:"Oakland", state:"CA" },
+              { name:"Ogden", state:"UT" },
+              { name:"Oklahoma City", state:"OK" },
+              { name:"Olympia", state:"WA" },
+              { name:"Omaha", state:"NE" },
+              { name:"Orlando", state:"FL" },
+              { name:"Palm Beach", state:"FL" },
+              { name:"Palm Springs", state:"CA" },
+              { name:"Palo Alto", state:"CA" },
+              { name:"Panama City Beach", state:"FL" },
+              { name:"Pasadena", state:"CA" },
+              { name:"Pensacola", state:"FL" },
+              { name:"Peoria", state:"IL" },
+              { name:"Philadelphia", state:"PA" },
+              { name:"Phoenix", state:"AZ" },
+              { name:"Pierre", state:"SD" },
+              { name:"Pigeon Forge", state:"TN" },
+              { name:"Pittsburgh", state:"PA" },
+              { name:"Pocatello", state:"ID" },
+              { name:"Portland", state:"ME" },
+              { name:"Portland", state:"OR" },
+              { name:"Portsouth", state:"NH" },
+              { name:"Princeton", state:"NJ" },
+              { name:"Providence", state:"RI" },
+              { name:"Raleigh", state:"NC" },
+              { name:"Redondo Beach", state:"CA" },
+              { name:"Reno", state:"NV" },
+              { name:"Richmond", state:"VA" },
+              { name:"Rochester", state:"MN" },
+              { name:"Rochester", state:"NY" },
+              { name:"Rockford", state:"IL" },
+              { name:"Sacramento", state:"CA" },
+              { name:"Salem", state:"OR" },
+              { name:"Salt Lake City", state:"UT" },
+              { name:"San Antonio", state:"TX" },
+              { name:"San Diego", state:"CA" },
+              { name:"San Francisco", state:"CA" },
+              { name:"San Jose", state:"CA" },
+              { name:"Santa Barbara", state:"CA" },
+              { name:"Santa Cruz", state:"CA" },
+              { name:"Santa Fe", state:"NM" },
+              { name:"Santa Monica", state:"CA" },
+              { name:"Sarasota", state:"FL" },
+              { name:"Savannah", state:"GA" },
+              { name:"Scottsdale", state:"AZ" },
+              { name:"Scranton", state:"PA" },
+              { name:"Seattle", state:"WA" },
+              { name:"Shreveport", state:"LA" },
+              { name:"Sioux Falls", state:"SD" },
+              { name:"South Bend", state:"IN" },
+              { name:"Spokane", state:"WA" },
+              { name:"Springfield", state:"MA" },
+              { name:"St. Louis", state:"MO" },
+              { name:"St. Paul", state:"MN" },
+              { name:"St. Petersburg", state:"FL" },
+              { name:"State College", state:"PA" },
+              { name:"Sun Valley", state:"ID" },
+              { name:"Syracuse", state:"NY" },
+              { name:"Tacoma", state:"WA" },
+              { name:"Tallahassee", state:"FL" },
+              { name:"Tampa", state:"FL" },
+              { name:"Telluride", state:"CO" },
+              { name:"Tempe", state:"AZ" },
+              { name:"Terre Haute", state:"IN" },
+              { name:"Toledo", state:"OH" },
+              { name:"Topeka", state:"KS" },
+              { name:"Traverse City", state:"MI" },
+              { name:"Trenton", state:"NJ" },
+              { name:"Tucson", state:"AZ" },
+              { name:"Tulsa", state:"OK" },
+              { name:"Vail", state:"CO" },
+              { name:"Virginia Beach", state:"VA" },
+              { name:"Washington", state:"DC" },
+              { name:"Wheeling", state:"WV" },
+              { name:"Wichita", state:"KS" },
+              { name:"Williamsburg", state:"VA" },
+              { name:"Wilmington", state:"DE" },
+              { name:"Winston-Salem", state:"NC" },
+              { name:"Worcester", state:"MA" },
+              { name:"Yellowstone", state:"WY" },
+              { name:"York", state:"PA" }
+          ];
+
+//           require([
+//               "dojo/store/Memory",
+//               "dijit/form/ComboBox", "dijit/form/FilteringSelect",
+//               "dojo/domReady!"
+//           ], function(Memory, ComboBox, FilteringSelect){
+
+//               new dijit.form.ComboBox({
+//                   hasDownArrow: false,
+//                   id: "city",
+//                   store: new Memory({ data: cities }),
+//                   autoComplete: true,
+//                   query: {state: /.*/},
+//                   style: "width: 150px;",
+//                   required: true,
+//                   searchAttr: "name",
+//                   onChange: function(city){
+//                       console.log("combobox onchange ", city, this.item);
+//                       dijit.byId('state').set('value', this.item ? this.item.state : null);
+//                   }
+//               }, "city").startup();
+
+//               new dijit.form.FilteringSelect({
+//                   id: "state",
+//                   store: new Memory({ idProperty: "state", data: states }),
+//                   autoComplete: true,
+//                   style: "width: 150px;",
+//                   onChange: function(state){
+//                       dijit.byId('city').query.state = this.item.state || /.*/;
+//                   }
+//               }, "state").startup();
+//           });
+
+
 </script>
 
 
@@ -89,6 +733,14 @@
 <hr/>
 
 <div id="testTree"></div>
+
+
+<input id="childName" type="text" value="New Child"/><button id="add-new-child">Add Child</button>
+
+
+<div id='city'></div>
+<div id='state'></div>
+
 
 </body>
 </html>
