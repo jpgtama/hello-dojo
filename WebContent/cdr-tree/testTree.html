@@ -119,7 +119,7 @@
         window.data = data;
         window.arrayUtil = arrayUtil;
         
-		var FildterMemory = declare([Memory], {
+		var FilterMemory = declare([Memory], {
 		    filter: null,
 		    
 		    
@@ -135,7 +135,7 @@
 				}
 
 				// original data
-				this.originalData = this.data;
+				this.originalData = this.data.slice(0);
 				
 				// find out leaf id
 				var parentIds = arrayUtil.map(this.originalData, function(obj){ return obj.parent; });
@@ -147,7 +147,7 @@
 				
 				
 				// copy data
-				this.data = this.originalData.slice(0);
+				// this.data = this.originalData.slice(0);
 				
 				// index data
 				this.setData(this.data || []);
@@ -195,62 +195,62 @@
 			},
 		
 			// only for console query result
-			put: function(object, options){
-				// summary:
-				//		Stores an object
-				// object: Object
-				//		The object to store.
-				// options: dojo/store/api/Store.PutDirectives?
-				//		Additional metadata for storing the data.  Includes an "id"
-				//		property if a specific id is to be used.
-				// returns: Number
-				var data = this.data,
-					index = this.index,
-					idProperty = this.idProperty;
-				var id = object[idProperty] = (options && "id" in options) ? options.id : idProperty in object ? object[idProperty] : Math.random();
-				if(id in index){
-					// object exists
-					if(options && options.overwrite === false){
-						throw new Error("Object already exists");
-					}
-					// replace the entry in data
-					data[index[id]] = object;
-				}else{
-					// add the new object
-					index[id] = data.push(object) - 1;
-				}
+// 			put: function(object, options){
+// 				// summary:
+// 				//		Stores an object
+// 				// object: Object
+// 				//		The object to store.
+// 				// options: dojo/store/api/Store.PutDirectives?
+// 				//		Additional metadata for storing the data.  Includes an "id"
+// 				//		property if a specific id is to be used.
+// 				// returns: Number
+// 				var data = this.data,
+// 					index = this.index,
+// 					idProperty = this.idProperty;
+// 				var id = object[idProperty] = (options && "id" in options) ? options.id : idProperty in object ? object[idProperty] : Math.random();
+// 				if(id in index){
+// 					// object exists
+// 					if(options && options.overwrite === false){
+// 						throw new Error("Object already exists");
+// 					}
+// 					// replace the entry in data
+// 					data[index[id]] = object;
+// 				}else{
+// 					// add the new object
+// 					index[id] = data.push(object) - 1;
+// 				}
 				
-				// sort data
-				this.setData(this.data);
+// 				// sort data
+// 				this.setData(this.data);
 				
-				return id;
-			},
+// 				return id;
+// 			},
 			
 			// set data, with sorting
-			setData: function(data){
-				// summary:
-				//		Sets the given data as the source for this store, and indexes it
-				// data: Object[]
-				//		An array of objects to use as the source of data.
-				if(data.items){
-					// just for convenience with the data format IFRS expects
-					this.idProperty = data.identifier || this.idProperty;
-					data = this.data = data.items;
-				}else{
-					this.data = data;
-				}
+// 			setData: function(data){
+// 				// summary:
+// 				//		Sets the given data as the source for this store, and indexes it
+// 				// data: Object[]
+// 				//		An array of objects to use as the source of data.
+// 				if(data.items){
+// 					// just for convenience with the data format IFRS expects
+// 					this.idProperty = data.identifier || this.idProperty;
+// 					data = this.data = data.items;
+// 				}else{
+// 					this.data = data;
+// 				}
 			
-				// sort
-				if(this.order){
-					this.data.sort(this.order);
-				}
+// 				// sort
+// 				if(this.order){
+// 					this.data.sort(this.order);
+// 				}
 			
-				// index 
-				this.index = {};
-				for(var i = 0, l = data.length; i < l; i++){
-					this.index[data[i][this.idProperty]] = i;
-				}
-			},
+// 				// index 
+// 				this.index = {};
+// 				for(var i = 0, l = data.length; i < l; i++){
+// 					this.index[data[i][this.idProperty]] = i;
+// 				}
+// 			},
 			
 			// filter data
 			setFilter: function(filter){
@@ -297,7 +297,6 @@
 			    	    this.remove(dataToRemoveIds[i]);
 			    	}
 				    
-				    
 				    // put elements
 				    for(var i=0;i<dataDisplay.length; i++){
 				        var id = dataDisplay[i][idProperty];
@@ -306,16 +305,13 @@
 				            console.log('put: ', id);
 					        this.put(dataDisplay[i]);
 				        }
-				        
 				    }
-				    
-				    
 			},
 			
 			// order tree node
-			order: function(a, b){
-			    return a.orderIndex - b.orderIndex;
-			},
+// 			order: function(a, b){
+// 			    return a.orderIndex - b.orderIndex;
+// 			},
 			
 			// check if this object has children
 			isThereChildren: function(obj){
@@ -361,10 +357,10 @@
  
         // set up the store to get the tree data, plus define the method
         // to query the children of a node
-        var governmentStore = new FildterMemory({
+        var governmentStore = new FilterMemory({
             data: data,
             getChildren: function(object){
-                return this.query({parent: object.id});
+                return this.query({parent: object.id}, {sort: [{attribute:"orderIndex", descending: false}]});
             }
         });
 
