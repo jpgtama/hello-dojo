@@ -64,29 +64,10 @@ define([
         dndController : _dndSelector,
 
         /**
-         * Override
-         */
-        postMixInProperties: function(){
-            this.inherited(arguments);
-            
-            this.rawStore = this.model.store;
-            
-        },
-        
-        /**
          * override
          */
         postCreate : function() {
             this.inherited(arguments);
-            
-            
-            // keep original store
-            this.originalStore = this.model.store;
-            
-            // new store
-            var newData = this.originalStore.data.slice(0);
-            var newStore = new Observable(new Memory({data: newData}));
-            
         },
 
         /**
@@ -240,6 +221,30 @@ define([
          */
         rmoveDisabledCls : function(node) {
             domClass.remove(node.rowNode, 'disabledNode')
+        },
+        
+        /**
+         * reload the tree.
+         */
+        reload: function() {
+            // destroy all tree node
+            if(this.rootNode){
+                this.rootNode.destroyRecursive();
+            }
+            
+            // remove root in model
+            if(this.model.root){
+                this.model.root = null;
+            }
+            
+            // remove childrenCache
+            this.model.childrenCache = {};
+            
+            // clear item nodes map
+            this._itemNodesMap = {}
+            
+            // reload
+            this._load();
         }
 
     });
