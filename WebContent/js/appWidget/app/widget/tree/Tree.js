@@ -34,7 +34,11 @@ define([
     var Tree = declare('app.registry.widget.tree.Tree', [
         dijitTree
     ], {
+        
+        showRoot: false,
 
+        autoExpand: true,
+        
         _nodePixelIndent : 38,
         /**
          * 叶子节点disabled标识符

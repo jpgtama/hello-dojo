@@ -20,27 +20,145 @@
     };
 </script>
 <script src="/server-js-lib/dojo/dojo.js"></script>
+
+
+<style type="text/css">
+.chooseFields {
+	display: flex;
+}
+
+.chooseFields .tree {
+	flex: 3;
+}
+
+.chooseFields .arrow {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.chooseFields .list {
+	flex: 3;
+}
+</style>
+
 </head>
-<body  class="claro">
+<body class="claro">
 
-<h1>Test Tree</h1>
-<hr/>
+	<h1>Test Tree</h1>
+	<hr />
 
-<div class="tree">
-	<input id="searchInput" type="text" placeholder="search"  value=""/><button id="searchInputBtn">Search</button>
-	<div id="testTree"></div>
-	<script type="text/javascript" src="tree.js"></script>
-</div>
+	<div class="chooseFields">
 
 
-<hr/>
+		<div class="tree">
+			<input id="searchInput" type="text" placeholder="search" value="" />
+			<div id="testTree"></div>
+			<script type="text/javascript" src="tree.js"></script>
+		</div>
 
-<div class="combobox">
-	<div id='city'></div>
-	<div id='state'></div>
-	<script type="text/javascript" src="combobox.js"></script>
-</div>
+		<div class="arrow">
+			<button>&larr;</button>
+			<button>&rarr;</button>
+		
+		</div>
 
+		<div class="list"></div>
+
+
+
+	</div>
+
+
+	<hr />
+
+	<div class="combobox">
+		<div id='city'></div>
+		<div id='state'></div>
+		<script type="text/javascript" src="combobox.js"></script>
+	</div>
+
+
+	<hr/>
+	
+	<div id="select">
+		<p>select</p>
+	
+		<div id="target"></div>
+	
+		<script type="text/javascript">
+		require(["dijit/form/Select",
+		         "dojo/data/ObjectStore",
+		         "dojo/store/Memory",
+		         'dojo/store/Observable',
+		         "dojo/domReady!"
+		       ], function(Select, ObjectStore, Memory, Observable){
+
+		         var store = new Memory({
+		           data: [
+		             { id: "foo", label: "Foo" },
+		             { id: "bar", label: "Bar" }
+		           ]
+		         });
+
+		         var selectObStore = new Observable(store);
+		         
+		         window.selectObStore = selectObStore;
+		         
+		         var os = new ObjectStore({ objectStore: selectObStore });
+
+		         var s = new Select({
+		           store: os
+		         }, "target");
+		         s.startup();
+
+		         s.on("change", function(){
+		             console.log("my value: ", this.get("value"))
+		         })
+		       })
+			
+		</script>
+	</div>
+	
+	<hr/>
+	
+	
+	<div class="multiSelect">
+		<p>Multi Select</p>
+		
+		<select id="dynamic"></select>
+		<p><button id="progbutton" type="button">Get value</button></p>
+
+		<script type="text/javascript">
+		require([
+		         "dijit/form/MultiSelect", "dijit/form/Button",
+		         "dojo/dom", "dojo/_base/window", "dojo/domReady!"
+		     ], function(MultiSelect, Button, dom, win){
+
+		         var sel = dom.byId('dynamic');
+		         var n = 0;
+		         for(var i in dijit){
+		             var c = win.doc.createElement('option');
+		             c.innerHTML = i;
+		             c.value = n++;
+		             sel.appendChild(c);
+		         }
+		         var myMultiSelect = new MultiSelect({ name: 'dynamic' }, sel);
+		         
+		         myMultiSelect.startup();
+
+		         new Button({
+		             onClick: function(){
+		                 alert(myMultiSelect.get('value'));
+		             }
+		         }, "progbutton").startup();
+		     });
+		
+		</script>
+	</div>
+	
 
 </body>
 </html>
