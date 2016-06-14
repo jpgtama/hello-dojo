@@ -103,46 +103,15 @@ require([
     window.data = data;
     window.arrayUtil = arrayUtil;
 
-    // set up the store to get the tree data, plus define the method
-    // to query the children of a node
-    var governmentStore = new FilterMemory({
-        data : data,
-        getChildren : function(object) {
-            return this.query({
-                parent : object.id
-            }, {
-                sort : [
-                    {
-                        attribute : "orderIndex",
-                        descending : false
-                    }
-                ]
-            });
-        }
-    });
-
-    window.governmentStore = governmentStore;
-
-    // give store Observable interface so Tree can track updates
-    var obStore = new Observable(governmentStore);
-
-    window.obStore = obStore;
-
-    // set up the model, assigning governmentStore, and assigning method to
-    // identify leaf nodes of tree
-    var governmentModel = new ObjectStoreModel({
-        store : obStore,
-        query : {
-            id : 'root'
-        },
-        mayHaveChildren : function(item) {
-            return this.store.isThereChildren(item);
-        }
-    });
 
     // set up the tree, assigning governmentModel;
     var governmentTree = new AppTree({
-        model : governmentModel,
+//        model : governmentModel,
+        data: data,
+        sortOrder: 'desc',
+        searchAttr: 'name',
+        queryExpr: '${0}*',
+        ignoreCase: false,
         onOpenClick : true,
         onLoad : function() {
             // dom.byId('image').src = '../resources/images/root.jpg';
@@ -162,7 +131,7 @@ require([
         // get search
         var search = query("#searchInput")[0].value;
        
-        obStore.setFilter(search);
+        governmentTree.setFilter(search);
         
     });
 

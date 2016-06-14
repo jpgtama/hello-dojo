@@ -1,0 +1,29 @@
+<div class="templateDialog">
+	<style type="text/css">
+@import "app/research/widget/dialog/style/template-dialog.css";
+</style>
+	<div>
+		<!-- header -->
+		<div style="height: 30px; margin: 28px 28px 0px 28px;">
+			<div style="display: table; table-layout: fixed; width: 100%;">
+				<div style="display: table-row;">
+					<div style="display: table-cell; text-align: left;">
+						<label data-dojo-attach-point="subTitleNode" data-dojo-type="app/widget/Label" class="subtitle"
+							data-dojo-props="value:at(this,'title')"></label>
+					</div>
+					<div style="display: table-cell; text-align: right;">
+						<button data-dojo-attach-point="cancelNode" data-dojo-type="app/widget/button/standard/StandardButton"
+							data-dojo-props="uiType: 'gray', label: 'cancel'" data-dojo-attach-event="onClick:_cancelAction"
+							style="margin-right: 20px;"></button>
+						<button data-dojo-attach-point="submitNode" data-dojo-type="app/widget/button/standard/StandardButton"
+							data-dojo-props="uiType: 'blue', label: 'save'" data-dojo-attach-event="onClick:_submitAction"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="overflow: auto; height: 537px;">
+			<div data-dojo-type="dijit/layout/ContentPane" data-dojo-attach-point="contentNode">${!template}</div>
+		</div>
+
+	</div>
+</div>

@@ -78,6 +78,8 @@ define([
          * Convert given text to search RegExp.
          */
         _convertToRegExp : function(text) {
+            // replace queryExpr with user input & escape special char: \, *, ?
+            // -> \\, \*, \?
             var qs = string.substitute(this.queryExpr, [
                 text.replace(/([\\\*\?])/g, "\\$1")
             ]);

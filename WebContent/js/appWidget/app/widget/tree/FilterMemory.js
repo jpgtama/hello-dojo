@@ -1,5 +1,5 @@
 define([
-    './_WidgetSearchMixin',
+    'app/widget/_WidgetSearchMixin',
     'dojo/string',
     'dojo/_base/array',
     'dojo/_base/lang',
@@ -8,7 +8,7 @@ define([
     'dojo/_base/declare',
 ], function(_WidgetSearchMixin, string, arrayUtil, lang, Memory, QueryResults, declare) {
 
-    var FM = declare('app.registry.widget.tree.Tree.FilterMemory', [
+    var FM = declare('app.widget.tree.FilterMemory', [
         Memory,
         _WidgetSearchMixin
     ], {
