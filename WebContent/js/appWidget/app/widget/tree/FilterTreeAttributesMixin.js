@@ -21,30 +21,23 @@
 define([
     'dojo/_base/declare'
 ], function(declare) {
+    // this class provide a few default attributes
     return declare('app.widget.tree.FilterTreeAttributesMixin', null, {
 
+        /**
+         * id property
+         */
         idProperty : 'id',
 
+        /**
+         * root id
+         */
+        rootId: 'root',
+        
         /**
          * this is the data array
          */
         data : null,
-
-        /**
-         * queryExpr: String This specifies what query is sent to the data
-         * store, based on what the user has typed. Changing this expression
-         * will modify whether the results are only exact matches, a "starting
-         * with" match, etc. `${0}` will be substituted for the user text. `*`
-         * is used for wildcards. `${0}*` means "starts with", `*${0}*` means
-         * "contains", `${0}` means "is"
-         */
-        queryExpr : "*${0}*",
-
-        /**
-         * ignoreCase: Boolean Set true if the query should ignore case when
-         * matching possible items
-         */
-        ignoreCase : true,
 
         /**
          * searchAttr: String Search for items in the data store where this
@@ -52,8 +45,14 @@ define([
          */
         searchAttr : "name",
 
+        /**
+         * sort attribute
+         */
         sortAttribute : 'orderIndex',
 
+        /**
+         * sort order
+         */
         sortOrder : 'asc'
 
     });

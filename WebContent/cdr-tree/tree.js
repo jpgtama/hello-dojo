@@ -98,6 +98,13 @@ require([
         }
     ];
 
+    
+    
+    window.firstStore = new Memory({data: data});
+    window.secondStore = lang.clone(window.firstStore);
+    
+    
+    
     window.registry = registry;
     window.switchForm = true;
     window.data = data;
@@ -107,19 +114,12 @@ require([
     // set up the tree, assigning governmentModel;
     var governmentTree = new AppTree({
 //        model : governmentModel,
-        data: data,
+//        originalStore: store,
+        originalData: data,
         sortOrder: 'desc',
         searchAttr: 'name',
-        queryExpr: '${0}*',
-        ignoreCase: false,
-        onOpenClick : true,
-        onLoad : function() {
-            // dom.byId('image').src = '../resources/images/root.jpg';
-        },
-        onClick : function(item) {
-            // dom.byId('image').src = '../resources/images/'+item.id+'.jpg';
-
-        }
+        queryExpr: '*${0}*',
+        ignoreCase: true
     }, "testTree");
     governmentTree.startup();
 
