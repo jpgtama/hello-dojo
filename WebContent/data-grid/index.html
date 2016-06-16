@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>data-grid</title>
+
+    <script type="text/javascript">
+        dojoConfig = {
+            baseUrl: 'http://localhost:9090/dojo-release-1.10.4-src/dojo/',
+            parseOnLoad: true,
+            async: false,
+            cacheBust: true,
+            isDebug: true,
+            packages: [
+                {
+                    name: 'dgrid',
+                    location: '../dgrid'
+                },
+                {
+                    name: 'dstore',
+                    location: '../dstore'
+                },
+                {
+                    name: 'put-selector',
+                    location: '../put-selector'
+                },
+                {
+                    name: 'xstyle',
+                    location: '../xstyle'
+                }
+            ]
+        };
+    </script>
+    <script src="http://localhost:9090/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+
+</head>
+<body>
+
+<pre>
+    There are many ways to implement a data grid.
+</pre>
+
+
+<ol>
+    <li>
+        dgrid - which is based on Dojo. So users have to include Dojo in their project. In this proejct, Dojo is included like this:
+        <pre class="code">
+            &lt;script type="text/javascript"&gt;
+                dojoConfig = {
+                    baseUrl: 'http://localhost:9090/dojo-release-1.10.4-src/dojo/',
+                    parseOnLoad: true,
+                    async: false,
+                    cacheBust: true,
+                    isDebug: true,
+                    packages: [
+                        {
+                            name: 'dgrid',
+                            location: '../dgrid'
+                        },
+                        {
+                            name: 'dstore',
+                            location: '../dstore'
+                        },
+                        {
+                            name: 'put-selector',
+                            location: '../put-selector'
+                        },
+                        {
+                            name: 'xstyle',
+                            location: '../xstyle'
+                        }
+                    ]
+                };
+            &lt;/script&gt;
+            &lt;script type="text/javascript" charset="utf-8" src="http://localhost:9090/dojo-release-1.10.4-src/dojo/main.js?1464682058036"&gt;&lt;/script&gt;&lt;script src="http://localhost:9090/dojo-release-1.10.4-src/dojo/dojo.js"&gt;&lt;/script&gt;
+        </pre>
+
+        The grid is as below and I have disabled the sort function.
+
+        <div id="grid"></div>
+
+
+        <script class="useDGrid">
+
+            require([ 'dgrid/Grid', 'dojo/domReady!' ], function (Grid) {
+                var data = [
+                    { first: 'Bob', last: 'Barker', age: 89 },
+                    { first: 'Vanna', last: 'White', age: 55 },
+                    { first: 'Pat', last: 'Sajak', age: 65 }
+                ];
+
+                var grid = new Grid({
+                    columns: {
+                        first: {label: 'First Name', sortable: false},
+                        last: {label: 'Last Name', sortable:false},
+                        age: {label: 'Age', sortable: false}
+                    }
+                }, 'grid');
+                grid.renderArray(data);
+            });
+        </script>
+
+
+
+    </li>
+</ol>
+
+
+</body>
+</html>

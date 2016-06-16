@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Design Pattern</title>
+    <!-- Latest compiled and minified CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Optional theme -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+
+</head>
+<body class="container">
+
+<ul class="nav nav-pills">
+    <li class="active"><a href="#">Home</a></li>
+    <li class=""><a href="#">Profile</a></li>
+    <li class=""><a href="#">Messages</a></li>
+</ul>
+
+
+<div class="page-header">
+    <h1>This is page header</h1>
+</div>
+
+<h1>Hello, I am h1, <small>some small words</small></h1>
+<h2>Hello, I am h2, <small>some small words</small></h2>
+<h3>Hello, I am h3, <small>some small words</small></h3>
+<h4>Hello, I am h4, <span class="small">small words</span></h4>
+
+<p>this is paragraph</p>
+<p class="lead">this is a paragraph too, with lead class</p>
+<p class="text-left"> Left aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned text Left aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned text Left aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned textLeft aligned text</p>
+<p class="text-right">Right aligned text</p>
+<p class="text-center">Center aligned text</p>
+<p class="text-justify">Justified text?</p>
+<p class="text-nowrap">No wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap textNo wrap text</p>
+
+<p class="text-lowercase">THIS IS LOWERCASE TEXT.</p>
+<p class="text-uppercase">this is uppercase text.</p>
+<p class="text-capitalize">this is capitalized text.</p>
+<p class="text-muted">Muted text</p>
+
+<blockquote>
+    <p>Can we apply design patterns or just patterns as everywhere as possible?</p>
+
+    <small>by <cite>Evan Hu</cite></small>
+</blockquote>
+
+
+<div class="list-group">
+    <div class="list-group-item active">
+        <span class="glyphicon glyphicon-camera"></span>
+        Hello
+        <span class="badge">25</span>
+    </div>
+    <div class="list-group-item list-group-item-success">
+        Word
+    </div>
+    <div class="list-group-item info">
+        I am
+    </div>
+    <div class="list-group-item warning">
+        Back
+    </div>
+</div>
+
+<div class="bg-success">Success</div>
+
+
+<ol>
+
+    <li> <b> User login logic:</b>
+            <pre>
+Problem:
+    we check username & password
+    we lock account after password was input 3 times unsuccessfully
+    administrator can unlock account by reset password
+    password has to been updated after reset or initial create
+
+Apply Chain-of-Responsibility design patter to solve this problem:
+
+    Interceptor chain:
+
+    Input username & password ---------------------------------------------------------------------------------------> check password
+                                    ↑ check username existence
+                                                                ↑ check account status
+
+
+                                                                                            ↓wrong password input times check
+    Input username & password result  <--------------------------------------------------------------------------------------------------------- check password result
+            </pre>
+
+            A compare between flow chart & CoR pattern:
+            <div class="container">
+
+                <div class="row vdivide">
+
+                    <div class="col-md-6">
+                        Flow chart
+
+                    </div>
+
+                    <div class="col-md-6">
+                        CoR pattern
+
+                    </div>
+
+                </div>
+            </div>
+
+    </li>
+
+
+
+</ol>
+
+
+
+</body>
+</html>

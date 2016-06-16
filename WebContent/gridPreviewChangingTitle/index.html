@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title>Grid Preview Changing Title</title>
+
+
+<link rel="stylesheet"
+	href="http://localhost:9090/dojo-release-1.10.4-src/dijit/themes/claro/claro.css">
+
+<link rel="stylesheet"
+	href="http://localhost:9090/dojo-release-1.10.4-src/dgrid/css/dgrid.css">
+
+<style>
+.philips-table {
+	
+}
+
+.philips-table-header {
+	
+}
+
+.philips-table-content {
+	
+}
+
+.philips-table-row {
+	
+}
+
+.philips-table-cell {
+	
+}
+
+.table {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+}
+
+.header {
+	/*background-color: #dddddd;*/
+	/*font-weight: bold;*/
+	
+}
+
+.header .table-cell {
+	
+}
+
+.table-row {
+	display: table-row;
+}
+
+.table-cell {
+	display: table-cell;
+	/*text-align: center;*/
+	/*padding: 5px 0 5px 0;*/
+	/*font-family: simhei, sans-serif;*/
+	/*font-size: 19px;*/
+}
+
+.table-row:not (.header ) .table-cell {
+	/*border-bottom: 1px solid #eeeeee;*/
+	
+}
+
+.table-cell.editable {
+	background-color: white;
+}
+
+.editable {
+	background-color: white;
+}
+
+.hidden {
+	display: none
+}
+</style>
+
+<script src="../js-lib/double-click-editor.js"></script>
+
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : 'http://localhost:9090/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/hello-dojo'
+            }
+        ]
+    };
+</script>
+<script src="http://localhost:9090/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+
+</head>
+<body class="claro">
+
+
+	<hr />
+	<pre>
+Requirement:
+
+    Preview data before print and change the title when needed.
+
+
+</pre>
+	<hr />
+
+	<div class="table hidden">
+		<div class="table-row header">
+			<div class="table-cell">性别</div>
+			<div class="table-cell">家庭住址</div>
+			<div class="table-cell">患者编号</div>
+			<div class="table-cell">高血压史</div>
+			<div class="table-cell">CK-MB</div>
+		</div>
+		<div class="table-row">
+			<div class="table-cell">男</div>
+			<div class="table-cell">北京市</div>
+			<div class="table-cell">023212</div>
+			<div class="table-cell">是</div>
+			<div class="table-cell">3.75</div>
+		</div>
+		<div class="table-row">
+			<div class="table-cell">男</div>
+			<div class="table-cell">北京市</div>
+			<div class="table-cell">023212</div>
+			<div class="table-cell">是</div>
+			<div class="table-cell">3.75</div>
+		</div>
+		<div class="table-row">
+			<div class="table-cell">男</div>
+			<div class="table-cell">北京市</div>
+			<div class="table-cell">023212</div>
+			<div class="table-cell">是</div>
+			<div class="table-cell">3.75</div>
+		</div>
+		<div class="table-row">
+			<div class="table-cell">男</div>
+			<div class="table-cell">北京市</div>
+			<div class="table-cell">023212</div>
+			<div class="table-cell">是</div>
+			<div class="table-cell">3.75</div>
+		</div>
+		<div class="table-row">
+			<div class="table-cell">男</div>
+			<div class="table-cell">北京市</div>
+			<div class="table-cell">023212</div>
+			<div class="table-cell">是</div>
+			<div class="table-cell">3.75</div>
+		</div>
+		<div class="table-row">
+			<div class="table-cell">男</div>
+			<div class="table-cell">北京市</div>
+			<div class="table-cell">023212</div>
+			<div class="table-cell">是</div>
+			<div class="table-cell">3.75</div>
+		</div>
+		<div class="table-row">
+			<div class="table-cell">男</div>
+			<div class="table-cell">北京市</div>
+			<div class="table-cell">023212</div>
+			<div class="table-cell">是</div>
+			<div class="table-cell">3.75</div>
+		</div>
+		<div class="table-row">
+			<div class="table-cell">男</div>
+			<div class="table-cell">北京市</div>
+			<div class="table-cell">023212</div>
+			<div class="table-cell">是</div>
+			<div class="table-cell">3.75</div>
+		</div>
+		<div class="table-row">
+			<div class="table-cell">男</div>
+			<div class="table-cell">北京市</div>
+			<div class="table-cell">023212</div>
+			<div class="table-cell">是</div>
+			<div class="table-cell">3.75</div>
+		</div>
+	</div>
+
+
+	<script class="useHTMLTable">
+        // add editable to all title table cell
+        document.querySelectorAll('.table .header .table-cell').forEach(function(cell) {
+            useContentEditable.addEditorToElement(cell);
+        });
+
+        require([
+            'app/widget/Hello'
+        ], function(Hello) {
+            var h = new Hello();
+
+            console.log(h.name);
+        });
+    </script>
+
+
+
+	<hr />
+	<div id="grid"></div>
+
+	<hr />
+
+	<hr />
+
+
+	<script class="useDGrid">
+        require([
+            'dijit/form/Textarea',
+            'dijit/InlineEditBox',
+            'app/widget/grid/_HeaderMixin',
+            'dojo/dom-construct',
+            'dojo/query',
+            'dgrid/Grid',
+            'dojo/_base/declare',
+            'dojo/domReady!'
+        ], function(Textarea, InlineEditBox, _HeaderMixin, domC, query, Grid, declare) {
+            var data = [
+                {
+                    first : 'Bob',
+                    last : 'Barker',
+                    age : 89
+                },
+                {
+                    first : 'Vanna',
+                    last : 'White',
+                    age : 55
+                },
+                {
+                    first : 'Pat',
+                    last : 'Sajak',
+                    age : 65
+                }
+            ];
+
+            var NewGrid = declare([
+                Grid,
+                _HeaderMixin
+            ]);
+
+            var grid = new NewGrid({
+                className : 'data-grid',
+                columns : [
+                    {
+                        label : 'First Name',
+                        field : 'first'
+
+                    },
+                    {
+                        label : 'Last Name',
+                        field : 'last'
+                    },
+                    {
+                        label : 'Age',
+                        field : 'age'
+                    }
+                ]
+            }, 'grid');
+
+            grid.renderArray(data);
+
+            window.gridWidget = grid;
+
+            // query('th', grid.headerNode).forEach(useContentEditable.addEditorToElement);
+
+        });
+    </script>
+
+</body>
+</html>

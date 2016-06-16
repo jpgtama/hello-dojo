@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Double Click Editor</title>
+
+<style>
+.options, .options tr, .options td {
+	border: 1px solid;
+}
+
+
+input[readonly]{
+	border: none;
+}
+
+	.red{
+		color: red;
+	}
+
+</style>
+</head>
+<body>
+
+
+	<ol>
+		<li class="domInsertRemove">
+			<div>
+				<p>DOM insert & remove:</p>
+				
+				
+				<p>Use an input to replace text. </p>
+				
+				<p>Features: 
+					<ul>
+						<li>end edit when blur event or
+					enter key event happens.</li>
+					</ul>
+				
+				</p>
+			</div>
+
+			<table class="options">
+				<tr>
+					<td id="td1">Option 1</td>
+					<td id="td2">Option 2</td>
+					<td id="td3">Option 3</td>
+				</tr>
+			</table>
+
+
+		</li>
+
+
+		<li class="domInsert&Hidden">
+			<div>
+				<p>DOM insert & hidden </p>
+			</div>
+		
+		</li>
+
+		<li class="inputReadonly">
+		
+			<div>
+				<p>Use input readonly</p>
+			</div>
+			
+			
+			<table class="options">
+				<tr>
+					<td id="td3_1"><input id="input3_1" value="Option 1" readonly/></td>
+					<td ><input value="Option 2" readonly /></td>
+					<td ><input value="Option 3" readonly /></td>
+				</tr>
+			</table>
+			
+		</li>
+		
+		<li class="contenteditable">
+			<div>
+				<p>Set contenteditable to true</p>
+			</div>
+		
+			<table class="options">
+				<tr>
+					<td id="td4_1"><span >Option 1<span class="red">hello</span></span></td>
+					<td ><span >Option 2</span></td>
+					<td ><span >Option 3</span></td>
+				</tr>
+			</table>
+		
+			<script type="text/javascript">
+				var td4_1 = document.getElementById("td4_1");
+				
+				td4_1.addEventListener('dblclick', function(e){
+				    this.setAttribute('contenteditable', true);
+				    this.focus();
+				});
+				
+				td4_1.addEventListener('blur', function(e){
+				    this.removeAttribute('contenteditable');
+				});
+			
+			</script>
+		
+		</li>
+		
+
+	</ol>
+
+
+
+
+
+	<script class="insertRemoveInput">
+        var td1 = document.getElementById("td1");
+
+        td1.addEventListener('dblclick', function(e) {
+            var tdStyle = getComputedStyle(this);
+            var width = tdStyle.width;
+            
+            var v = this.innerHTML;
+            this.innerHTML = '';
+
+            var textbox = document.createElement('input');
+
+            textbox.value = v;
+
+            textbox.style.width = width;
+            
+            this.appendChild(textbox);
+
+            textbox.focus();
+
+            var td1 = this;
+
+            var endEdit = function(e) {
+                if (e.type === 'blur' || (e.type === 'keyup' && e.key === 'Enter')) {
+                    // remove event, if not, an error will come: Failed to set the 'innerHTML' property on 'Element': The node to be removed is no longer a child of this node
+                    this.removeEventListener('blur', endEdit);
+                    this.removeEventListener('keyup', endEdit);
+
+                    var v = this.value;
+                    this.style.display = 'none';
+                    td1.innerHTML = v;
+
+                    // remove textbox
+                    this.remove();
+                }
+
+            };
+
+            // end edit
+            textbox.addEventListener('blur', endEdit);
+            textbox.addEventListener('keyup', endEdit);
+
+            // stop bubbling
+            textbox.addEventListener('dblclick', function(e) {
+                e.stopPropagation();
+            });
+
+        });
+    </script>
+
+
+	<script class="inputReadonly">
+		var input = document.getElementById('input3_1');
+		
+		input.addEventListener('dblclick', function(e){
+		    this.removeAttribute('readonly');
+		});
+		
+		var endEdit = function(e){
+		    this.setAttribute('readonly', 'readonly');
+		};
+		
+		input.addEventListener('blur', endEdit);
+		
+	
+	</script>
+	
+	
+	<script class="点击单元格变为文本框" title="http://blog.csdn.net/ghsau/article/details/7765204">
+		function appendInput(tdNode) {  
+	        // 创建input元素节点，createElement创建元素节点，createTextNode(value)创建文本节点  
+	        var inputNode = document.createElement("input");  
+	        // 给input属性赋值  
+	        inputNode.value = tdNode.innerText;  
+	        inputNode.name = "value";  
+	        // 删除单元格的文本节点，参数为要删除的子节点对象  
+	        tdNode.removeChild(tdNode.firstChild);  
+	        // 将input追加到单元格中，appendChild(node)将node追加到父节点末尾，insertBefore(node1, node2)是将node1加入到node2之前  
+	        tdNode.appendChild(inputNode);  
+	        // 聚焦input，在chrome下，光标直接定位到文本最右边，IE下确实最左边  
+	        inputNode.focus();  
+	        // 将光标移到文本最右边  
+	        moveCursorToRight(inputNode);  
+	    }  
+	      
+	    /** 光标移到文本最右边 */  
+	    function moveCursorToRight(obj) {  
+	        var r = obj.createTextRange();  
+	        r.moveStart('character', obj.value.length);  
+	        r.collapse(true);  
+	        r.select();  
+	    }  	
+	
+	</script>
+
+</body>
+</html>
