@@ -151,6 +151,7 @@
                     renderCell : function(object, value, node) {
 
                         var myProgressBar = new DynamicProgressBar({
+                            group: 'dataExport',
                             style : "width: 200px"
                         });
 
@@ -174,6 +175,17 @@
             window.gridWidget = grid;
             window.columns = columns;
 
+            // update progress
+            var i = 0;
+            setInterval(function() {
+                
+                DynamicProgressBar.instanceGroup['dataExport'].forEach(function(dpb){
+                    dpb.set("value", i++ % 100);
+                });
+                
+                
+            }, 1000);
+            
         });
     </script>
 

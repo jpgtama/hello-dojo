@@ -10,19 +10,22 @@ define([
             // parent
             this.inherited(arguments);
 
-            // 
-            var i = 0;
-            var _this = this;
-            setInterval(function() {
-                _this.set("value", i++ % 100);
-            }, 100);
-
+            // add to instance group
+            DPB.addToInstanceGroup(this);
         }
 
     });
     
     // static properties
-    DPB.hello = 'hello';
+    DPB.instanceGroup = {};
+    
+    DPB.addToInstanceGroup = function(dpb){
+        var groupArray = DPB.instanceGroup[dpb.group] || [];
+        
+        groupArray.push(dpb);
+        
+        DPB.instanceGroup[dpb.group] = groupArray;
+    };
     
     
     return DPB; 
