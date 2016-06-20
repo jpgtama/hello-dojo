@@ -237,52 +237,102 @@ Requirement:
             'dojo/_base/declare',
             'dojo/domReady!'
         ], function(Textarea, InlineEditBox, _HeaderMixin, domC, query, Grid, declare) {
-            var data = [
-                {
-                    first : 'Bob',
-                    last : 'Barker',
-                    age : 89
-                },
-                {
-                    first : 'Vanna',
-                    last : 'White',
-                    age : 55
-                },
-                {
-                    first : 'Pat',
-                    last : 'Sajak',
-                    age : 65
-                }
-            ];
+//             var data = [
+//                 {
+//                     first : 'Bob',
+//                     last : 'Barker',
+//                     age : 89
+//                 },
+//                 {
+//                     first : 'Vanna',
+//                     last : 'White',
+//                     age : 55
+//                 },
+//                 {
+//                     first : 'Pat',
+//                     last : 'Sajak',
+//                     age : 65
+//                 }
+//             ];
+
+
+			var data = [
+			 {
+				patientName: 'Bob',
+				birthDate: 'today',
+				ethnic: 'a',
+				text1_A2AEFEE3C463249D: 'adfasdfasd',
+				radio2_E57C1E56C484D463: 'y'
+			},
+			{
+				patientName: 'Bob',
+				birthDate: 'today',
+				ethnic: 'a',
+				text1_A2AEFEE3C463249D: 'adfasdfasd',
+				radio2_E57C1E56C484D463: 'y'
+			},
+			{
+				patientName: 'Bob',
+				birthDate: 'today',
+				ethnic: 'a',
+				text1_A2AEFEE3C463249D: 'adfasdfasd',
+				radio2_E57C1E56C484D463: 'y'
+			},
+			{
+				patientName: 'Bob',
+				birthDate: 'today',
+				ethnic: 'a',
+				text1_A2AEFEE3C463249D: 'adfasdfasd',
+				radio2_E57C1E56C484D463: 'y'
+			},
+			{
+				patientName: 'Bob',
+				birthDate: 'today',
+				ethnic: 'a',
+				text1_A2AEFEE3C463249D: 'adfasdfasd',
+				radio2_E57C1E56C484D463: 'y'
+			}];
 
             var NewGrid = declare([
                 Grid,
                 _HeaderMixin
             ]);
 
+            
+//             var columns = [
+//                            {
+//                                label : 'First Name',
+//                                field : 'first'
+
+//                            },
+//                            {
+//                                label : 'Last Name',
+//                                field : 'last'
+//                            },
+//                            {
+//                                label : 'Age',
+//                                field : 'age'
+//                            }
+//                        ];
+
+
+			var columns = [
+			           	{field: 'patientName', label: '名字别名', form: '1'},
+			        	{field: 'birthDate', label: '出生日期', form: '1'},
+			        	{field: 'ethnic', label: '民族', form: '1'},
+			        	{field: 'text1_A2AEFEE3C463249D', label: '文本框1', form: '54551555'},
+			        	{field: 'radio2_E57C1E56C484D463', label: '单选框2', form: '54551555'}
+			        ];
+            
             var grid = new NewGrid({
                 className : 'data-grid',
-                columns : [
-                    {
-                        label : 'First Name',
-                        field : 'first'
-
-                    },
-                    {
-                        label : 'Last Name',
-                        field : 'last'
-                    },
-                    {
-                        label : 'Age',
-                        field : 'age'
-                    }
-                ]
+                columns : columns
             }, 'grid');
 
             grid.renderArray(data);
 
             window.gridWidget = grid;
-
+			window.columns = columns;
             // query('th', grid.headerNode).forEach(useContentEditable.addEditorToElement);
 
         });

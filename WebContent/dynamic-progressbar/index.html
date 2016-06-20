@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dynamic Progress Bar</title>
+<link rel="stylesheet"
+	href="http://localhost:9090/dojo-release-1.10.4-src/dijit/themes/claro/claro.css">
+
+<link rel="stylesheet"
+	href="http://localhost:9090/dojo-release-1.10.4-src/dgrid/css/dgrid.css">
+
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : 'http://localhost:9090/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/hello-dojo'
+            }
+        ]
+    };
+</script>
+<script src="http://localhost:9090/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+
+</head>
+<body class="claro">
+
+	<h1>Dynamic Progress Bar</h1>
+
+	<pre>
+	We need to put a progress bar inside dgrid and make it dynamically update.
+</pre>
+
+	<hr />
+
+	<div id="grid"></div>
+	<hr />
+
+
+	<script type="text/javascript">
+
+        require([
+            'app/widget/dynamicProgressBar/DynamicProgressBar',
+            "dijit/ProgressBar",
+            'dijit/form/Textarea',
+            'dijit/InlineEditBox',
+            'app/widget/grid/_HeaderMixin',
+            'dojo/dom-construct',
+            'dojo/query',
+            'dgrid/Grid',
+            'dojo/_base/declare',
+            'dojo/domReady!'
+        ], function(DynamicProgressBar, ProgressBar, Textarea, InlineEditBox, _HeaderMixin, domC, query, Grid, declare) {
+
+            
+            window.DynamicProgressBar = DynamicProgressBar;
+            
+            var data = [
+                {
+                    patientName : 'Bob',
+                    birthDate : 'today',
+                    ethnic : 'a',
+                    text1_A2AEFEE3C463249D : 'adfasdfasd',
+                    radio2_E57C1E56C484D463 : 'y',
+                    progress : 11
+                },
+                {
+                    patientName : 'Bob',
+                    birthDate : 'today',
+                    ethnic : 'a',
+                    text1_A2AEFEE3C463249D : 'adfasdfasd',
+                    radio2_E57C1E56C484D463 : 'y',
+                    progress : 11
+                },
+                {
+                    patientName : 'Bob',
+                    birthDate : 'today',
+                    ethnic : 'a',
+                    text1_A2AEFEE3C463249D : 'adfasdfasd',
+                    radio2_E57C1E56C484D463 : 'y',
+                    progress : 11
+                },
+                {
+                    patientName : 'Bob',
+                    birthDate : 'today',
+                    ethnic : 'a',
+                    text1_A2AEFEE3C463249D : 'adfasdfasd',
+                    radio2_E57C1E56C484D463 : 'y',
+                    progress : 11
+                },
+                {
+                    patientName : 'Bob',
+                    birthDate : 'today',
+                    ethnic : 'a',
+                    text1_A2AEFEE3C463249D : 'adfasdfasd',
+                    radio2_E57C1E56C484D463 : 'y',
+                    progress : 11
+                }
+            ];
+
+            var columns = [
+                {
+                    field : 'patientName',
+                    label : '名字别名',
+                    form : '1'
+                },
+                {
+                    field : 'birthDate',
+                    label : '出生日期',
+                    form : '1'
+                },
+                {
+                    field : 'ethnic',
+                    label : '民族',
+                    form : '1'
+                },
+                {
+                    field : 'text1_A2AEFEE3C463249D',
+                    label : '文本框1',
+                    form : '54551555'
+                },
+                {
+                    field : 'radio2_E57C1E56C484D463',
+                    label : '单选框2',
+                    form : '54551555'
+                },
+                {
+                    field : 'progress',
+                    label : 'Progress',
+                    form : '0',
+                    renderCell : function(object, value, node) {
+
+                        var myProgressBar = new DynamicProgressBar({
+                            style : "width: 200px"
+                        });
+
+                        myProgressBar.placeAt(node).startup();
+
+                    }
+                }
+            ];
+
+            var NewGrid = declare([
+                Grid,
+                _HeaderMixin
+            ]);
+            var grid = new NewGrid({
+                className : 'data-grid',
+                columns : columns
+            }, 'grid');
+
+            grid.renderArray(data);
+
+            window.gridWidget = grid;
+            window.columns = columns;
+
+        });
+    </script>
+
+
+</body>
+</html>

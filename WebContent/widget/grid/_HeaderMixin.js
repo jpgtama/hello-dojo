@@ -36,10 +36,13 @@ define([
          */
         postMixInProperties : function() {
 
-            // add renderHeaderCell function
-            if (this.columns) {
-                arrayUtil.forEach(this.columns, function(col) {
+            if (this.columns && this.columns.length > 0) {
 
+                // get column properties
+                this._getOriginalColumnProperties();
+
+                // add sortable & renderHeaderCell function
+                arrayUtil.forEach(this.columns, function(col) {
                     // disable sort because the sort arrow can mess up the
                     // editor style
                     col.sortable = false;
@@ -59,6 +62,37 @@ define([
 
             // call parent
             this.inherited(arguments);
+        },
+
+        /**
+         * get original columns properties and save it to dgrid
+         */
+        _getOriginalColumnProperties : function() {
+            this.originalColumnProperties = [];
+            for ( var p in this.columns[0]) {
+                this.originalColumnProperties.push(p);
+            }
+        },
+
+        /**
+         * get columns like original
+         */
+        getOriginalColumns : function() {
+            // use this._columns here because this.colummns was converted to
+            // object by dgrid
+            // and arrayUtil.map can't loop an object.
+            return arrayUtil.map(this._columns, function(col) {
+                // the returned column, which will have the original properties
+                // passed to dgrid
+                var retCol = {};
+
+                // fill properties according to the original column properties
+                arrayUtil.forEach(this.originalColumnProperties, function(p) {
+                    retCol[p] = col[p];
+                });
+
+                return retCol;
+            }, this);
         }
 
     });
