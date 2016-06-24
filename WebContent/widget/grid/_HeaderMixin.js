@@ -109,7 +109,7 @@ define([
          * Override, in order to clean up editor when grid was destroyed.
          * 
          */
-        _destroyColumns : function() {
+        destroy : function() {
             // clean up header
             this._headerCleanup();
 

@@ -221,6 +221,8 @@ Requirement:
 	<hr />
 	<div id="grid"></div>
 
+	
+
 	<hr />
 
 	<hr />
@@ -230,13 +232,14 @@ Requirement:
         require([
             'dijit/form/Textarea',
             'dijit/InlineEditBox',
+            'app/widget/grid/HeaderEditableGrid',
             'app/widget/grid/_HeaderMixin',
             'dojo/dom-construct',
             'dojo/query',
             'dgrid/Grid',
             'dojo/_base/declare',
             'dojo/domReady!'
-        ], function(Textarea, InlineEditBox, _HeaderMixin, domC, query, Grid, declare) {
+        ], function(Textarea, InlineEditBox, HeaderEditableGrid, _HeaderMixin, domC, query, Grid, declare) {
 //             var data = [
 //                 {
 //                     first : 'Bob',
@@ -293,10 +296,10 @@ Requirement:
 				radio2_E57C1E56C484D463: 'y'
 			}];
 
-            var NewGrid = declare([
-                Grid,
-                _HeaderMixin
-            ]);
+//             var NewGrid = declare([
+//                 Grid,
+//                 _HeaderMixin
+//             ]);
 
             
 //             var columns = [
@@ -324,7 +327,7 @@ Requirement:
 			        	{field: 'radio2_E57C1E56C484D463', label: '单选框2', form: '54551555'}
 			        ];
             
-            var grid = new NewGrid({
+            var grid = new HeaderEditableGrid({
                 className : 'data-grid',
                 columns : columns
             }, 'grid');
@@ -333,10 +336,17 @@ Requirement:
 
             window.gridWidget = grid;
 			window.columns = columns;
+			window.data = data;
             // query('th', grid.headerNode).forEach(useContentEditable.addEditorToElement);
 
         });
     </script>
+
+
+	<hr/>
+	<p>Use markup</p>
+
+	<div data-dojo-type="app/widget/grid/HeaderEditableGrid" data-dojo-props="columns: columns, data: data"></div>
 
 </body>
 </html>

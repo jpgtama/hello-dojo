@@ -23,10 +23,10 @@ define([
     'dijit/InlineEditBox',
     'dijit/_WidgetBase',
     'dijit/_TemplatedMixin',
-    'dojo/sniff',
+    'dojo/string',
     'dojo/_base/lang',
     'dojo/_base/declare'
-], function(Textarea, InlineEditBox, _WidgetBase, _TemplatedMixin, has, lang, declare) {
+], function(Textarea, InlineEditBox, _WidgetBase, _TemplatedMixin, stringUtil, lang, declare) {
     return declare([
         _WidgetBase,
         _TemplatedMixin
@@ -62,20 +62,26 @@ define([
             }
 
             // add editor ability
-            this._editorInstance = new InlineEditBox({
+            var header = this;
+            var editor = new InlineEditBox({
                 autoSave : true,
-                onChange : lang.hitch(this, function(value) {
-                    // set column label to new value
-                    this.column.label = value;
-                }),
-                // copied this from InlineEditBox and changed the indication
-                // text to 'Please Input Title'
-                noValueIndicator : has("ie") <= 6 ? "<span style='font-family: wingdings; text-decoration: underline;'>Please Input Title</span>"
-                        : "<span style='text-decoration: underline;'>Please Input Title</span>",
+
+                onChange : function(value) {
+                    // empty or blank is not accepted
+                    if (stringUtil.trim(value).length === 0) {
+                        // this.wrapperWidget._resetValue hold the last saved
+                        // value and we set the value back
+                        this.set('value', this.wrapperWidget._resetValue);
+                    } else {
+                        // set column label to new value
+                        header.column.label = value;
+                    }
+                }
             }, this.contentNode);
 
+            // assign to this
+            this._editorInstance = editor;
             this._editorInstance.startup();
-
         },
 
         /**
