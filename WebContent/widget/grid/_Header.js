@@ -38,9 +38,16 @@ define([
         // definition object.
 
         /**
-         * template string
+         * template string, because InlineEditorBox need a non widget to
+         * startup, so we add another div with attach point contentNode to place
+         * InlineEditorBox.
          */
         templateString : '<div>  <div data-dojo-attach-point="contentNode"></div>    </div>',
+
+        /**
+         * hold the editor instances and destroy it when header was destroyed.
+         */
+        _editorInstance : null,
 
         /**
          * Override
@@ -55,17 +62,38 @@ define([
             }
 
             // add editor ability
-            var itb = new InlineEditBox({
+            this._editorInstance = new InlineEditBox({
                 autoSave : true,
                 onChange : lang.hitch(this, function(value) {
                     // set column label to new value
                     this.column.label = value;
                 }),
-                // copied this from InlineEditBox and changed the indication text to 'Please Input Title'
+                // copied this from InlineEditBox and changed the indication
+                // text to 'Please Input Title'
                 noValueIndicator : has("ie") <= 6 ? "<span style='font-family: wingdings; text-decoration: underline;'>Please Input Title</span>"
                         : "<span style='text-decoration: underline;'>Please Input Title</span>",
-            }, this.contentNode).startup();
+            }, this.contentNode);
 
+            this._editorInstance.startup();
+
+        },
+
+        /**
+         * Override, destroy editor instance when this header was destroyed.
+         */
+        destroy : function() {
+            // destroy editor
+            if (this._editorInstance) {
+                if (this._editorInstance.destroy) {
+                    // console.log('I am going to destroy my editor');
+                    this._editorInstance.destroy();
+                } else {
+                    console.error('the editor does not have a destroy method');
+                }
+            }
+
+            // call parent to continue destroy process
+            this.inherited(arguments);
         }
 
     });

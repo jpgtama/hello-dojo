@@ -31,6 +31,8 @@ define([
         // additional
         // functions
 
+        _headerInstances : null,
+
         /**
          * Override
          */
@@ -42,6 +44,8 @@ define([
                 this._getOriginalColumnProperties();
 
                 // add sortable & renderHeaderCell function
+                this._headerInstances = [];
+                var _headerMixin = this;
                 arrayUtil.forEach(this.columns, function(col) {
                     // disable sort because the sort arrow can mess up the
                     // editor style
@@ -51,8 +55,12 @@ define([
                     col.renderHeaderCell = function(node) {
                         // create _Header, pass this as column
                         var h = new _Header({
-                            column : this
+                            column : col
                         });
+
+                        // add to _headerMixin header instances so can be
+                        // destroyed
+                        _headerMixin._headerInstances.push(h);
 
                         // use _Header to render header
                         return h.domNode;
@@ -65,7 +73,9 @@ define([
         },
 
         /**
-         * get original columns properties and save it to dgrid
+         * get original columns properties and save it to dgrid, so when users
+         * want to get back columns, we can remove those atrributes which were
+         * added by dgrid.
          */
         _getOriginalColumnProperties : function() {
             this.originalColumnProperties = [];
@@ -93,6 +103,33 @@ define([
 
                 return retCol;
             }, this);
+        },
+
+        /**
+         * Override, in order to clean up editor when grid was destroyed.
+         * 
+         */
+        _destroyColumns : function() {
+            // clean up header
+            this._headerCleanup();
+
+            // call parent
+            this.inherited(arguments);
+        },
+
+        /**
+         * clean up _header
+         */
+        _headerCleanup : function() {
+            // destroy _header in header instances
+            arrayUtil.forEach(this._headerInstances, function(h) {
+                if (h.destroy) {
+                    h.destroy();
+                } else {
+                    console.error('no destory method found in header: ', h);
+                }
+            }, this);
+
         }
 
     });
