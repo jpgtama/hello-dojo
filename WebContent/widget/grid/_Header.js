@@ -57,9 +57,7 @@ define([
             this.inherited(arguments);
 
             // set header content
-            if (this.column) {
-                this.contentNode.innerHTML = this.column.label;
-            }
+            this.contentNode.innerHTML = this.headerContent;
 
             // add editor ability
             var header = this;
@@ -73,8 +71,8 @@ define([
                         // value and we set the value back
                         this.set('value', this.wrapperWidget._resetValue);
                     } else {
-                        // set column label to new value
-                        header.column.label = value;
+                        // invoke call back function with new value
+                        header.onChange(value);
                     }
                 }
             }, this.contentNode);

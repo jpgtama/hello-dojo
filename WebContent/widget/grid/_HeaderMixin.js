@@ -21,8 +21,9 @@
 define([
     './_Header',
     'dojo/_base/array',
+    'dojo/_base/lang',
     'dojo/_base/declare'
-], function(_Header, arrayUtil, declare) {
+], function(_Header, arrayUtil, lang, declare) {
 
     return declare(null, {
         // summary:
@@ -38,24 +39,38 @@ define([
          */
         postMixInProperties : function() {
 
+            // save original columns, so dgrid's changes on columns will not
+            // affect original columns passed by user
+            this.originalColumns = this.columns;
+            this.columns = lang.clone(this.originalColumns);
+
             if (this.columns && this.columns.length > 0) {
 
-                // get column properties
-                this._getOriginalColumnProperties();
-
-                // add sortable & renderHeaderCell function
+                // 
                 this._headerInstances = [];
+
+                // 
                 var _headerMixin = this;
-                arrayUtil.forEach(this.columns, function(col) {
+
+                // loop to add sortable & renderHeaderCell function
+                for (var i = 0; i < this.columns.length; i++) {
+                    var col = this.columns[i];
+                    col.originalCol = this.originalColumns[i];
+
                     // disable sort because the sort arrow can mess up the
                     // editor style
                     col.sortable = false;
 
                     // add renderHeaderCell function
                     col.renderHeaderCell = function(node) {
-                        // create _Header, pass this as column
+                        var thisCol = this;
+                        // create _Header
                         var h = new _Header({
-                            column : col
+                            headerContent : thisCol.label,
+                            onChange : function(v) {
+                                thisCol.label = v;
+                                thisCol.originalCol.label = v;
+                            }
                         });
 
                         // add to _headerMixin header instances so can be
@@ -65,44 +80,11 @@ define([
                         // use _Header to render header
                         return h.domNode;
                     };
-                }, this);
+                }
             }
 
             // call parent
             this.inherited(arguments);
-        },
-
-        /**
-         * get original columns properties and save it to dgrid, so when users
-         * want to get back columns, we can remove those atrributes which were
-         * added by dgrid.
-         */
-        _getOriginalColumnProperties : function() {
-            this.originalColumnProperties = [];
-            for ( var p in this.columns[0]) {
-                this.originalColumnProperties.push(p);
-            }
-        },
-
-        /**
-         * get columns like original
-         */
-        getOriginalColumns : function() {
-            // use this._columns here because this.colummns was converted to
-            // object by dgrid
-            // and arrayUtil.map can't loop an object.
-            return arrayUtil.map(this._columns, function(col) {
-                // the returned column, which will have the original properties
-                // passed to dgrid
-                var retCol = {};
-
-                // fill properties according to the original column properties
-                arrayUtil.forEach(this.originalColumnProperties, function(p) {
-                    retCol[p] = col[p];
-                });
-
-                return retCol;
-            }, this);
         },
 
         /**

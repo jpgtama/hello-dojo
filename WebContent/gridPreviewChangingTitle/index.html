@@ -335,7 +335,7 @@ Requirement:
             grid.renderArray(data);
 
             window.gridWidget = grid;
-			window.columns = columns;
+			window.originalColumns = columns;
 			window.data = data;
             // query('th', grid.headerNode).forEach(useContentEditable.addEditorToElement);
 
@@ -346,7 +346,7 @@ Requirement:
 	<hr/>
 	<p>Use markup</p>
 
-	<div data-dojo-type="app/widget/grid/HeaderEditableGrid" data-dojo-props="columns: columns, data: data"></div>
+<!-- 	<div data-dojo-type="app/widget/grid/HeaderEditableGrid" data-dojo-props="columns: columns, data: data"></div> -->
 
 </body>
 </html>
