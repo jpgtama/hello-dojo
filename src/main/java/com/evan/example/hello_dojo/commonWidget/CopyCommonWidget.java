@@ -1,13 +1,19 @@
 package com.evan.example.hello_dojo.commonWidget;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.DigestInputStream;
+import java.security.InvalidParameterException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -27,18 +33,18 @@ public class CopyCommonWidget {
 	
 	/**
 	 * 
-	 * for comparing two files located in two different folders, a and b, you need to choose one as a base against which the comparison is made.
+	 * Compare two files located in two different folders, a and b, you need to choose one as a base against which the comparison is made.
 	 * 
 	 * 
-	 * If we choose a as base, then there will be 4 statuses:
+	 * If we choose 'a' as base, then there will be 4 statuses:
 	 * 
-	 * a and b both exist, but content is same, so the comparison result is b is changed, 0
+	 * 'a' and 'b' both exist, but content is same, so the comparison result is 0('b' is not changed)
 	 * 
-	 * a and b both exist, but content is different, so the comparison result is b is changed, 2
+	 * 'a' and 'b' both exist, but content is different, so the comparison result is 2('b' is changed)
 	 * 
-	 * a exists, b doesn't exist, then the result is b is removed, -1
+	 * 'a' exists, 'b' doesn't exist, then the result is -1('b' is removed)
 	 * 
-	 * a doesn't exist, b exists, then the result is b is created, 1
+	 * 'a' doesn't exist, 'b' exists, then the result is 1('b' is created)
 	 * 
 	 * 
 	 * So for this class, we will have below methods:
@@ -134,6 +140,113 @@ public class CopyCommonWidget {
 	};
 	
 	/**
+	 * 
+	 * 
+	 * 
+	 * @author $Author: $
+	 * @version $Revision: $
+	 * @since $Date: $
+	 */
+	private static class FolderSync {
+		
+		private String fromFolder;
+		
+		private String toFolder;
+		
+		public FolderSync() {
+			// TODO Auto-generated constructor stub
+		}
+		
+		/**
+		 * FolderSync
+		 * 
+		 * @param fromFolder
+		 * @param toFolder
+		 */
+		public FolderSync(String fromFolder, String toFolder) {
+			super();
+			setFromFolder(fromFolder);
+			setToFolder(toFolder);
+		}
+		
+		/**
+		 * get fromFolder
+		 * 
+		 * @return the fromFolder
+		 */
+		public String getFromFolder() {
+			return fromFolder;
+		}
+		
+		/**
+		 * set fromFolder
+		 * 
+		 * @param fromFolder
+		 *            the fromFolder to set
+		 */
+		public void setFromFolder(String fromFolder) {
+			this.fromFolder = fromFolder;
+		}
+		
+		/**
+		 * get toFolder
+		 * 
+		 * @return the toFolder
+		 */
+		public String getToFolder() {
+			return toFolder;
+		}
+		
+		/**
+		 * set toFolder
+		 * 
+		 * @param toFolder
+		 *            the toFolder to set
+		 */
+		public void setToFolder(String toFolder) {
+			this.toFolder = toFolder;
+		};
+		
+		private Map<String, FileCompareItem> fileCompareMap;
+		
+		public void status() {
+			fileCompareMap = new LinkedHashMap<>();
+			
+			// check folder
+			if (fromFolder == null || toFolder == null) {
+				throw new InvalidParameterException("folder is null.");
+			}
+			
+			File from = new File(fromFolder);
+			File to = new File(toFolder);
+			
+			if (!from.exists() || !to.exists()) {
+				throw new InvalidParameterException("folder not found.");
+			}
+			
+			// BFS from folder
+			Queue<File> fileQueue = new LinkedList<>();
+			fileQueue.add(from);
+			
+			while (!fileQueue.isEmpty()) {
+				File file = fileQueue.remove();
+				
+				for (File f : file.listFiles()) {
+					if (f.isDirectory()) {
+						fileQueue.add(f);
+					} else {
+						// get relative path
+						String relativePath = from.toURI().relativize(f.toURI()).getPath();
+					}
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	/**
 	 * copy from
 	 */
 	static String fromFolder = "C:/source_code/ichm-new/app/common-ui/src/main/webapp/app/widget";
@@ -144,6 +257,29 @@ public class CopyCommonWidget {
 	static String toFolder = "C:/workspace/scheduler_workspace/hello-dojo/WebContent/js/appWidget/app/widget";
 	
 	public static void main(String[] args) {
+		String folderStr = "C:/source_code/ichm-new/app/common-ui/src/main/webapp/app/widget";
+		String relativeFileStr = "tree/Tree.js";
+		
+		File folder = new File(folderStr);
+		File relativeFile = new File(folder, relativeFileStr);
+		
+		Path folderPath = Paths.get(folderStr);
+		Path relativeFilePath = Paths.get(folderStr, relativeFileStr);
+		
+		// use substring
+		System.out.println(relativeFile.getAbsolutePath().substring(folder.getAbsolutePath().length()));
+		// output: \tree\Tree.js
+		
+		// use URI relativize
+		System.out.println(folder.toURI().relativize(relativeFile.toURI()).getPath());
+		// output: tree/Tree.js
+		
+		// use Path relativize
+		System.out.println(folderPath.relativize(relativeFilePath));
+		// output: tree\Tree.js
+	}
+	
+	public static void main_(String[] args) {
 		// find out any modified files by comparing files between the two folders
 		
 		// TODO loop base folder
@@ -154,20 +290,32 @@ public class CopyCommonWidget {
 		
 		String file = "tree/Tree.js";
 		
-		try {
-			Paths.get(toFolder, file);
-			
-			FileCompareItem fci = new FileCompareItem();
-			
-			fci.addBaseFile(Paths.get(toFolder, file));
-			fci.addCompareFile(Paths.get(fromFolder, file));
-			
-			System.out.println(fci.result());
-			
-		} catch (NoSuchAlgorithmException | IOException | com.evan.example.hello_dojo.commonWidget.CopyCommonWidget.FileCompareItem.NoItemToCompareException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		File from = new File(fromFolder);
+		File f = new File(from, file);
+		
+		Path fromPath = Paths.get(fromFolder);
+		Path fPath = Paths.get(fromFolder, file);
+		
+		System.out.println(from.toURI().relativize(f.toURI()).getPath());
+		System.out.println(f.getAbsolutePath().substring(from.getAbsolutePath().length()));
+		
+		System.out.println(fromPath.relativize(fPath));
+		
+		// try {
+		// Paths.get(toFolder, file);
+		//
+		// FileCompareItem fci = new FileCompareItem();
+		//
+		// fci.addBaseFile(Paths.get(toFolder, file));
+		// fci.addCompareFile(Paths.get(fromFolder, file));
+		//
+		// System.out.println(fci.result());
+		//
+		// } catch (NoSuchAlgorithmException | IOException | com.evan.example.hello_dojo.commonWidget.CopyCommonWidget.FileCompareItem.NoItemToCompareException
+		// e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 		
 	}
 	
