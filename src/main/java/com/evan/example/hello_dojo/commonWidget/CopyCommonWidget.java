@@ -5,15 +5,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.DigestInputStream;
 import java.security.InvalidParameterException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
+import java.util.Stack;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -70,7 +68,7 @@ public class CopyCommonWidget {
 		 * @version $Revision: $
 		 * @since $Date: $
 		 */
-		public static class NoItemToCompareException extends Exception {
+		public static class NoItemToCompareException extends RuntimeException {
 			
 			public NoItemToCompareException() {
 				super();
@@ -101,7 +99,7 @@ public class CopyCommonWidget {
 		 * @throws IOException
 		 * @throws NoSuchAlgorithmException
 		 */
-		public Integer result() throws NoItemToCompareException, NoSuchAlgorithmException, IOException {
+		public Integer result() {
 			
 			if (baseFileFullPath == null && compareFileFullPath == null) {
 				throw new NoItemToCompareException("base file and compare file both not found.");
@@ -125,16 +123,23 @@ public class CopyCommonWidget {
 		 * @throws NoSuchAlgorithmException
 		 * @throws IOException
 		 */
-		private static String checksum(Path fileFullPath) throws NoSuchAlgorithmException, IOException {
-			byte[] buffer = new byte[8192];
-			MessageDigest md = MessageDigest.getInstance("SHA-1");
-			
-			try (InputStream is = Files.newInputStream(fileFullPath); DigestInputStream dis = new DigestInputStream(is, md)) {
-				while (dis.read(buffer) != -1)
-					;
+		private static String checksum(Path fileFullPath) {
+			try {
+				byte[] buffer = new byte[8192];
+				MessageDigest md = MessageDigest.getInstance("SHA-1");
+				
+				try (InputStream is = Files.newInputStream(fileFullPath); DigestInputStream dis = new DigestInputStream(is, md)) {
+					while (dis.read(buffer) != -1)
+						;
+				}
+				
+				return DatatypeConverter.printHexBinary(md.digest());
+			} catch (NoSuchAlgorithmException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
-			return DatatypeConverter.printHexBinary(md.digest());
+			return null;
 		}
 		
 	};
@@ -207,10 +212,8 @@ public class CopyCommonWidget {
 			this.toFolder = toFolder;
 		};
 		
-		private Map<String, FileCompareItem> fileCompareMap;
-		
-		public void status() {
-			fileCompareMap = new LinkedHashMap<>();
+		public static void compareTowFolders(String fromFolder, String toFolder) {
+			Map<String, FileCompareItem> fileCompareMap = new LinkedHashMap<>();
 			
 			// check folder
 			if (fromFolder == null || toFolder == null) {
@@ -224,24 +227,54 @@ public class CopyCommonWidget {
 				throw new InvalidParameterException("folder not found.");
 			}
 			
-			// BFS from folder
-			Queue<File> fileQueue = new LinkedList<>();
-			fileQueue.add(from);
+			// DFS from folder
+			// Queue<File> fileQueue = new LinkedList<>();
+			Stack<File> fileStack = new Stack<>();
+			fileStack.push(from);
 			
-			while (!fileQueue.isEmpty()) {
-				File file = fileQueue.remove();
+			while (!fileStack.isEmpty()) {
+				File file = fileStack.pop();
 				
 				for (File f : file.listFiles()) {
 					if (f.isDirectory()) {
-						fileQueue.add(f);
+						fileStack.push(f);
 					} else {
 						// get relative path
 						String relativePath = from.toURI().relativize(f.toURI()).getPath();
+						if (fileCompareMap.get(relativePath) == null) {
+							fileCompareMap.put(relativePath, new FileCompareItem());
+						}
+						
+						fileCompareMap.get(relativePath).addBaseFile(f.toPath());
 					}
 				}
-				
 			}
 			
+			// DFS to folder
+			fileStack.push(to);
+			while (!fileStack.isEmpty()) {
+				File file = fileStack.pop();
+				
+				for (File f : file.listFiles()) {
+					if (f.isDirectory()) {
+						fileStack.push(f);
+					} else {
+						// get relative path
+						String relativePath = to.toURI().relativize(f.toURI()).getPath();
+						if (fileCompareMap.get(relativePath) == null) {
+							fileCompareMap.put(relativePath, new FileCompareItem());
+						}
+						
+						fileCompareMap.get(relativePath).addCompareFile(f.toPath());
+					}
+				}
+			}
+			
+			// compare files
+			for (String relativePath : fileCompareMap.keySet()) {
+				FileCompareItem fci = fileCompareMap.get(relativePath);
+				System.out.println(relativePath + ", " + fci.result());
+			}
 		}
 		
 	}
@@ -257,65 +290,9 @@ public class CopyCommonWidget {
 	static String toFolder = "C:/workspace/scheduler_workspace/hello-dojo/WebContent/js/appWidget/app/widget";
 	
 	public static void main(String[] args) {
-		String folderStr = "C:/source_code/ichm-new/app/common-ui/src/main/webapp/app/widget";
-		String relativeFileStr = "tree/Tree.js";
-		
-		File folder = new File(folderStr);
-		File relativeFile = new File(folder, relativeFileStr);
-		
-		Path folderPath = Paths.get(folderStr);
-		Path relativeFilePath = Paths.get(folderStr, relativeFileStr);
-		
-		// use substring
-		System.out.println(relativeFile.getAbsolutePath().substring(folder.getAbsolutePath().length()));
-		// output: \tree\Tree.js
-		
-		// use URI relativize
-		System.out.println(folder.toURI().relativize(relativeFile.toURI()).getPath());
-		// output: tree/Tree.js
-		
-		// use Path relativize
-		System.out.println(folderPath.relativize(relativeFilePath));
-		// output: tree\Tree.js
-	}
-	
-	public static void main_(String[] args) {
 		// find out any modified files by comparing files between the two folders
 		
-		// TODO loop base folder
-		
-		// TODO loop compare folder
-		
-		// TODO compare
-		
-		String file = "tree/Tree.js";
-		
-		File from = new File(fromFolder);
-		File f = new File(from, file);
-		
-		Path fromPath = Paths.get(fromFolder);
-		Path fPath = Paths.get(fromFolder, file);
-		
-		System.out.println(from.toURI().relativize(f.toURI()).getPath());
-		System.out.println(f.getAbsolutePath().substring(from.getAbsolutePath().length()));
-		
-		System.out.println(fromPath.relativize(fPath));
-		
-		// try {
-		// Paths.get(toFolder, file);
-		//
-		// FileCompareItem fci = new FileCompareItem();
-		//
-		// fci.addBaseFile(Paths.get(toFolder, file));
-		// fci.addCompareFile(Paths.get(fromFolder, file));
-		//
-		// System.out.println(fci.result());
-		//
-		// } catch (NoSuchAlgorithmException | IOException | com.evan.example.hello_dojo.commonWidget.CopyCommonWidget.FileCompareItem.NoItemToCompareException
-		// e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
+		FolderSync.compareTowFolders(toFolder, fromFolder);
 		
 	}
 	
