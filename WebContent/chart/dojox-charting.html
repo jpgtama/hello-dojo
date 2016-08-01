@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dojox charting</title>
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : 'http://localhost:9090/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/hello-dojo'
+            }
+        ]
+    };
+</script>
+<script src="http://localhost:9090/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+</head>
+<body>
+<h1>Dojox charting</h1>
+<hr/>
+
+<div id="chartOne" style="width: 400px; height: 240px; "></div>
+
+<div id="chartTwo" style="width: 400px; height: 240px; "></div>
+
+<div id="chartThree" style="width: 400px; height: 240px; "></div>
+
+<div id="chartStackedAreas" style="width: 400px; height: 240px; "></div>
+
+<div id="chartFour" style="width: 400px; height: 240px; "></div>
+
+<div id="chartFive" style="width: 400px; height: 240px; "></div>
+
+<div id="chartSpider" style="width: 400px; height: 240px; "></div>
+
+<div id="chartPie" style="width: 400px; height: 400px; "></div>
+
+<div id="chartDonuts" style="width: 400px; height: 400px;"></div>
+
+<script type="text/javascript">
+require([
+         "app/widget/percentageIndicator/percentageDonut/PercentageDonut",
+         "dojox/charting/Chart", 
+         "dojox/charting/axis2d/Default", 
+         "dojox/charting/plot2d/Default", 
+         "dojox/charting/plot2d/Lines", 
+         "dojox/charting/plot2d/Areas", 
+         "dojox/charting/plot2d/Markers", 
+         "dojox/charting/plot2d/MarkersOnly", 
+         "dojox/charting/plot2d/StackedAreas", 
+         "dojox/charting/plot2d/Spider", 
+         "dojox/charting/plot2d/Pie", 
+         "dojox/charting/themes/Wetland" , 
+         "dojox/charting/themes/MiamiNice" , 
+         "dojox/charting/themes/Harmony" , 
+         "dojox/charting/widget/SelectableLegend",
+         "dojox/charting/action2d/Tooltip",
+         'dojo/dom-construct',
+         'dojo/dom-geometry',
+         'dojo/dom-style',
+         'dojo/fx/easing',
+         'dojo/_base/declare',
+         "dojo/ready"],
+        function(PercentageDonut, Chart, DefaultAxis, Default, Lines, Areas, Markers, MarkersOnly, StackedAreas, Spider, Pie, 
+                Wetland, MiamiNice, Harmony, SelectableLegend, Tooltip, domC, domG, style, easing, declare, ready){
+    
+    
+          ready(function(){
+    
+              
+            // chart one
+            function chart_one(){
+                var c = new Chart("chartOne", {
+                    title: "Default",
+                    titlePos: "bottom",
+                    titleGap: 25,
+                    titleFont: "normal normal normal 15pt Arial",
+                    titleFontColor: "orange"
+                  });
+                
+                
+                
+                c.addPlot("default", {type: Default, tension:3})
+                  .addAxis("x", {fixLower: "none", fixUpper: "none", labels: [{value: 1, text: "Jan"}, {value: 2, text: "Feb"},
+                                                                                {value: 3, text: "Mar"}, {value: 4, text: "Apr"},
+                                                                                {value: 5, text: "May"}, {value: 6, text: "Jun"},
+                                                                                {value: 7, text: "Jul"}, {value: 8, text: "Aug"},
+                                                                                {value: 9, text: "Sep"}, {value: 10, text: "Oct"},
+                                                                                {value: 11, text: "Nov"}, {value: 12, text: "Dec"}]})
+                  .addAxis("y", {vertical: true, fixLower: "micro", fixUpper: "micro", min: 0})
+                  .setTheme(Wetland)
+                  .addSeries("Series A", [1, 2, 0.5, 1.5, 1, 2.8, 0.4])
+                  .addSeries("Series B", [2.6, 1.8, 2, 1, 1.4, 0.7, 2])
+                  .addSeries("Series C", [6.3, 1.8, 3, 0.5, 4.4, 2.7, 2]);
+                
+                
+                new Tooltip(c, "default", {
+                    text: function(o){
+                       return "Element at index: "+o.index;
+                    }
+                 });
+                
+                c.render();
+            }
+            
+            chart_one();
+            
+            
+            // chart two
+            var c2 = new Chart('chartTwo', {
+                title: 'Lines',
+                titlePos: 'bottom',
+                titleFontColor: 'orange'
+            });
+            
+            c2.addPlot('default', {type: Lines, tension: 3 })
+	            .addAxis("x", {fixLower: "major", fixUpper: "major"})
+	            .addAxis("y", {vertical: true, fixLower: "major", fixUpper: "major", min: 0})
+	            .setTheme(Wetland)
+	            .addSeries("Series A", [1, 2, 0.5, 1.5, 1, 2.8, 0.4])
+	            .addSeries("Series B", [2.6, 1.8, 2, 1, 1.4, 0.7, 2])
+	            .addSeries("Series C", [6.3, 1.8, 3, 0.5, 4.4, 2.7, 2])
+	            .render();
+            
+            
+            // chart three
+            var c3 = new Chart('chartThree', {
+                title: 'Areas',
+                titlePos: 'bottom',
+                titleFontColor: 'orange'
+            });
+            
+            c3.addPlot('default', {type: Areas, tension: 3 })
+	            .addAxis("x", {fixLower: "major", fixUpper: "major"})
+	            .addAxis("y", {vertical: true, fixLower: "major", fixUpper: "major", min: 0})
+	            .setTheme(Wetland)
+	            .addSeries("Series A", [1, 2, 0.5, 1.5, 1, 2.8, 0.4])
+	            .addSeries("Series B", [2.6, 1.8, 2, 1, 1.4, 0.7, 2])
+	            .addSeries("Series C", [6.3, 1.8, 3, 0.5, 4.4, 2.7, 2])
+	            .render();
+            
+            // chart: StackedAreas
+            function chart_StackedAreas(type){
+                var c = new Chart('chart'+type, {
+                    title: type,
+                    titlePos: 'bottom',
+                    titleFontColor: 'orange'
+                });
+                
+                c.addPlot('default', {type: type, tension: 3 })
+    	            .addAxis("x", {fixLower: "major", fixUpper: "major"})
+    	            .addAxis("y", {vertical: true, fixLower: "major", fixUpper: "major", min: 0})
+    	            .setTheme(Wetland)
+    	            .addSeries("Series A", [1, 2, 0.5, 1.5, 1, 2.8, 0.4])
+    	            .addSeries("Series B", [2.6, 1.8, 2, 1, 1.4, 0.7, 2])
+    	            .addSeries("Series C", [6.3, 1.8, 3, 0.5, 4.4, 2.7, 2])
+    	            .render();
+                
+            }
+            
+            chart_StackedAreas('StackedAreas');
+            
+            
+            
+            // chart four
+            var c4 = new Chart('chartFour', {
+                title: 'Markers',
+                titlePos: 'bottom',
+                titleFontColor: 'orange'
+            });
+            
+            c4.addPlot('default', {type: Markers, tension: 3 })
+	            .addAxis("x", {fixLower: "major", fixUpper: "major"})
+	            .addAxis("y", {vertical: true, fixLower: "major", fixUpper: "major", min: 0})
+	            .setTheme(Wetland)
+	            .addSeries("Series A", [1, 2, 0.5, 1.5, 1, 2.8, 0.4])
+	            .addSeries("Series B", [2.6, 1.8, 2, 1, 1.4, 0.7, 2])
+	            .addSeries("Series C", [6.3, 1.8, 3, 0.5, 4.4, 2.7, 2])
+	            .render();
+            
+            
+            // chart five: MarkersOnly
+            var c5 = new Chart('chartFive', {
+                title: 'MarkersOnly',
+                titlePos: 'bottom',
+                titleFontColor: 'orange'
+            });
+            
+            c5.addPlot('default', {type: MarkersOnly, tension: 3 })
+	            .addAxis("x", {fixLower: "major", fixUpper: "major"})
+	            .addAxis("y", {vertical: true, fixLower: "major", fixUpper: "major", min: 0})
+	            .setTheme(Wetland)
+	            .addSeries("Series A", [1, 2, 0.5, 1.5, 1, 2.8, 0.4])
+	            .addSeries("Series B", [2.6, 1.8, 2, 1, 1.4, 0.7, 2])
+	            .addSeries("Series C", [6.3, 1.8, 3, 0.5, 4.4, 2.7, 2])
+	            .render();
+            
+            
+            // chart: spider
+            function chart_spider(){
+                var chart = new Chart('chartSpider', {
+                    title: 'Spider',
+                    titlePos: 'bottom',
+                    titleFontColor: 'orange'
+                });
+                
+                chart.addPlot("default", {
+                    type: Spider,
+                    labelOffset: -10,
+                    divisions: 5,
+                    seriesFillAlpha: 0.2,
+                    markerSize: 3,
+                    precision: 0,
+                    spiderType: "polygon"
+                  });
+                  chart.addSeries("China", {data: {"GDP": 2, "area": 6, "population": 2000, "inflation": 15, "growth": 12}}, { fill: "blue" });
+                  chart.addSeries("USA", {data: {"GDP": 3, "area": 20, "population": 1500, "inflation": 10, "growth": 3}}, { fill: "green" });
+                  // ...
+                  chart.addSeries("Canada", {data: {"GDP": 1, "area": 18, "population": 300, "inflation": 3, "growth": 15}}, { fill: "purple" });
+                  chart.render();
+
+                  var legend = new SelectableLegend({chart: chart, horizontal: true}, "legend");
+            }
+
+            chart_spider();
+            
+            
+            // chart: pie
+            function chart_pie(){
+                var c = window.chartPie = new Chart(document.getElementById('chartPie'), {
+                    title: 'Pie',
+                    titlePos: 'bottom',
+                    titleFontColor: 'orange'
+                });
+                
+                c.addPlot('default', {type: Pie, labels: true, stroke: null, animate: { duration: 2000, easing: easing.bounceInOut }})
+    	            .setTheme(Harmony)
+    	            .addSeries("Series A", [{y: 5, color: "green"},
+    	                                    {y: 1, color: "white"}]);
+                
+                // tooltip
+                new Tooltip(c, "default", {
+			       text: function(o){
+			          return "Element at index: "+o.index;
+			       }
+			    });
+                
+    	        c.render();
+    	        
+    	        
+            }
+            
+            
+            chart_pie();
+            
+            
+            // chart donuts
+            function chart_donuts(type){
+                
+                var pd = window.pd = new PercentageDonut({
+                    targetDom: 'chart'+type,
+                    centerColor: 'white',
+                    completeColor: '#7AC943',
+                    incompleteColor: '#3FA9F5'
+                });
+                
+                var z= 0;
+                var m = 100;
+                var h = setInterval(function(){
+    	            z+=10;
+    	            
+                	pd.update(z, m-z);
+    	            if(z >= m){
+    	                clearInterval(h);
+    	            }    	            
+    	        }, 200);
+            }
+            
+            
+            chart_donuts('Donuts');
+	        
+            
+            
+          });
+      });
+
+
+	function xy(arr){
+	    return arr.map(function(a){
+	        return {x: a[0], y: a[1]};
+	    });
+	}
+
+</script>
+
+
+</body>
+</html>

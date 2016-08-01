@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Use CSS to make a grid</title>
+</head>
+<body>
+
+
+
+
+
+<hr/>
+
+	<div >
+		<div class="dgrid-header dgrid-header-row ui-widget-header" role="row">
+			<table class="dgrid-row-table" role="presentation"
+				id="dgrid_0-header">
+				<tr>
+					<th class="dgrid-cell dgrid-column-0 field-patientName"
+						role="columnheader"><div id="dijit__TemplatedMixin_0"
+							widgetid="dijit__TemplatedMixin_0">
+							<div data-dojo-attach-point="contentNode" role="button"
+								tabindex="0" class="dijitInlineEditBoxDisplayMode"
+								id="dijit_InlineEditBox_0" widgetid="dijit_InlineEditBox_0">名字别名</div>
+						</div></th>
+					<th class="dgrid-cell dgrid-column-1 field-birthDate"
+						role="columnheader"><div id="dijit__TemplatedMixin_1"
+							widgetid="dijit__TemplatedMixin_1">
+							<div data-dojo-attach-point="contentNode" role="button"
+								tabindex="0" class="dijitInlineEditBoxDisplayMode"
+								id="dijit_InlineEditBox_1" widgetid="dijit_InlineEditBox_1">出生日期</div>
+						</div></th>
+					<th class="dgrid-cell dgrid-column-2 field-ethnic"
+						role="columnheader"><div id="dijit__TemplatedMixin_2"
+							widgetid="dijit__TemplatedMixin_2">
+							<div data-dojo-attach-point="contentNode" role="button"
+								tabindex="0" class="dijitInlineEditBoxDisplayMode"
+								id="dijit_InlineEditBox_2" widgetid="dijit_InlineEditBox_2">民族</div>
+						</div></th>
+					<th class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+						role="columnheader"><div id="dijit__TemplatedMixin_3"
+							widgetid="dijit__TemplatedMixin_3">
+							<div data-dojo-attach-point="contentNode" role="button"
+								tabindex="0" class="dijitInlineEditBoxDisplayMode"
+								id="dijit_InlineEditBox_3" widgetid="dijit_InlineEditBox_3">文本框1</div>
+						</div></th>
+					<th class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+						role="columnheader"><div id="dijit__TemplatedMixin_4"
+							widgetid="dijit__TemplatedMixin_4">
+							<div data-dojo-attach-point="contentNode" role="button"
+								tabindex="0" class="dijitInlineEditBoxDisplayMode"
+								id="dijit_InlineEditBox_4" widgetid="dijit_InlineEditBox_4">单选框2</div>
+						</div></th>
+				</tr>
+			</table>
+		</div>
+<!-- 		<div class="dgrid-scroller" -->
+<!-- 			style="margin-top: 24px; margin-bottom: 0px;"> -->
+			
+<!-- 		</div> -->
+<div class="dgrid-content ui-widget-content">
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-0">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-1">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-2">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-3">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-4">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-5">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-6">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-7">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-8">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-9">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-10">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-11">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-12">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-13">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-14">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-15">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-16">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-17">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-18">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-19">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-20">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-21">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-22">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-23">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-24">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-25">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-26">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-27">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-28">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-29">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-30">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-31">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-32">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-33">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-even ui-state-default"
+					id="dgrid_0-row-34">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row dgrid-row-odd ui-state-default"
+					id="dgrid_0-row-35">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+				<div role="row" class=" dgrid-row ui-state-default dgrid-row-even"
+					id="dgrid_0-row-36">
+					<table class="dgrid-row-table" role="presentation">
+						<tr>
+							<td class="dgrid-cell dgrid-column-0 field-patientName"
+								role="gridcell">Bob</td>
+							<td class="dgrid-cell dgrid-column-1 field-birthDate"
+								role="gridcell">today</td>
+							<td class="dgrid-cell dgrid-column-2 field-ethnic"
+								role="gridcell">a</td>
+							<td
+								class="dgrid-cell dgrid-column-3 field-text1_A2AEFEE3C463249D"
+								role="gridcell">adfasdfasd</td>
+							<td
+								class="dgrid-cell dgrid-column-4 field-radio2_E57C1E56C484D463"
+								role="gridcell">y</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		<div
+			class="dgrid-header dgrid-header-scroll dgrid-scrollbar-width ui-widget-header"
+			style="height: 24px;"></div>
+		<div class="dgrid-footer dgrid-footer-hidden"></div>
+	</div>
+
+
+</body>
+</html>

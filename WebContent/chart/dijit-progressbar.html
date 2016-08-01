@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dijit Progress Bar</title>
+<link rel="stylesheet" href="/dojo-release-1.10.4-src/dojo/resources/dojo.css" />
+<link rel="stylesheet" href="/dojo-release-1.10.4-src/dijit/themes/dijit.css" />
+<link rel="stylesheet" href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+	
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : 'http://localhost:9090/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/hello-dojo'
+            }
+        ]
+    };
+</script>
+<script src="http://localhost:9090/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+<style type="text/css">
+
+
+/* .dijitProgressBar{ */
+/* 	background-color: #C5C4C4 !important; */
+/* 	border: none !important; */
+/*     height: 10px !important; */
+/*     overflow: initial !important; */
+/* } */
+
+/* .dijitProgressBarFull{ */
+/*     height: 10px !important; */
+/* } */
+
+/* .dijitProgressBarTile{ */
+/* 	    background-color: #7395fb !important; */
+/* 	    background-image: none !important; */
+/* 	    background-repeat: none !important; */
+/* } */
+
+/* .dijitProgressBarLabel{ */
+/* 	display: inline-block !important; */
+/*     position: absolute !important; */
+/*     right: -30px !important; */
+/*     top: -1px !important; */
+/*     width: initial !important; */
+/* } */
+
+
+</style>
+</head>
+<body class="claro philips">
+	<h1>Dijit Progress Bar</h1>
+	<hr />
+
+
+<div id="progressBar1"></div>
+
+<div id="progressBar"></div>
+
+
+<script type="text/javascript">
+	require(["dijit/ProgressBar", 'app/widget/percentageProgressBar/PercentageProgressBar',
+	         "dojo/dom", "dojo/_base/declare",  "dojo/_base/window", "dojo/domReady!"], function(ProgressBar, PercentageProgressBar, dom, declare, win){
+	    
+	    var i = 0;
+	    
+	    var myProgressBar = new PercentageProgressBar({
+	        style: "width: 100px"
+	    });
+	    
+	    myProgressBar.placeAt('progressBar1').startup();
+	    
+	    setInterval(function(){
+	       myProgressBar.set("value", i++ % 100);
+	    }, 100);
+
+
+		
+	});
+
+</script>
+
+</body>
+</html>

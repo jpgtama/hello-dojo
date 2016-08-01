@@ -64,13 +64,12 @@
             "dijit/ProgressBar",
             'dijit/form/Textarea',
             'dijit/InlineEditBox',
-            'app/widget/grid/_HeaderMixin',
             'dojo/dom-construct',
             'dojo/query',
             'dgrid/Grid',
             'dojo/_base/declare',
             'dojo/domReady!'
-        ], function(DynamicProgressBar, ProgressBar, Textarea, InlineEditBox, _HeaderMixin, domC, query, Grid, declare) {
+        ], function(DynamicProgressBar, ProgressBar, Textarea, InlineEditBox, domC, query, Grid, declare) {
 
             
             window.DynamicProgressBar = DynamicProgressBar;
@@ -155,15 +154,18 @@
                             style : "width: 200px"
                         });
 
-                        myProgressBar.placeAt(node).startup();
+                        //myProgressBar.placeAt(node).startup();
+                        // node.appendChild(myProgressBar.domNode);
 
+                        // myProgressBar.startup();
+                        
+                        return myProgressBar.domNode;
                     }
                 }
             ];
 
             var NewGrid = declare([
-                Grid,
-                _HeaderMixin
+                Grid
             ]);
             var grid = new NewGrid({
                 className : 'data-grid',

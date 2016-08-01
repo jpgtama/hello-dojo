@@ -6,7 +6,7 @@ define([
     
     var DPB = declare(ProgressBar, {
 
-        startup : function() {
+        postCreate : function() {
             // parent
             this.inherited(arguments);
 
