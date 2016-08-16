@@ -1,0 +1,18 @@
+<div class="cardWrapper">
+	<div class="studyName">${data.studyName}</div>
+	<div class="countWrapper">
+		<div class="study">
+			<div class="label">${studyLabel}</div>
+			<div class="count">${data.studyCount}</div>
+		</div>
+		<div class="patient">
+			<div class="label">${patientLabel}</div>
+			<div class="count">${data.patientCount}</div>
+		</div>
+	</div>
+	<div class="completeState">
+		<div class="progressBar" data-dojo-attach-point="completeBar"
+			data-dojo-type="app/widget/completeBar/CompleteBar"
+			data-dojo-props="total: ${data.studyCount}, complete: ${data.completeCount}"></div>
+	</div>
+</div>

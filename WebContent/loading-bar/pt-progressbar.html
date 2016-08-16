@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<style>
+
+
+.pt-loading-text{
+	display: none;
+}
+
+.pt-progressbar-gradient, .progressBar{
+	width: 400px;
+	height: 10px;
+	background-image: linear-gradient(to right,rgba(42,146,196,0) 0,#2a92c4 50%,rgba(42,146,196,0));
+	background-size: 250px 1em;
+	background-repeat: no-repeat;
+ 	animation: 2s linear 0s normal none infinite running animateLinearProgress; 
+}
+
+@keyframes animateCircularProgress {
+	100% {
+		-webkit-transform:rotate(360deg);
+		transform:rotate(360deg)
+	}
+}
+
+@keyframes animateLinearProgress {
+	0% {
+		background-position:-250px 0
+	}
+	100% {
+		background-position: 400px 0
+	}
+}
+
+</style>
+</head>
+<body>
+
+	<div class="progressBar"></div>
+
+
+<!-- 	<div widgetid="progressbar" style="width: 400px;" -->
+<!-- 		class="pt-progressbar indeterminate" id="progressbar" -->
+<!-- 		data-dojo-type="pt/ProgressBar"> -->
+<!-- 		<div class="pt-loading-text">Loading</div> -->
+<!-- 		<div class="pt-progressbar-gradient"> -->
+<!-- 			<div class="pt-progressbar-value"></div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+
+
+</body>
+</html>

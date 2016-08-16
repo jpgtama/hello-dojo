@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dojo Loading Bar</title>
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dojo/resources/dojo.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dijit/themes/dijit.css" />
+<link rel="stylesheet"
+	href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : 'http://localhost:9090/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/hello-dojo'
+            }
+        ]
+    };
+</script>
+<script src="http://localhost:9090/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+
+<style type="text/css">
+.container {
+	display: flex;
+	height: 800px;
+	padding: 5px;
+}
+
+.left, .menu, .content {
+	border: 1px solid;
+	margin: 5px;
+}
+
+.left {
+	flex: 1;
+}
+
+.right {
+	flex: 3;
+	display: flex;
+	flex-direction: column;
+}
+
+.menu {
+	flex: 1;
+}
+
+.content {
+	flex: 3;
+}
+</style>
+
+</head>
+<body class="claro">
+
+	<h1>Dojo Loading Bar</h1>
+	<hr />
+
+	<div class="container">
+
+		<div class="left">
+			<ul>
+				<li><a href="javascript: onClick('Alternative Rap')">Alternative
+						Rap</a></li>
+				<li><a href="javascript: onClick('Bounce')">Bounce</a></li>
+				<li><a href="javascript: onClick('Dirty South')">Dirty
+						South</a></li>
+				<li><a href="javascript: onClick('East Coast Rap')">East
+						Coast Rap</a></li>
+				<li><a href="javascript: onClick('Gangsta Rap')">Gangsta
+						Rap</a></li>
+				<li><a href="javascript: onClick('Hardcore Rap')">Hardcore
+						Rap</a></li>
+				<li><a href="javascript: onClick('Hip-Hop')">Hip-Hop</a></li>
+				<li><a href="javascript: onClick('Latin Rap')">Latin Rap</a></li>
+				<li><a href="javascript: onClick('Old School Rap')">Old
+						School Rap</a></li>
+				<li><a href="javascript: onClick('Rap')">Rap</a></li>
+				<li><a
+					href="javascript: onClick('Turntablism (thank you Luke Allfree)')">Turntablism
+						(thank you Luke Allfree)</a></li>
+				<li><a href="javascript: onClick('Underground Rap')">Underground
+						Rap</a></li>
+				<li><a href="javascript: onClick('West Coast Rap')">West
+						Coast Rap</a></li>
+
+			</ul>
+
+		</div>
+
+
+		<div class="right">
+			<div class="menu"></div>
+			<div class="content"></div>
+		</div>
+
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript">
+        function onClick(str){
+            // TODO show loading bar
+            console.log('Begin to show loading bar...');
+            
+            
+            
+        }
+    </script>
+
+
+</body>
+</html>

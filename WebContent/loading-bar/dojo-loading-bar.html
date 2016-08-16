@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dojo Loading Bar</title>
+<link rel="stylesheet" href="style.css"></link>
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : 'http://localhost:9090/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/hello-dojo'
+            }
+        ]
+    };
+</script>
+<script src="http://localhost:9090/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+</head>
+<body>
+
+<h1>Dojo Loading Bar</h1>
+<hr/>
+
+
+
+<div id="loadingOverlay" class="loadingOverlay pageOverlay"></div>
+
+<script type="text/javascript">
+
+	var demo;
+	
+	require(["dojo/_base/declare","dojo/dom","dojo/dom-style"],
+		function(declare, dom, domStyle){
+	    
+		var Demo = declare(null, {
+			overlayNode:null,
+			constructor:function(){
+				// save a reference to the overlay
+				this.overlayNode = dom.byId("loadingOverlay");
+			},
+			// called to hide the loading overlay
+			endLoading:function(){
+				domStyle.set(this.overlayNode,'display','none');
+			}
+		});
+		
+		demo = new Demo();
+		
+		
+});
+
+
+</script>
+
+
+</body>
+</html>

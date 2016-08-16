@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Card List based on dgrid List</title>
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : 'http://localhost:9090/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/hello-dojo'
+            }
+        ]
+    };
+</script>
+<script src="http://localhost:9090/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+<link rel="stylesheet" href="/dojo-release-1.10.4-src/dojo/resources/dojo.css" />
+<link rel="stylesheet" href="/dojo-release-1.10.4-src/dijit/themes/dijit.css" />
+<link rel="stylesheet" href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+<style>
+
+.wrapper{
+	display: inline-block;
+    width: 25%;
+    padding: 22px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.item{
+    background-color: aliceblue;
+}
+
+.cardWrapper{
+	background-color: #F2F2F2;
+	display: inline-block;
+	box-shadow: 0px 0px 5px 4px rgba(0,0,0,0.1);
+	padding: 8px;
+	font-family: simhei;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.cardWrapper .studyName{
+	margin-bottom: 8px;
+}
+
+.countWrapper{
+	margin-bottom: 21px;
+}
+
+.countWrapper .study, .countWrapper .patient{
+    display: inline-block;
+    background-color: white;
+    padding: 8px 25px 8px 25px;
+}
+
+.countWrapper .label{
+	    margin-bottom: 8px;
+}
+
+.countWrapper .count{
+	    text-align: center;
+}
+
+
+.completeState .progressBar{
+	background-color: #A4D323;
+	font-size: 12px;
+}
+
+.completeState .progressBar > div{
+/* 	display: inline-block; */
+}
+.completeState .progressBar .complete{
+    width: 75%;
+    background-color: #EFBA28;
+    float: left;
+    text-align: left;
+}
+
+.completeState .progressBar .incomplete{
+	float: right;
+}
+
+</style>
+</head>
+<body class="claro">
+
+<h1>Card List based on dgrid List</h1>
+<hr/>
+
+<!-- <div class="cardWrapper"> -->
+<!-- 	<div class="studyName">PCI患者注册研究</div> -->
+<!-- 	<div class="countWrapper"> -->
+<!-- 		<div class="study"> -->
+<!-- 			<div class="label">研究数量</div> -->
+<!-- 			<div class="count">108</div> -->
+<!-- 		</div> -->
+<!-- 		<div class="patient"> -->
+<!-- 			<div class="label">患者人数</div> -->
+<!-- 			<div class="count">98</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- 	<div class="completeState"> -->
+<!-- 		<div class="progressBar" id="progressBar"></div> -->
+<!-- 	</div> -->
+<!-- </div> -->
+
+<div data-dojo-type="app/widget/studyCard/StudyCard" data-dojo-props="data : {studyName : 'PIC患者注册研究',studyCount: 108,patientCount : 98,completeCount : 76}"></div>
+
+
+<!-- <img src="注册完成度.png" /> -->
+<br/>
+<br/>
+<br/>
+<hr/>
+<br/>
+<br/>
+<br/>
+
+<div id="list"></div>
+
+
+<div id="onDemandList"></div>
+
+
+<script>
+require(['app/widget/studyCard/StudyCard', 'dgrid/List', 'dgrid/OnDemandList',  'app/widget/completeBar/CompleteBar', 
+         'dojo/dom-construct', 'dojo/string'], function (StudyCard, List, OnDemandList, CompleteBar, domC, string) {
+    
+    // var arrayOfData = ["Africa", "Egypt", "Cairo", "Kenya", "Nairobi", "Mombasa", "Sudan", "Khartoum", "Asia", "China", "Shanghai", "India", "Calcutta", "Russia", "Moscow", "Mongolia", "Ulan Bator", "Oceania", "Australia", "Sydney", "Europe", "Germany", "Berlin", "France", "Paris", "Spain", "Madrid", "Italy", "Rome", "North America", "Mexico", "Mexico City", "Guadalajara", "Canada", "Ottawa", "Toronto", "United States of America", "New York", "South America", "Brazil", "Brasilia", "Argentina", "Buenos Aires"];
+    
+    var arrayOfData = [ 
+                       {studyName: 'PCI患者注册研究', studyCount: 108,patientCount : 98,completeCount : 76}, 
+                       {studyName: 'CAG注册研究', studyCount: 108,patientCount : 98,completeCount : 95},  
+                       {studyName: '高血压注册研究', studyCount: 108,patientCount : 98,completeCount : 95},  
+                       {studyName: '他汀类注册研究', studyCount: 108,patientCount : 98,completeCount : 95},  
+                       {studyName: '房颤注册研究', studyCount: 108,patientCount : 98,completeCount : 95},  
+                       {studyName: 'CAF注册研究', studyCount: 108,patientCount : 98,completeCount : 95},  
+                       {studyName: '心衰注册研究', studyCount: 108,patientCount : 98,completeCount : 76},  
+                       {studyName: '起搏器注册研究', studyCount: 108,patientCount : 98,completeCount : 76}
+                   
+                     ];
+    
+    // attach to a DOM element indicated by its ID
+    var list = new List({
+        renderRow: function(item){
+            //var div = domC.toDom(string.substitute('<div class="wrapper">   <div class="cardWrapper"> 	<div class="studyName">${studyName}</div> 	<div class="countWrapper"> 		<div class="study"> 			<div class="label">${study.label}</div> 			<div class="count">${study.count}</div> 		</div> 		<div class="patient"> 			<div class="label">${patient.label}</div> 			<div class="count">${patient.count}</div> 		</div> 	</div> 	<div class="completeState"> 		<div class="progressBar"> 	&nbsp;		<div class="complete">${completeState.complete}</div> 			<div class="incomplete">${completeState.incomplete}</div> 		</div> 	</div> </div>    </div>', item));
+            
+            var wrapper = domC.toDom('<div class="wrapper"><div>');
+            
+            var sd = new StudyCard({
+                data:　item
+            });
+            
+            wrapper.appendChild(sd.domNode);
+            
+            return wrapper;
+        } 
+    }, 'list');
+    // render some data
+    list.renderArray(arrayOfData);
+    
+    
+//     var t = 108;
+//     var c = 76;
+//     var pb = new CompleteBar({
+//         value: c/t*100 
+//     });
+//     pb.placeAt('progressBar');
+//     setInterval(function(){
+//         pb.updateStatus(t, c++);
+//     }, 1000);
+    
+});
+
+</script>
+
+
+</body>
+</html>

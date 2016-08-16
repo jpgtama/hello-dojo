@@ -1,0 +1,25 @@
+.completeBar {
+	border: none;
+	background-color: #A4D323 !important;
+}
+
+.completeBar .completeCount {
+	position: absolute;
+	top: 0px;
+	left: 3px;
+}
+
+.completeBar .incompleteCount {
+	position: absolute;
+	top: 0px;
+	right: 3px;
+}
+
+.completeBar .dijitProgressBarFull {
+	border: none;
+}
+
+.completeBar .dijitProgressBarTile {
+	background-color: #EFBA28;
+	background-image: none;
+}
