@@ -10,47 +10,47 @@
  * prohibited without the written consent of the copyright owner.
  * 
  * 
- * FILE NAME: StudyCard.js
+ * FILE NAME: StudyCardList.js
  * 
- * CREATED: 2016年8月16日 下午5:13:53
+ * CREATED: 2016年8月17日 上午9:43:24
  * 
  * ORIGINAL AUTHOR(S): 310199253
  * 
  * </pre>
  ******************************************************************************/
 define([
-    'dijit/_WidgetBase',
-    'dijit/_TemplatedMixin',
-    'dijit/_WidgetsInTemplateMixin',
+    '../studyCard/StudyCard',
+    'dgrid/List',
+    'dojo/dom-construct',
     'dojo/_base/declare',
-    'dojo/text!./study-card.html',
-    'xstyle/css!./study-card.css'
-], function(_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, declare, template) {
+    'xstyle/css!./study-card-list.css'
+], function(StudyCard, List, domC, declare) {
     return declare('', [
-        _WidgetBase,
-        _TemplatedMixin,
-        _WidgetsInTemplateMixin
+        List
     ], {
-
-        templateString : template,
-
-        studyLabel: '研究数量',
         
-        patientLabel: '患者人数',
-        
-        data : {
-            "patientCount": 7,
-            "researchDefId": 55596290,
-            "researchCount": 7,
-            "researchName": "MultiPage",
-            "complete": 6
+        /**
+         * Override
+         */
+        postscript: function(){
+            arguments[0]['class'] = 'study-card-list';
+            this.inherited(arguments);
         },
 
         /**
          * Override
          */
-        constructor : function() {
+        renderRow : function(item) {
+            debugger;
+            var wrapper = domC.toDom('<div class="wrapper"><div>');
 
+            var sd = new StudyCard({
+                data : item
+            });
+
+            wrapper.appendChild(sd.domNode);
+
+            return wrapper;
         }
     });
 });

@@ -1,0 +1,7 @@
+.card-list .row-wrapper{
+	display: inline-block;
+    width: 25%;
+    padding: 22px;
+    box-sizing: border-box;
+    text-align: center;
+}

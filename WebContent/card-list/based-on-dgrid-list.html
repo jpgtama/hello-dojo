@@ -40,69 +40,69 @@
 <link rel="stylesheet" href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
 <style>
 
-.wrapper{
-	display: inline-block;
-    width: 25%;
-    padding: 22px;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.item{
-    background-color: aliceblue;
-}
-
-.cardWrapper{
-	background-color: #F2F2F2;
-	display: inline-block;
-	box-shadow: 0px 0px 5px 4px rgba(0,0,0,0.1);
-	padding: 8px;
-	font-family: simhei;
-    font-weight: bold;
-    border-radius: 5px;
-}
-
-.cardWrapper .studyName{
-	margin-bottom: 8px;
-}
-
-.countWrapper{
-	margin-bottom: 21px;
-}
-
-.countWrapper .study, .countWrapper .patient{
-    display: inline-block;
-    background-color: white;
-    padding: 8px 25px 8px 25px;
-}
-
-.countWrapper .label{
-	    margin-bottom: 8px;
-}
-
-.countWrapper .count{
-	    text-align: center;
-}
-
-
-.completeState .progressBar{
-	background-color: #A4D323;
-	font-size: 12px;
-}
-
-.completeState .progressBar > div{
+/* .wrapper{ */
 /* 	display: inline-block; */
-}
-.completeState .progressBar .complete{
-    width: 75%;
-    background-color: #EFBA28;
-    float: left;
-    text-align: left;
-}
+/*     width: 25%; */
+/*     padding: 22px; */
+/*     box-sizing: border-box; */
+/*     text-align: center; */
+/* } */
 
-.completeState .progressBar .incomplete{
-	float: right;
-}
+/* .item{ */
+/*     background-color: aliceblue; */
+/* } */
+
+/* .cardWrapper{ */
+/* 	background-color: #F2F2F2; */
+/* 	display: inline-block; */
+/* 	box-shadow: 0px 0px 5px 4px rgba(0,0,0,0.1); */
+/* 	padding: 8px; */
+/* 	font-family: simhei; */
+/*     font-weight: bold; */
+/*     border-radius: 5px; */
+/* } */
+
+/* .cardWrapper .studyName{ */
+/* 	margin-bottom: 8px; */
+/* } */
+
+/* .countWrapper{ */
+/* 	margin-bottom: 21px; */
+/* } */
+
+/* .countWrapper .study, .countWrapper .patient{ */
+/*     display: inline-block; */
+/*     background-color: white; */
+/*     padding: 8px 25px 8px 25px; */
+/* } */
+
+/* .countWrapper .label{ */
+/* 	    margin-bottom: 8px; */
+/* } */
+
+/* .countWrapper .count{ */
+/* 	    text-align: center; */
+/* } */
+
+
+/* .completeState .progressBar{ */
+/* 	background-color: #A4D323; */
+/* 	font-size: 12px; */
+/* } */
+
+/* .completeState .progressBar > div{ */
+/* /* 	display: inline-block; */ */
+/* } */
+/* .completeState .progressBar .complete{ */
+/*     width: 75%; */
+/*     background-color: #EFBA28; */
+/*     float: left; */
+/*     text-align: left; */
+/* } */
+
+/* .completeState .progressBar .incomplete{ */
+/* 	float: right; */
+/* } */
 
 </style>
 </head>
@@ -128,7 +128,7 @@
 <!-- 	</div> -->
 <!-- </div> -->
 
-<div data-dojo-type="app/widget/studyCard/StudyCard" data-dojo-props="data : {studyName : 'PIC患者注册研究',studyCount: 108,patientCount : 98,completeCount : 76}"></div>
+<!-- <div data-dojo-type="app/widget/studyCard/StudyCard" data-dojo-props="data : {studyName : 'PIC患者注册研究',studyCount: 108,patientCount : 98,completeCount : 76}"></div> -->
 
 
 <!-- <img src="注册完成度.png" /> -->
@@ -147,52 +147,314 @@
 
 
 <script>
-require(['app/widget/studyCard/StudyCard', 'dgrid/List', 'dgrid/OnDemandList',  'app/widget/completeBar/CompleteBar', 
-         'dojo/dom-construct', 'dojo/string'], function (StudyCard, List, OnDemandList, CompleteBar, domC, string) {
+require(['app/widget/studyCard/StudyCard', 'app/widget/cardList/CardList', 'dgrid/List', 'dgrid/OnDemandList',  'app/widget/completeBar/CompleteBar', 
+         'dojo/dom-construct', 'dojo/string'], function (StudyCard, CardList, List, OnDemandList, CompleteBar, domC, string) {
     
     // var arrayOfData = ["Africa", "Egypt", "Cairo", "Kenya", "Nairobi", "Mombasa", "Sudan", "Khartoum", "Asia", "China", "Shanghai", "India", "Calcutta", "Russia", "Moscow", "Mongolia", "Ulan Bator", "Oceania", "Australia", "Sydney", "Europe", "Germany", "Berlin", "France", "Paris", "Spain", "Madrid", "Italy", "Rome", "North America", "Mexico", "Mexico City", "Guadalajara", "Canada", "Ottawa", "Toronto", "United States of America", "New York", "South America", "Brazil", "Brasilia", "Argentina", "Buenos Aires"];
     
-    var arrayOfData = [ 
-                       {studyName: 'PCI患者注册研究', studyCount: 108,patientCount : 98,completeCount : 76}, 
-                       {studyName: 'CAG注册研究', studyCount: 108,patientCount : 98,completeCount : 95},  
-                       {studyName: '高血压注册研究', studyCount: 108,patientCount : 98,completeCount : 95},  
-                       {studyName: '他汀类注册研究', studyCount: 108,patientCount : 98,completeCount : 95},  
-                       {studyName: '房颤注册研究', studyCount: 108,patientCount : 98,completeCount : 95},  
-                       {studyName: 'CAF注册研究', studyCount: 108,patientCount : 98,completeCount : 95},  
-                       {studyName: '心衰注册研究', studyCount: 108,patientCount : 98,completeCount : 76},  
-                       {studyName: '起搏器注册研究', studyCount: 108,patientCount : 98,completeCount : 76}
-                   
-                     ];
+//     var arrayOfData = [ 
+//                        {studyName: 'PCI患者注册研究', studyCount: 108,patientCount : 98,completeCount : 76}, 
+//                        {studyName: 'CAG注册研究', studyCount: 108,patientCount : 98,completeCount : 95},  
+//                        {studyName: '高血压注册研究', studyCount: 108,patientCount : 98,completeCount : 95},  
+//                        {studyName: '他汀类注册研究', studyCount: 108,patientCount : 98,completeCount : 95},  
+//                        {studyName: '房颤注册研究', studyCount: 108,patientCount : 98,completeCount : 95},  
+//                        {studyName: 'CAF注册研究', studyCount: 108,patientCount : 98,completeCount : 95},  
+//                        {studyName: '心衰注册研究', studyCount: 108,patientCount : 98,completeCount : 76},  
+//                        {studyName: '起搏器注册研究', studyCount: 108,patientCount : 98,completeCount : 76},
+//                        {studyName: 'PCI患者注册研究', studyCount: 108,patientCount : 98,completeCount : 76}, 
+//                        {studyName: 'CAG注册研究', studyCount: 108,patientCount : 98,completeCount : 95},  
+//                        {studyName: '高血压注册研究', studyCount: 108,patientCount : 98,completeCount : 95},  
+//                        {studyName: '他汀类注册研究', studyCount: 108,patientCount : 98,completeCount : 95}
+//                      ];
+
+	var arrayOfData = [{
+		"patientCount": 4,
+		"researchDefId": 52978308,
+		"researchCount": 4,
+		"researchName": "YX025",
+		"complete": 0
+	},
+	{
+		"patientCount": 2,
+		"researchDefId": 53064344,
+		"researchCount": 2,
+		"researchName": "Yx026",
+		"complete": 1
+	},
+	{
+		"patientCount": 2,
+		"researchDefId": 53318358,
+		"researchCount": 2,
+		"researchName": "jhy001",
+		"complete": 1
+	},
+	{
+		"patientCount": 2,
+		"researchDefId": 53351134,
+		"researchCount": 2,
+		"researchName": "Radio_Default",
+		"complete": 0
+	},
+	{
+		"patientCount": 6,
+		"researchDefId": 53383911,
+		"researchCount": 6,
+		"researchName": "XXXX",
+		"complete": 2
+	},
+	{
+		"patientCount": 2,
+		"researchDefId": 53482239,
+		"researchCount": 2,
+		"researchName": "YXB001YXB00B001YXB0YXB001YXB1YXB001YXB001YX01YXB001YXB001YXB001YXB0YXB001YXB001YXB001YXB0",
+		"complete": 0
+	},
+	{
+		"patientCount": 7,
+		"researchDefId": 53572372,
+		"researchCount": 7,
+		"researchName": "Research_Table_001",
+		"complete": 5
+	},
+	{
+		"patientCount": 3,
+		"researchDefId": 54002557,
+		"researchCount": 3,
+		"researchName": "test1",
+		"complete": 0
+	},
+	{
+		"patientCount": 1,
+		"researchDefId": 54035333,
+		"researchCount": 1,
+		"researchName": "TestRadioExport",
+		"complete": 0
+	},
+	{
+		"patientCount": 1,
+		"researchDefId": 54133661,
+		"researchCount": 1,
+		"researchName": "test2",
+		"complete": 0
+	},
+	{
+		"patientCount": 2,
+		"researchDefId": 54150049,
+		"researchCount": 2,
+		"researchName": "test3",
+		"complete": 1
+	},
+	{
+		"patientCount": 1,
+		"researchDefId": 54191020,
+		"researchCount": 1,
+		"researchName": "test5",
+		"complete": 0
+	},
+	{
+		"patientCount": 1,
+		"researchDefId": 54264765,
+		"researchCount": 1,
+		"researchName": "test6",
+		"complete": 0
+	},
+	{
+		"patientCount": 7,
+		"researchDefId": 54867024,
+		"researchCount": 10,
+		"researchName": "吕中夺东和奇才遥城林村遥一有要标有地肝要震 村遥村地膘膘膘格不 极",
+		"complete": 9
+	},
+	{
+		"patientCount": 2,
+		"researchDefId": 55014516,
+		"researchCount": 3,
+		"researchName": "方式顶顶顶顶顶顶0000000aaaaaaaaaaaaaaaaaaaaaaaaa",
+		"complete": 1
+	},
+	{
+		"patientCount": 2,
+		"researchDefId": 55080068,
+		"researchCount": 2,
+		"researchName": "b1",
+		"complete": 1
+	},
+	{
+		"patientCount": 1,
+		"researchDefId": 55522544,
+		"researchCount": 1,
+		"researchName": "luohuan",
+		"complete": 0
+	},
+	{
+		"patientCount": 2,
+		"researchDefId": 55690522,
+		"researchCount": 2,
+		"researchName": "bolean",
+		"complete": 0
+	},
+	{
+		"patientCount": 1,
+		"researchDefId": 55784752,
+		"researchCount": 2,
+		"researchName": "反倒是1111",
+		"complete": 1
+	},
+	{
+		"patientCount": 1,
+		"researchDefId": 55833916,
+		"researchCount": 1,
+		"researchName": "PCI_853",
+		"complete": 0
+	},
+	{
+		"patientCount": 2,
+		"researchDefId": 55878983,
+		"researchCount": 2,
+		"researchName": "测试",
+		"complete": 1
+	},
+	{
+		"patientCount": 7,
+		"researchDefId": 55911759,
+		"researchCount": 8,
+		"researchName": "ertrrrrrrr",
+		"complete": 3
+	},
+	{
+		"patientCount": 13,
+		"researchDefId": 54264769,
+		"researchCount": 14,
+		"researchName": "111valid",
+		"complete": 10
+	},
+	{
+		"patientCount": 5,
+		"researchDefId": 55149717,
+		"researchCount": 6,
+		"researchName": "CathPCI",
+		"complete": 3
+	},
+	{
+		"patientCount": 1,
+		"researchDefId": 54322151,
+		"researchCount": 1,
+		"researchName": "研究项目名称_28",
+		"complete": 0
+	},
+	{
+		"patientCount": 1,
+		"researchDefId": 54322152,
+		"researchCount": 1,
+		"researchName": "研究项目名称_29",
+		"complete": 0
+	},
+	{
+		"patientCount": 4,
+		"researchDefId": 54322168,
+		"researchCount": 5,
+		"researchName": "研究项目名称_44",
+		"complete": 0
+	},
+	{
+		"patientCount": 4,
+		"researchDefId": 54322169,
+		"researchCount": 9,
+		"researchName": "研究项目名称_45",
+		"complete": 5
+	},
+	{
+		"patientCount": 6,
+		"researchDefId": 54322170,
+		"researchCount": 13,
+		"researchName": "研究项目名称_46",
+		"complete": 2
+	},
+	{
+		"patientCount": 3,
+		"researchDefId": 54981740,
+		"researchCount": 3,
+		"researchName": "A-Form",
+		"complete": 0
+	},
+	{
+		"patientCount": 3,
+		"researchDefId": 55411925,
+		"researchCount": 3,
+		"researchName": "testPercentage_AF",
+		"complete": 0
+	},
+	{
+		"patientCount": 2,
+		"researchDefId": 54322166,
+		"researchCount": 2,
+		"researchName": "研究项目名称_42",
+		"complete": 1
+	},
+	{
+		"patientCount": 4,
+		"researchDefId": 54322167,
+		"researchCount": 4,
+		"researchName": "研究项目名称_43",
+		"complete": 3
+	},
+	{
+		"patientCount": 2,
+		"researchDefId": 55690521,
+		"researchCount": 2,
+		"researchName": "boolaen",
+		"complete": 1
+	},
+	{
+		"patientCount": 1,
+		"researchDefId": 54264768,
+		"researchCount": 1,
+		"researchName": "研究项目名称_yy2",
+		"complete": 0
+	},
+	{
+		"patientCount": 3,
+		"researchDefId": 55329985,
+		"researchCount": 3,
+		"researchName": "page1",
+		"complete": 0
+	},
+	{
+		"patientCount": 7,
+		"researchDefId": 55596290,
+		"researchCount": 7,
+		"researchName": "MultiPage",
+		"complete": 6
+	}];
     
     // attach to a DOM element indicated by its ID
-    var list = new List({
-        renderRow: function(item){
-            //var div = domC.toDom(string.substitute('<div class="wrapper">   <div class="cardWrapper"> 	<div class="studyName">${studyName}</div> 	<div class="countWrapper"> 		<div class="study"> 			<div class="label">${study.label}</div> 			<div class="count">${study.count}</div> 		</div> 		<div class="patient"> 			<div class="label">${patient.label}</div> 			<div class="count">${patient.count}</div> 		</div> 	</div> 	<div class="completeState"> 		<div class="progressBar"> 	&nbsp;		<div class="complete">${completeState.complete}</div> 			<div class="incomplete">${completeState.incomplete}</div> 		</div> 	</div> </div>    </div>', item));
+//     var list = new List({
+//         renderRow: function(item){
+//             //var div = domC.toDom(string.substitute('<div class="wrapper">   <div class="cardWrapper"> 	<div class="studyName">${studyName}</div> 	<div class="countWrapper"> 		<div class="study"> 			<div class="label">${study.label}</div> 			<div class="count">${study.count}</div> 		</div> 		<div class="patient"> 			<div class="label">${patient.label}</div> 			<div class="count">${patient.count}</div> 		</div> 	</div> 	<div class="completeState"> 		<div class="progressBar"> 	&nbsp;		<div class="complete">${completeState.complete}</div> 			<div class="incomplete">${completeState.incomplete}</div> 		</div> 	</div> </div>    </div>', item));
             
-            var wrapper = domC.toDom('<div class="wrapper"><div>');
+//             var wrapper = domC.toDom('<div class="wrapper"><div>');
             
-            var sd = new StudyCard({
-                data:　item
-            });
+//             var sd = new StudyCard({
+//                 data:　item
+//             });
             
-            wrapper.appendChild(sd.domNode);
+//             wrapper.appendChild(sd.domNode);
             
-            return wrapper;
-        } 
+//             return wrapper;
+//         } 
+//     }, 'list');
+    
+    var list = new CardList({
+        card: StudyCard,
+        arrayOfData: arrayOfData
     }, 'list');
+    
+    
+    
     // render some data
-    list.renderArray(arrayOfData);
+    // list.renderArray(arrayOfData);
     
     
-//     var t = 108;
-//     var c = 76;
-//     var pb = new CompleteBar({
-//         value: c/t*100 
-//     });
-//     pb.placeAt('progressBar');
-//     setInterval(function(){
-//         pb.updateStatus(t, c++);
-//     }, 1000);
     
 });
 

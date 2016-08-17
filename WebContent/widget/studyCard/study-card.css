@@ -1,0 +1,47 @@
+.studyCard {
+	background-color: #F2F2F2;
+	display: inline-block;
+	box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
+	padding: 8px;
+	font-family: simhei;
+	font-weight: bold;
+	border-radius: 5px;
+}
+
+.studyCard .studyName {
+	margin-bottom: 8px;
+}
+
+.studyCard .countWrapper {
+	margin-bottom: 21px;
+}
+
+.studyCard .countWrapper .study, .studyCard .countWrapper .patient {
+	display: inline-block;
+	background-color: white;
+	padding: 8px 25px 8px 25px;
+}
+
+.studyCard .countWrapper .label {
+	margin-bottom: 8px;
+}
+
+.studyCard .countWrapper .count {
+	text-align: center;
+}
+
+.studyCard .completeState .progressBar {
+	background-color: #A4D323;
+	font-size: 12px;
+}
+
+.studyCard .completeState .progressBar .complete {
+	width: 75%;
+	background-color: #EFBA28;
+	float: left;
+	text-align: left;
+}
+
+.studyCard .completeState .progressBar .incomplete {
+	float: right;
+}
