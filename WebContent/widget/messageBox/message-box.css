@@ -1,0 +1,80 @@
+.container, .titleBar, .content, .button {
+	position: relative;
+}
+
+.container {
+	display: inline-block;
+	background-color: white;
+	width: 478px;
+	box-shadow: 0px 0px 33px 6px rgba(0, 0, 0, 0.16);
+}
+
+.titleBar {
+	color: white;
+	font-weight: bold;
+	font-family: Centrale Sans;
+	font-size: 22px;
+	text-align: left;
+	font-style: normal;
+	padding: 14px 28px 14px 28px;
+}
+
+.titleBar .icon {
+	display: inline-block;
+	vertical-align: middle;
+	width: 30px;
+	height: 30px;
+}
+
+
+
+.titleBar .title {
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	left: 8px;
+	top: -2px;
+}
+
+.content {
+	padding: 16px 28px 24px 28px;
+	font-size: 24px;
+	font-family: sans-serif;
+}
+
+.toolBar {
+	text-align: right;
+	padding: 28px 28px 28px 0px;
+}
+
+.toolBar .button {
+	border-radius: 5px;
+	padding: 8px 16px;
+}
+
+
+/*=========================Individual=============================*/
+
+/*=========Error==========*/
+.error .titleBar{
+	background-color: #db2a36;
+}
+.error .titleBar .icon {
+	background-image: url(error.png);
+}
+/*=========Error==========*/
+
+
+
+/*=========Attention==========*/
+.attention .titleBar{
+	background-color: #f0bb29;
+}
+.attention .titleBar .icon {
+	background-image: url(attention.png);
+}
+/*=========Attention==========*/
+
+
+
+

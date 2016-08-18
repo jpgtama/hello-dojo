@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Message Box UI Standard</title>
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : 'http://localhost:9090/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/hello-dojo'
+            }
+        ]
+    };
+</script>
+<script src="http://localhost:9090/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+<link rel="stylesheet" href="/dojo-release-1.10.4-src/dojo/resources/dojo.css" />
+<link rel="stylesheet" href="/dojo-release-1.10.4-src/dijit/themes/dijit.css" />
+<link rel="stylesheet" href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+<style>
+/* .container, .title, .content, .button { */
+/* 	position: relative; */
+/* } */
+
+/* .container { */
+/* 	display: inline-block; */
+/* 	background-color: white; */
+/* 	width: 478px; */
+/* 	box-shadow: 0px 0px 33px 6px rgba(0, 0, 0, 0.16); */
+/* } */
+
+/* .title { */
+/* 	background-color: #db2a36; */
+/* 	color: white; */
+/* 	font-weight: bold; */
+/* 	font-family: Centrale Sans; */
+/* 	font-size: 22px; */
+/* 	text-align: left; */
+/* 	font-style: normal; */
+/* 	padding: 14px 28px 14px 28px; */
+/* } */
+
+/* .title .icon { */
+/* 	display: inline-block; */
+/* 	vertical-align: middle; */
+/* } */
+
+/* /* .title .icon .icon-close{ */ */
+/* /*     width: 30px; */ */
+/* /*     height: 30px; */ */
+/* /*     background-color: white; */ */
+/* /*     border-radius: 15px; */ */
+/* /* } */ */
+/* .title .text { */
+/* 	display: inline-block; */
+/* 	vertical-align: middle; */
+/* 	position: relative; */
+/* 	left: 8px; */
+/* 	top: -2px; */
+/* } */
+
+/* .content { */
+/* 	padding: 16px 28px 24px 28px; */
+/* 	font-size: 24px; */
+/* 	font-family: sans-serif; */
+/* } */
+
+/* .toolbar { */
+/* 	text-align: right; */
+/* 	padding: 28px 28px 28px 0px; */
+/* } */
+
+/* .toolbar .button { */
+/* 	border-radius: 5px; */
+/* 	padding: 8px 16px; */
+/* } */
+</style>
+
+</head>
+<body>
+
+	<h1>Message Box UI Standard</h1>
+	<hr />
+
+<!-- 	<div class="container"> -->
+
+<!-- 		<div class="title"> -->
+<!-- 			<div class="icon"> -->
+<!-- 				<img src="exclamation-mark.png" /> -->
+<!-- 								<div class="icon-close"> -->
+<!-- 								</div> -->
+<!-- 			</div> -->
+<!-- 			<div class="text">Error</div> -->
+<!-- 		</div> -->
+
+<!-- 		<div class="content">A serious message appear here. Text is -->
+<!-- 			flush left and allows for multiple lines.</div> -->
+
+<!-- 		<div class="toolbar"> -->
+<!-- 			<button class="button">Acknowledge</button> -->
+<!-- 		</div> -->
+
+<!-- 	</div> -->
+
+
+<div data-dojo-type="app/widget/messageBox/MessageBox"></div>
+
+
+</body>
+</html>
