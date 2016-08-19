@@ -39,62 +39,9 @@
 <link rel="stylesheet" href="/dojo-release-1.10.4-src/dijit/themes/dijit.css" />
 <link rel="stylesheet" href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
 <style>
-/* .container, .title, .content, .button { */
-/* 	position: relative; */
-/* } */
-
-/* .container { */
-/* 	display: inline-block; */
-/* 	background-color: white; */
-/* 	width: 478px; */
-/* 	box-shadow: 0px 0px 33px 6px rgba(0, 0, 0, 0.16); */
-/* } */
-
-/* .title { */
-/* 	background-color: #db2a36; */
-/* 	color: white; */
-/* 	font-weight: bold; */
-/* 	font-family: Centrale Sans; */
-/* 	font-size: 22px; */
-/* 	text-align: left; */
-/* 	font-style: normal; */
-/* 	padding: 14px 28px 14px 28px; */
-/* } */
-
-/* .title .icon { */
-/* 	display: inline-block; */
-/* 	vertical-align: middle; */
-/* } */
-
-/* /* .title .icon .icon-close{ */ */
-/* /*     width: 30px; */ */
-/* /*     height: 30px; */ */
-/* /*     background-color: white; */ */
-/* /*     border-radius: 15px; */ */
-/* /* } */ */
-/* .title .text { */
-/* 	display: inline-block; */
-/* 	vertical-align: middle; */
-/* 	position: relative; */
-/* 	left: 8px; */
-/* 	top: -2px; */
-/* } */
-
-/* .content { */
-/* 	padding: 16px 28px 24px 28px; */
-/* 	font-size: 24px; */
-/* 	font-family: sans-serif; */
-/* } */
-
-/* .toolbar { */
-/* 	text-align: right; */
-/* 	padding: 28px 28px 28px 0px; */
-/* } */
-
-/* .toolbar .button { */
-/* 	border-radius: 5px; */
-/* 	padding: 8px 16px; */
-/* } */
+.container{
+	margin-right: 50px;
+}
 </style>
 
 </head>
@@ -124,8 +71,20 @@
 <!-- 	</div> -->
 
 
-<div data-dojo-type="app/widget/messageBox/MessageBox"></div>
+<div data-dojo-type="app/widget/messageBox/MessageBox" data-dojo-props="state: 'error', content: 'This is a message.'"></div>
+<br/><br/><br/><br/><br/><br/><br/>
+<div data-dojo-type="app/widget/messageBox/MessageBox" data-dojo-props="state: 'attention', content: 'This is a message.'"></div> 
+<br/><br/><br/><br/><br/><br/><br/>
+<div data-dojo-type="app/widget/messageBox/MessageBox" data-dojo-props="state: 'confirm', content: 'This is a message.', onOk: function(){alert('ok')}"></div>
+<div data-dojo-type="app/widget/messageBox/MessageBox" data-dojo-props="state: 'confirm', type:'blue', content: 'This is a message.'"></div>
+<div data-dojo-type="app/widget/messageBox/MessageBox" data-dojo-props="state: 'confirm', type:'closeIcon', content: 'This is a message.'"></div> 
+<br/><br/><br/><br/><br/><br/><br/>
+<div data-dojo-type="app/widget/messageBox/MessageBox" data-dojo-props="state: 'information', content: 'This is a message.'"></div>
+<div data-dojo-type="app/widget/messageBox/MessageBox" data-dojo-props="state: 'information', type:'closeIcon', content: 'This is a message.'"></div><br/>
+<br/><br/><br/><br/><br/><br/><br/>
+<div data-dojo-type="app/widget/messageBox/MessageBox" data-dojo-props="state: 'message', title:'Message Title', content: 'This is a message.'"></div><br/>
 
 
+<br/><br/><br/><br/><br/><br/><br/>
 </body>
 </html>

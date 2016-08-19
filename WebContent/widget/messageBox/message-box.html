@@ -1,17 +1,16 @@
-<div class="container attention">
+<div class="container">
 
 	<div class="titleBar" data-dojo-attach-point="titleBarNode">
-		<div class="icon" data-dojo-attach-point="iconNode">
-<!-- 			<img src="exclamation-mark.png" /> -->
-		</div>
-		<div class="title" data-dojo-attach-point="iconNode">Error</div>
+		<div class="icon" data-dojo-attach-point="iconNode"></div>
+		<div class="title" data-dojo-attach-point="iconNode">${_title}</div>
+		<div class="close" data-dojo-attach-point="closeNode" data-dojo-attach-event="onclick: _onClose"></div>
 	</div>
 
-	<div class="content" data-dojo-attach-point="contentNode">A serious message appear here. Text is flush
-		left and allows for multiple lines.</div>
+	<div class="content" data-dojo-attach-point="contentNode">${content}</div>
 
 	<div class="toolBar" data-dojo-attach-point="toolBarNode">
-		<button class="button" data-dojo-attach-point="buttonNode">Acknowledge</button>
+		<button class="button cancel" data-dojo-attach-point="cancelBtnNode" data-dojo-attach-event="onclick: _onCancel">${_cancelTitle}</button>
+		<button class="button ok" data-dojo-attach-point="okBtnNode" data-dojo-attach-event="onclick: _onOk">${_okTitle}</button>
 	</div>
 
 </div>
