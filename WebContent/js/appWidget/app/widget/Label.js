@@ -6,12 +6,12 @@ define([
     'dojox/mvc/Output',
     'dijit/_Widget',
     'dijit/_TemplatedMixin',
-    'app/widget/_WidgetSecurityMixin',
+    './_WidgetSecurityMixin',
     'dojo/dom-class',
     'dojo/dom-style',
     'dojo/dom-attr',
     'dojo/dom-construct',
-    'app/util/ResourceUtil'
+    '../util/ResourceUtil'
 ], function(declare, lang, dom, regexp, Output, _Widget, _TemplatedMixin, _WidgetSecurityMixin, domClass, domStyle, domAttr, domConstruct, i18n) {
 
     return declare('app.widget.Label', [
@@ -31,8 +31,8 @@ define([
         /**
          * format
          */
-        format: null,
-        
+        format : null,
+
         /** Override */
         constructor : function(/* Object */options) {
             lang.mixin(this, options);

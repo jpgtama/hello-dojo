@@ -2,7 +2,8 @@
 
 	<div class="titleBar" data-dojo-attach-point="titleBarNode">
 		<div class="icon" data-dojo-attach-point="iconNode"></div>
-		<div class="title" data-dojo-attach-point="iconNode">${_title}</div>
+<!-- 		<div class="title" data-dojo-attach-point="iconNode">${_title}</div> -->
+		<div class="title" data-dojo-type="app/js/appWidget/app/widget/Label" data-dojo-attach-point="iconNode" data-dojo-props="value:'${_title}', displayWidth: 360"></div>
 		<div class="close" data-dojo-attach-point="closeNode" data-dojo-attach-event="onclick: _onClose"></div>
 	</div>
 

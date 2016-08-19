@@ -1,5 +1,5 @@
 define([
-    'app/config/profileConfig',
+    '../config/profileConfig',
     'dojo/aspect',
     'dojo/dom',
     'dojo/dom-style',

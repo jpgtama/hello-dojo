@@ -33,7 +33,7 @@
 
 .titleBar .title {
 	display: inline-block;
-	vertical-align: middle;
+	vertical-align: bottom;
 	position: relative;
 	top: -2px;
 }
@@ -41,6 +41,7 @@
 .titleBar .close {
 	display: none;
 	position: absolute;
+	top: 14px;
 	right: 28px;
 	width: 20px;
 	height: 20px;
@@ -197,6 +198,7 @@
 
 .message .titleBar .close {
 	display: inline-block;
+	top: 28px;
 }
 
 .message .content {
