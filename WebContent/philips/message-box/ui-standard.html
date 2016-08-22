@@ -39,13 +39,16 @@
 <link rel="stylesheet" href="/dojo-release-1.10.4-src/dijit/themes/dijit.css" />
 <link rel="stylesheet" href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
 <style>
-.container{
-	margin-right: 50px;
-}
+/* .container{ */
+/* 	margin-right: 50px; */
+/* } */
+
+
+
 </style>
 
 </head>
-<body>
+<body class="claro">
 
 	<h1>Message Box UI Standard</h1>
 	<hr />
@@ -86,5 +89,86 @@
 
 
 <br/><br/><br/><br/><br/><br/><br/>
+
+
+
+
+<div></div>
+
+<script>
+require(["app/widget/messageBox/MessageBox2", "dijit/ConfirmDialog", "dojo/dom-construct", 
+         "dojo/_base/declare", "dojo/domReady!"], 
+         function(MessageBox2, ConfirmDialog, domC, declare){
+//     var NCD = declare([ConfirmDialog], {
+        
+//         postCreate: function(){
+//             this.inherited(arguments);
+            
+//             // set class name
+//             var iconNode = domC.toDom('<div class="icon"></div>');
+//             domC.place(iconNode, this.titleBar, 'first');
+//             // insert icon
+//         }
+        
+//     });
+    
+    var mbs = [{state: 'error'}, {state: 'attention'}, {state: 'confirm'}, {state: 'confirm', type:'blue'}, {state: 'confirm', type:'closeIcon'},
+               {state: 'information'}, {state: 'information', type:'closeIcon'}, {state: 'message', title:'Message title'}];
+    
+    
+    for(var i in mbs){
+        var mb = mbs[i];
+        
+        var oneButtonDialog = function(mb){
+         // new button
+            var id = mb.state + '_' + mb.type;
+            var button = domC.toDom('<button id="'+id +'">'+ id +'</button>');
+            document.body.appendChild(button);
+            
+            
+            // new dialog
+            var myDialog = new MessageBox2({
+                title:  mb.title || "My ConfirmDialog",
+                content: mb.content ||  "Test content.",
+                state: mb.state,
+                type: mb.type
+            });
+            
+            button.addEventListener('click', function(){
+        	    var p = myDialog.show();
+        	    p.then(function(){
+        	        console.log('click ok');
+        	    }, function(err){
+        	        console.log('click cancel');
+        	    });
+            });
+        }
+        
+        oneButtonDialog(mb);
+        
+    }
+    
+    
+    
+    
+//     myDialog = new MessageBox2({
+//         title: "My ConfirmDialog",
+//         content: "Test content.",
+//         style: "width: 300px",
+//         state: 'confirm'
+        
+//     });
+    
+//     document.getElementById('MessageBox2').addEventListener('click', function(){
+// 	    myDialog.show();
+//     });
+    
+    
+    
+    
+});
+
+</script>
+
 </body>
 </html>

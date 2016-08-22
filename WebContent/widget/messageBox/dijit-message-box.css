@@ -1,0 +1,213 @@
+.container, .titleBar, .content, .button {
+	position: relative;
+}
+
+.container {
+	display: inline-block;
+	background-color: white;
+	width: 478px;
+	box-shadow: 0px 0px 33px 6px rgba(0, 0, 0, 0.16);
+}
+
+.titleBar {
+	color: white;
+	font-weight: bold;
+	font-family: Centrale Sans;
+	font-size: 22px;
+	text-align: left;
+	font-style: normal;
+	padding: 14px 28px 14px 28px;
+}
+
+.titleBar .icon {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	width: 30px;
+	height: 30px;
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	background-size: contain;
+	margin-right: 8px;
+}
+
+.titleBar .title {
+	display: inline-block;
+	vertical-align: bottom;
+	position: relative;
+	top: -2px;
+}
+
+.titleBar .close {
+	display: none;
+	position: absolute;
+	top: 14px;
+	right: 28px;
+	width: 20px;
+	height: 20px;
+	background-image: url(close-128.png);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	background-size: contain;
+	cursor: pointer;
+}
+
+.content {
+	padding: 16px 28px 24px 28px;
+	font-size: 24px;
+	font-family: sans-serif;
+}
+
+.toolBar {
+	text-align: right;
+	padding: 28px 28px 28px 0px;
+}
+
+.toolBar .button {
+	border-radius: 4px;
+	padding: 8px 16px;
+	cursor: pointer;
+}
+
+.toolBar .button.cancel, .toolBar .button.ok {
+	display: none;
+	height: 32px;
+	min-width: 80px;
+	border-left: none;
+	border-right: none;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+}
+
+.toolBar .button.cancel {
+	background-color: #E6E6E6;
+	border-top-color: #F2F2F2;
+	border-bottom-color: #666666;
+	color: black;
+}
+
+.toolBar .button.ok {
+	background-color: #0096ED;
+	border-top-color: #54C0FF;
+	border-bottom-color: #666666;
+	color: white;
+	margin-left: 10px;
+}
+
+/*=========Error==========*/
+.error .titleBar {
+	background-color: #db2a36;
+}
+
+.error .titleBar .icon {
+	background-image: url(error-128.png);
+}
+
+.error .toolBar .button.cancel {
+	display: inline-block;
+}
+
+/*=========Attention==========*/
+.attention .titleBar {
+	background-color: #f0bb29;
+}
+
+.attention .titleBar .icon {
+	background-image: url(attention-128.png);
+}
+
+.attention .toolBar .button.cancel {
+	display: inline-block;
+}
+
+/*=========Confirm lime, Default==========*/
+.confirm .titleBar, .confirm.lime .titleBar {
+	background-color: #7ead00;
+}
+
+.confirm .titleBar .icon, .confirm.lime .titleBar .icon {
+	background-image: url(confirm-lime-128.png);
+}
+
+.confirm .toolBar .button.cancel, .confirm .toolBar .button.ok, .confirm.lime .toolBar .button.cancel,
+	.confirm.lime .toolBar .button.ok {
+	display: inline-block;
+}
+
+/*=========Confirm blue==========*/
+.confirm.blue .titleBar {
+	background-color: #54C0FF;
+}
+
+.confirm.blue .titleBar .icon {
+	background-image: url(confirm-blue-128.png);
+}
+
+/*=========Confirm closeIcon==========*/
+.confirm.closeIcon .titleBar {
+	background-color: white;
+	color: black;
+}
+
+.confirm.closeIcon .titleBar .icon {
+	display: none;
+}
+
+.confirm.closeIcon .titleBar .close {
+	display: inline-block;
+}
+
+/*=========Information==========*/
+.information .titleBar {
+	background-color: #d9d9d9;
+	color: black;
+}
+
+.information .titleBar .icon {
+	background-image: url(information-128.png);
+}
+
+.information .toolBar .button.ok {
+	display: inline-block;
+}
+
+/*=========Information closeIcon==========*/
+.information.closeIcon .titleBar {
+	background-color: white;
+	color: black;
+}
+
+.information.closeIcon .titleBar .icon {
+	display: none;
+}
+
+.information.closeIcon .titleBar .close {
+	display: inline-block;
+}
+
+/*=========Message==========*/
+.message .titleBar {
+	background-color: white;
+	color: black;
+	padding: 28px 28px 28px 28px;
+}
+
+.message .titleBar .icon {
+	display: none;
+}
+
+.message .titleBar .close {
+	display: inline-block;
+	top: 28px;
+}
+
+.message .content {
+	padding: 0px 28px 0px 28px;
+}
+
+.message .toolBar .button.ok {
+	display: inline-block;
+	background-color: #3064FF;
+	border-top-width: 0px;
+	border-bottom-color: #113296;
+}

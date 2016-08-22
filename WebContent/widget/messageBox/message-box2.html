@@ -1,0 +1,21 @@
+<div class="messagebox container" role="dialog" aria-labelledby="${id}_title">
+	<div data-dojo-attach-point="titleBar" class="titleBar">
+		<div class="icon" data-dojo-attach-point="iconNode"></div>
+		<span data-dojo-attach-point="titleNode" class="title" id="${id}_title"
+				role="heading" level="1"></span>
+		<span data-dojo-attach-point="closeButtonNode" class="close" data-dojo-attach-event="ondijitclick: onCancel" title="${buttonCancel}" role="button" tabindex="-1">
+			<span data-dojo-attach-point="closeText" class="closeText" title="${buttonCancel}">x</span>
+		</span>
+	</div>
+	
+	<div class="replace"></div>
+	
+	<div data-dojo-attach-point="containerNode" class="content"></div>
+	
+	<div class='toolBar' data-dojo-attach-point="actionBarNode">
+		<button class="button cancel" data-dojo-attach-point="cancelButton2" data-dojo-attach-event="click:onCancel">${_cancelTitle}</button>
+		<button class="button ok" data-dojo-attach-point="okButton2" data-dojo-attach-event="click:_onSubmit">${_okTitle}</button>
+	</div>
+
+</div>
+

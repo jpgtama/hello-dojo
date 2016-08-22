@@ -1,0 +1,216 @@
+.messagebox.container, .messagebox.container .titleBar, .messagebox.container .content, .button {
+	position: relative;
+}
+
+.messagebox.container {
+	display: inline-block;
+	background-color: white;
+	width: 478px !important;
+	box-shadow: 0px 0px 33px 6px rgba(0, 0, 0, 0.16);
+	border: none;
+}
+
+.messagebox.container .titleBar {
+	color: white;
+	font-weight: bold;
+	font-family: Centrale Sans;
+	font-size: 22px;
+	text-align: left;
+	font-style: normal;
+	padding: 14px 28px 14px 28px;
+	background-image: none;
+	background-repeat: no-repeat;
+}
+
+.messagebox.container.titleBar .icon {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	width: 30px;
+	height: 30px;
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	background-size: contain;
+	margin-right: 8px;
+}
+
+.messagebox.container .titleBar .title {
+	display: inline-block;
+	vertical-align: bottom;
+	position: relative;
+	top: -2px;
+}
+
+.messagebox.container .titleBar .close {
+	display: none;
+	position: absolute;
+	top: 14px;
+	right: 28px;
+	width: 20px;
+	height: 20px;
+	background-image: url(close-128.png);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	background-size: contain;
+	cursor: pointer;
+}
+
+.messagebox.container .content {
+	padding: 16px 28px 24px 28px;
+	font-size: 24px;
+	font-family: sans-serif;
+}
+
+.messagebox.container .toolBar {
+	text-align: right;
+	padding: 28px 28px 28px 0px;
+}
+
+.messagebox.container .toolBar .button {
+	border-radius: 4px;
+	padding: 8px 16px;
+	cursor: pointer;
+}
+
+.messagebox.container .toolBar .button.cancel, .toolBar .button.ok {
+	display: none;
+	height: 32px;
+	min-width: 80px;
+	border-left: none;
+	border-right: none;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+}
+
+.messagebox.container .toolBar .button.cancel {
+	background-color: #E6E6E6;
+	border-top-color: #F2F2F2;
+	border-bottom-color: #666666;
+	color: black;
+}
+
+.messagebox.container .toolBar .button.ok {
+	background-color: #0096ED;
+	border-top-color: #54C0FF;
+	border-bottom-color: #666666;
+	color: white;
+	margin-left: 10px;
+}
+
+/*=========Error==========*/
+.messagebox.container.error .titleBar {
+	background-color: #db2a36;
+}
+
+.messagebox.container.error .titleBar .icon {
+	background-image: url(error-128.png);
+}
+
+.messagebox.container.error .toolBar .button.cancel {
+	display: inline-block;
+}
+
+/*=========Attention==========*/
+.messagebox.container.attention .titleBar {
+	background-color: #f0bb29;
+}
+
+.messagebox.container.attention .titleBar .icon {
+	background-image: url(attention-128.png);
+}
+
+.messagebox.container.attention .toolBar .button.cancel {
+	display: inline-block;
+}
+
+/*=========Confirm lime, Default==========*/
+.messagebox.container.confirm .titleBar, .confirm.lime .titleBar {
+	background-color: #7ead00;
+}
+
+.messagebox.container.confirm .titleBar .icon, .confirm.lime .titleBar .icon {
+	background-image: url(confirm-lime-128.png);
+}
+
+.messagebox.container.confirm .toolBar .button.cancel, .confirm .toolBar .button.ok, .confirm.lime .toolBar .button.cancel,
+	.confirm.lime .toolBar .button.ok {
+	display: inline-block;
+}
+
+/*=========Confirm blue==========*/
+.messagebox.container.confirm.blue .titleBar {
+	background-color: #54C0FF;
+}
+
+.messagebox.container.confirm.blue .titleBar .icon {
+	background-image: url(confirm-blue-128.png);
+}
+
+/*=========Confirm closeIcon==========*/
+.messagebox.container.confirm.closeIcon .titleBar {
+	background-color: white;
+	color: black;
+}
+
+.messagebox.container.confirm.closeIcon .titleBar .icon {
+	display: none;
+}
+
+.messagebox.container.confirm.closeIcon .titleBar .close {
+	display: inline-block;
+}
+
+/*=========Information==========*/
+.messagebox.container.information .titleBar {
+	background-color: #d9d9d9;
+	color: black;
+}
+
+.messagebox.container.information .titleBar .icon {
+	background-image: url(information-128.png);
+}
+
+.messagebox.container.information .toolBar .button.ok {
+	display: inline-block;
+}
+
+/*=========Information closeIcon==========*/
+.messagebox.container.information.closeIcon .titleBar {
+	background-color: white;
+	color: black;
+}
+
+.messagebox.container.information.closeIcon .titleBar .icon {
+	display: none;
+}
+
+.messagebox.container.information.closeIcon .titleBar .close {
+	display: inline-block;
+}
+
+/*=========Message==========*/
+.messagebox.container.message .titleBar {
+	background-color: white;
+	color: black;
+	padding: 28px 28px 28px 28px;
+}
+
+.messagebox.container.message .titleBar .icon {
+	display: none;
+}
+
+.messagebox.container.message .titleBar .close {
+	display: inline-block;
+	top: 28px;
+}
+
+.messagebox.container.message .content {
+	padding: 0px 28px 0px 28px;
+}
+
+.messagebox.container.message .toolBar .button.ok {
+	display: inline-block;
+	background-color: #3064FF;
+	border-top-width: 0px;
+	border-bottom-color: #113296;
+}

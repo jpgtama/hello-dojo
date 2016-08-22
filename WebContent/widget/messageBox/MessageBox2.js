@@ -10,32 +10,28 @@
  * prohibited without the written consent of the copyright owner.
  * 
  * 
- * FILE NAME: MessageBox.js
+ * FILE NAME: MessageBox2.js
  * 
- * CREATED: 2016年8月18日 下午5:26:23
+ * CREATED: 2016年8月22日 下午1:28:13
  * 
  * ORIGINAL AUTHOR(S): 310199253
  * 
  * </pre>
  ******************************************************************************/
 define([
-    'dijit/_WidgetBase',
-    'dijit/_TemplatedMixin',
-    'dijit/_WidgetsInTemplateMixin',
+    'dijit/Dialog',
+    'dojo/aspect',
+    'dojo/Deferred',
+    'dojo/dom-class',
+    'dojo/dom-construct',
     'dojo/_base/declare',
-    'dojo/dom-style',
-    'dojo/text!./message-box.html',
-    'xstyle/css!./message-box.css'
-], function(_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, declare, style, template) {
-    return declare('', [
-        _WidgetBase,
-        _TemplatedMixin,
-        _WidgetsInTemplateMixin
+    'dojo/text!./message-box2.html',
+    'xstyle/css!./message-box2.css'
+], function(Dialog, aspect, Deferred, domClass, domC, declare, template) {
+    return declare([
+        Dialog
     ], {
 
-        /**
-         * template string
-         */
         templateString : template,
 
         /**
@@ -63,12 +59,14 @@ define([
                     cancel : 'Acknowledge'
                 }
             },
+
             attention : {
                 title : 'Attention',
                 button : {
                     cancel : 'Close'
                 }
             },
+
             confirm : {
                 title : 'Confirm',
                 button : {
@@ -76,23 +74,20 @@ define([
                     cancel : 'Cancel'
                 }
             },
+
             information : {
                 title : 'Information',
                 button : {
                     ok : 'OK'
                 }
             },
+
             message : {
                 button : {
                     ok : 'Done'
                 }
             }
         },
-
-        /**
-         * dialog title
-         */
-        _title : '',
 
         /**
          * ok button title
@@ -104,13 +99,10 @@ define([
          */
         _cancelTitle : '',
 
+        clickDefer : null,
+
         /**
-         * options:
-         * 
-         * 1. state:
-         * 
-         * 2. content:
-         * 
+         * Override
          */
         constructor : function(options) {
             // handle options
@@ -121,47 +113,37 @@ define([
             var sc = this._stateConfig[state];
             if (state && sc) {
                 // class name
-                this.baseClass = state + ' ' + (type ? type : '');
+                this.baseClass += ' ' + state + ' ' + (type ? type : '');
 
                 // title & button
                 this._title = sc.title || title || '';
                 this._okTitle = sc.button.ok || '';
                 this._cancelTitle = sc.button.cancel || '';
-
             }
+
+            aspect.after(this, 'onExecute', function() {
+                if (this.clickDefer) {
+                    this.clickDefer.resolve();
+                }
+            });
+
+            aspect.after(this, 'onCancel', function() {
+                if (this.clickDefer) {
+                    this.clickDefer.reject();
+                }
+            });
+
         },
 
         /**
-         * on close
+         * Override
          */
-        _onClose : function() {
-            this.destroy();
-        },
+        show : function() {
+            this.inherited(arguments);
 
-        /**
-         * on cancel
-         */
-        _onCancel : function() {
-            if (this.onCancel) {
-                this.onCancel();
-            }
+            this.clickDefer = new Deferred();
 
-            this._onClose();
-        },
-
-        /**
-         * on ok
-         */
-        _onOk : function() {
-            if (this.onOk) {
-                this.onOk();
-            }
-
-            this._onClose();
-        },
-
-    // show : function() {
-    // style.set(this.domNode, 'display', 'inline-block');
-    // }
+            return this.clickDefer;
+        }
     });
 });
