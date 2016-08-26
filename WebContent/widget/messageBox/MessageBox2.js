@@ -123,7 +123,7 @@ define([
 
             aspect.after(this, 'onExecute', function() {
                 if (this.clickDefer) {
-                    this.clickDefer.resolve();
+                    this.clickDefer.resolve(true);
                 }
             });
 

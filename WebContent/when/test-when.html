@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test When</title>
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : 'http://localhost:9090/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/hello-dojo'
+            }
+        ]
+    };
+</script>
+<script src="http://localhost:9090/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+<link rel="stylesheet" href="/dojo-release-1.10.4-src/dojo/resources/dojo.css" />
+<link rel="stylesheet" href="/dojo-release-1.10.4-src/dijit/themes/dijit.css" />
+<link rel="stylesheet" href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+</head>
+<body>
+
+<h1>Test When</h1>
+<hr/>
+
+
+<h1>Output:</h1>
+<div id="output"></div>
+<button type="button" id="startButton">Start</button>
+
+
+<script type="text/javascript">
+
+var Def = function(){
+    
+    this.then =  function(success, error){
+        
+        this.success = success;
+        
+        this.error = error;
+        
+    };
+    
+    
+    this.resolve = function(v){
+        if(this.success){
+            this.success(v);
+        }
+    };
+    
+    
+    this.reject = function(v){
+        if(this.error){
+            this.error(v);
+        }
+    };
+    
+};
+
+
+function doSomething(){
+    var def = new Def();
+    
+    setTimeout(function(){
+        def.resolve('hello');
+    }, 1000 * 3);
+    
+    
+    return def; 
+}
+
+
+doSomething().then(function(v){
+    console.log('then', v);
+});
+
+
+
+
+
+
+
+
+
+
+
+require(["dojo/when", "dojo/Deferred", "dojo/dom", "dojo/on", "dojo/domReady!"],
+        function(when, Deferred, dom, on){
+          function asyncProcess(){
+            var deferred = new Deferred();
+
+            setTimeout(function(){
+              deferred.resolve();
+            }, 1000);
+
+            return deferred.promise;
+          }
+
+          function syncProcess(){
+            return false;
+          }
+
+          function outputValue(value){
+            dom.byId("output").innerHTML += "<br/>completed with value: " + value;
+          }
+
+          on(dom.byId("startButton"), "click", function(){
+            when(asyncProcess(), outputValue);
+            when(syncProcess(), outputValue);
+          });
+
+          
+          
+          
+        });
+
+</script>
+
+</body>
+</html>

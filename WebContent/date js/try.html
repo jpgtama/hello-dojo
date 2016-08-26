@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Try Date JS</title>
+<script type="text/javascript" src="date.js"></script>
+<script type="text/javascript" src="moment.js"></script>
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : 'http://localhost:9090/dojo-release-1.10.4-src/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/hello-dojo'
+            }
+        ]
+    };
+</script>
+<script src="http://localhost:9090/dojo-release-1.10.4-src/dojo/dojo.js"></script>
+<link rel="stylesheet" href="/dojo-release-1.10.4-src/dojo/resources/dojo.css" />
+<link rel="stylesheet" href="/dojo-release-1.10.4-src/dijit/themes/dijit.css" />
+<link rel="stylesheet" href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+<style>
+body{
+	padding: 10px 100px;
+}
+
+.container{
+	
+}
+
+.pane{
+	display: inline-block;
+    width: 367px;
+    height: 200px;
+    padding: 20px;
+    vertical-align: top;
+}
+
+.pane.left, .pane.middle{
+    border-right: 1px gray solid;
+}
+
+.formData{
+	margin-top: 10px;
+}
+
+.chooseField{
+	width: 70px;
+}
+
+#formula{
+	margin-top: 30px;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+</style>
+</head>
+<body class="claro">
+
+<h1>Try Date JS</h1>
+<hr/>
+
+<div class="container">
+	<div class="pane left">
+	
+		<label for="date1" style="font-size: 20px">a=</label>
+		<input type="text" name="date1" id="date1" value="2005-12-30"
+		    data-dojo-type="dijit/form/DateTextBox" onChange="setDateValue()"
+		    required="true" />
+		    
+		 <br/><br/><br/>
+		    
+		<label for="date2" style="font-size: 20px">b=</label>
+		<input type="text" name="date1" id="date2" value="2005-12-30"
+		    data-dojo-type="dijit/form/DateTextBox" onChange="setDateValue()"
+		    required="true" />
+		
+		<br/><br/><br/>
+		
+		<div>
+			<div>Form Data:</div>
+			<div id="formData" class="formData">
+				a = <br/> b = 
+			</div>
+		</div>    
+		    
+	</div>
+	
+	
+	<div class="pane middle">
+		<div>时间差</div>
+		
+		<br/><br/><br/>
+		
+		<div>单位
+			<select id="unit">
+				<option value="year">年</option>
+				<option value="month">月</option>
+				<option value="week">周</option>
+				<option value="day" selected>日</option>
+			</select>
+		
+		</div>
+		
+		<br/><br/><br/>
+		
+		<div>
+			计算:
+			
+			<input class="chooseField" id="c1" type="text" list="fields" value="a">
+			
+			<select id="operator">
+				<option value="ADD">+</option>
+				<option value="SUB" selected>-</option>
+			</select>
+			
+			
+			<input class="chooseField" id="c2" type="text" list="fields" value="b">
+			
+			
+			<datalist id="fields">
+			  <option value="a">字段A</option>
+			  <option value="b">字段B</option>
+			</datalist>
+			
+			<button id="getFormula" onClick="getFormula()">Get Formula</button>
+			
+			<div id="formula"></div>
+			
+		</div>
+	
+	</div>
+	
+	
+	<div class="pane tail">
+		<div>运算结果  <button onClick="calc()">Go</button></div>
+		<br/><br/><br/>
+		<textarea></textarea>
+	
+	
+	</div>
+
+
+</div>
+
+
+
+
+    
+    
+<script type="text/javascript">
+
+ 	var now = moment();
+	
+ 	//var randomDate = moment().subtract(Math.floor(Math.random()* 1000*60*60*24*30*12));
+ 	var randomDate = moment().subtract(2, 'days');
+ 	
+
+// 	console.log(now.diff(randomDate));
+	
+	function setDateValue(){
+	    
+	    var d1 =  dijit.byId('date1').get('value');
+	    var d2 =  dijit.byId('date2').get('value');
+	    
+	    if(d1 && d2){
+			var dv1 = d1.getTime();
+			var dv2 = d2.getTime();
+			
+			var s = '{ "a":'+dv1 + ',<br/> "b":'+dv2 + ' }';
+			
+			document.getElementById('formData').innerHTML = s;
+			
+	    }
+	}
+	
+	
+	function getFormula(){
+	    
+	    var s =  id('operator').value + '(' + id('c1').value +', '+ id('c2').value  +')';
+	    
+	    id('formula').innerText = s;
+	}
+	
+	
+	function calc(){
+	    
+	    // get form data
+	    var formData = JSON.parse(id('formData').innerText);
+	    
+	    var dateArray = [];
+	    for(var i in formData){
+	        dateArray.push(moment(formData[i]));
+	    }
+	    
+	    // get unit
+	    var unit = id('unit').value;
+	    
+	    // get formula
+	    var formula = ' var unit = unit;   return '+id('formula').innerText;
+	    
+	    
+	    //
+	    //var func = new Function(['unit', 'ADD', 'SUB', 'a', 'b'], formula);
+	    
+// 	    var ADD = op.ADD;
+// 	    var SUB = op.SUB;
+	        
+	    
+// 	    var param = [unit, ADD, SUB].concat(dateArray);
+	    
+// 	    var ret = func.apply({}, param);
+
+
+		var ret =  eval(formula);
+		
+	    
+	    console.log(ret);
+	    
+	    // 
+	    //op.calc();
+	    
+	}
+	
+	
+	function id(id){
+	    return document.getElementById(id); 
+	}
+	
+// 	function calc(){
+// 	    var funcStr='(function calcDate(unit, a, b){ 	    var da = moment(a); 	    var db = moment(b); 	    	    return a.diff(b, unit) 	    	})';
+	    
+// 	    var func = eval(funcStr);
+	    
+// 	}
+	
+	
+// 	function calcDate(unit, a, b){
+// 	    var da = moment(a);
+// 	    var db = moment(b);
+	    
+// 	    return a.diff(b, unit)
+	    
+// 	}
+
+
+	var op = {
+	    
+	    calc: function(){
+	        // get form data
+		    var formData = JSON.parse(id('formData').innerText);
+		    
+		    var dateArray = [];
+		    for(var i in formData){
+		        dateArray.push(moment(formData[i]));
+		    }
+		    
+		    // get unit
+		    var unit = id('unit').value;
+		    
+		    // get formula
+		    var formula = 'debugger; '+id('formula').innerText;
+		    
+		    
+		    //
+		    var func = new Function(['unit', 'ADD', 'SUB', 'a', 'b'], formula);
+		    
+		    var ADD = op.ADD;
+		    var SUB = op.SUB;
+		        
+		    
+		    var param = [unit, ADD, SUB].concat(dateArray);
+		    
+		    var ret = func.apply(this, param);
+		    
+		    console.log(ret);
+	    },
+	    
+	    ADD: function (/* Date */d, /* Integer */n){
+		    return d.add(n, unit);
+		    
+		},
+		
+		SUB: function (/* Date */d, /* Date | Integer */n){
+		    if(Number.isInteger(n)){
+		        return d.subtract(n, unit);
+		    }else if(moment.isMoment(n)){
+		        return d.diff(n, unit);
+		    }
+		}
+	    
+	};
+	
+	
+// 	function MUL(/* Integer */n, /* Number */size){
+	    
+// 	}
+	
+// 	function DIV(/* Integer */n, /* Number */size){
+	    
+// 	}
+	
+	
+	window.addEventListener('load', function(){
+	    setDateValue();
+	});
+	
+</script>
+
+
+</body>
+</html>

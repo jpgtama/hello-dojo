@@ -135,8 +135,7 @@ require(["app/widget/messageBox/MessageBox2", "dijit/ConfirmDialog", "dojo/dom-c
             });
             
             button.addEventListener('click', function(){
-        	    var p = myDialog.show();
-        	    p.then(function(){
+        	    myDialog.show().then(function(){
         	        console.log('click ok');
         	    }, function(err){
         	        console.log('click cancel');
@@ -164,6 +163,15 @@ require(["app/widget/messageBox/MessageBox2", "dijit/ConfirmDialog", "dojo/dom-c
 //     });
     
     
+    var SS = declare('', [], {
+        hello: function(){return 'hello';}
+    });
+    
+    SS.say = function(){alert('hi')};
+    
+    SS.prototype.welcome = function(){alert('welcome')};
+    
+    window.SS = SS;
     
     
 });
