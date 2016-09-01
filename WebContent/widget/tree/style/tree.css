@@ -1,0 +1,85 @@
+
+.philips .selectCriteria .dijitTree{
+	margin:8px 8px 0px 8px;
+}
+
+.philips .dijitTree .dijitTreeExpando {
+    display:none;
+}
+
+.philips .dijitTree .dijitTreeNode .parentNode{
+	background-color: transparent;
+	border-color: transparent;
+  	background-image: none;
+  	color:#878787;
+}
+
+.philips .dijitTree .dijitTreeRowSelected{
+	background-color: rgba(178, 226, 255, 0.3);
+	background-image:none;
+	border:0px;
+	padding:4px 0 2px;
+}
+
+.philips .dijitTree .dijitTreeRowHover{
+	background-color: rgba(129, 208, 255, 0.3);
+	background-image:none;
+	border:0px;
+	padding:4px 0 2px;
+}
+
+.philips .dijitTree .leafNode.dijitTreeRowSelected .dijitTreeLabel{
+	color:#4d4d4d;
+}
+
+.philips .dijitTree .leafNode.dijitTreeRowHover .dijitTreeLabel{
+	color:#4d4d4d;
+}
+
+.philips .dijitTree .disabledNode.dijitTreeRowHover .dijitTreeLabel{
+  	color:#878787;
+}
+
+.philips .dijitTree .dijitTreeNode .dijitTreeRow .dijitTreeLabel{
+	font-size:16px;
+}
+
+.philips .dijitTree .dijitTreeNode .parentNode .dijitTreeLabel{
+	font-size:18px;
+}
+.philips .dijitTree .dijitTreeNode .dijitTreeRow .dijitTreeIcon{
+	/* display:none; */
+}
+
+.philips .dijitTree .dijitTreeNode .dijitTreeRow{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.philips .left .dijitTree .dijitTreeNode .parentNode{
+    width:400px;
+}
+
+.philips .left .dijitTree .dijitTreeNode .leafNode{
+    width:400px;
+}
+
+.philips .right .dijitTree .dijitTreeNode .leafNode{
+    width: 466px;
+}
+
+.philips .dijitTreeRow .dijitTreeIcon {
+	background-image: url('./checkboxRadioButtonStates.png') !important; /* Contains both object and action icons in a sprite image for the enabled state.  */
+	width: 15px !important;
+	height: 15px !important;
+	 background-position: -15px;
+}
+
+
+.philips .dijitTreeRow.dijitTreeRowSelected .dijitTreeIcon {
+	background-image: url('./checkboxRadioButtonStates.png') !important; /* Contains both object and action icons in a sprite image for the enabled state.  */
+	width: 15px !important;
+	height: 15px !important;
+	 background-position: 0px;
+}
