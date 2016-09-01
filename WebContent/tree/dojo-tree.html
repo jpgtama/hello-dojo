@@ -63,20 +63,34 @@ body{
 <hr/>
 
 
-<div id="tree">
-</div>
+<div id="tree1"></div>
 
+<br/><br/><hr/><br/><br/>
+
+<div id="tree2"></div>
+
+
+<hr/>
+<input type="checkbox" id="some-checkbox"/>
+
+
+<hr/>
+<input id="triStateCheckBox"/>
 
 
 <script type="text/javascript">
 require([
          'app/widget/tree/Tree',
+         'app/widget/tree/CheckBoxTree',
          'app/widget/permissionTree/PermissionTree',
          'app/widget/permissionTree/treeNode/TreeNode',
+         'dojox/form/TriStateCheckBox',
+         'dojo/store/Observable',
          "dojo/_base/window", "dojo/store/Memory",
          "dijit/tree/ObjectStoreModel", "dijit/Tree",
          "dojo/domReady!"
-     ], function(CheckBoxTree, PermissionTree, TreeNode, win, Memory, ObjectStoreModel, Tree){
+     ], function(CheckBoxTree, NewCheckBoxTree, PermissionTree, TreeNode, TriStateCheckBox, Observable, 
+             win, Memory, ObjectStoreModel, Tree){
 
     
     
@@ -110,6 +124,9 @@ require([
                  return this.query({parent: object.id});
              }
          });
+         
+         myStore = window.myStore  = new Observable(myStore);
+
 
          // Create the model
          var myModel = new ObjectStoreModel({
@@ -121,22 +138,48 @@ require([
          });
 
          // Create the Tree.
-         var tree = new CheckBoxTree({
+         var tree = window.tree = new NewCheckBoxTree({
              autoExpand: true,
-//              model: myModel,
-originalStore: myStore,
-             treeNode: TreeNode,
-             rootId: 'world'
+              model: myModel,
+// originalStore: myStore,
+//              treeNode: TreeNode,
+//              rootId: 'world'
          });
-         tree.placeAt('tree');
+         tree.placeAt('tree1');
          tree.startup();
+         
+         // Create the Tree.
+//          var tree = new CheckBoxTree({
+//              autoExpand: true,
+// //               model: myModel,
+// originalStore: myStore,
+// //              treeNode: TreeNode,
+//              rootId: 'world'
+//          });
+//          tree.placeAt('tree2');
+//          tree.startup();
+
+
+         
+         // TriStateCheckBox
+         var triStateCheckBox = window.triStateCheckBox = new TriStateCheckBox({
+		    name: "checkBox",
+	        value: "agreed",
+	        checked: false
+		}, 'triStateCheckBox');
+	
+		triStateCheckBox.startup();
      });
 
 
+var checkbox = document.getElementById("some-checkbox");
+checkbox.indeterminate = true;
+
+
+		
 </script>
 
 <hr/>
-<input id="mycheck" name="mycheck" data-dojo-type="dijit/form/CheckBox" value="agreed" checked onChange="alert('onChange called with parameter = ' + arguments[0] + ', and widget value = ' + this.get('value'))" /> <label for="mycheck">I agree</label>
 
 </body>
 </html>

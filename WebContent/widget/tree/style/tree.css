@@ -70,16 +70,16 @@
 }
 
 .philips .dijitTreeRow .dijitTreeIcon {
-	background-image: url('./checkboxRadioButtonStates.png') !important; /* Contains both object and action icons in a sprite image for the enabled state.  */
-	width: 15px !important;
-	height: 15px !important;
+	background-image: url('./checkboxRadioButtonStates.png'); /* Contains both object and action icons in a sprite image for the enabled state.  */
+	width: 15px;
+	height: 15px;
 	 background-position: -15px;
 }
 
 
 .philips .dijitTreeRow.dijitTreeRowSelected .dijitTreeIcon {
-	background-image: url('./checkboxRadioButtonStates.png') !important; /* Contains both object and action icons in a sprite image for the enabled state.  */
-	width: 15px !important;
-	height: 15px !important;
-	 background-position: 0px;
+	background-image: url('./checkboxRadioButtonStates.png'); /* Contains both object and action icons in a sprite image for the enabled state.  */
+	width: 15px;
+	height: 15px;
+	background-position: 0px;
 }
