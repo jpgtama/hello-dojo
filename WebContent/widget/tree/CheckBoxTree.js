@@ -19,7 +19,7 @@
  * </pre>
  ******************************************************************************/
 define([
-    './CheckBoxTreeNode',
+    './EventedCheckBoxTreeNode',
     './_dndSelectorCheckBox',
     'dijit/Tree',
     'dojo/_base/declare',
@@ -30,10 +30,24 @@ define([
     var TreeNode = CheckBoxTreeNode;
     Tree._TreeNode = TreeNode;
 
+    /**
+     * 
+     * This is a tree with checkbox. The data store must be Observable.
+     * 
+     * There is only one way to set select status:
+     * 
+     * 1. add a selected attribute in data store, e.g. 'selected'.
+     * 
+     * 
+     * 
+     */
     return declare('', [
         Tree
     ], {
 
+        /**
+         * add specific class name
+         */
         baseClass : 'checkBoxTree dijitTree',
 
         /**
@@ -41,6 +55,9 @@ define([
          */
         dndController : _dndSelector,
 
+        /**
+         * Override, to use our TreeNode class.
+         */
         _createTreeNode : function(/* Object */args) {
             // summary:
             // creates a TreeNode

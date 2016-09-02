@@ -25,6 +25,23 @@ define([
     'dojo/_base/lang',
     'dojo/_base/declare'
 ], function(Tree, domClass, array, lang, declare) {
+    /**
+     * This tree node has 3 visual states: S, D, I
+     * 
+     * S - selected
+     * 
+     * D - disselcted
+     * 
+     * I - indeterminate(has children partially selected or all children are
+     * indeterminate)
+     * 
+     * 
+     * For checkbox, there are only two states: selected or disselected. For
+     * 'I', it's state is also selected in checkbox, but has a different visual
+     * display.
+     * 
+     * 
+     */
     return declare('CheckBoxTreeNode', [
         Tree._TreeNode
     ], {
@@ -43,18 +60,18 @@ define([
          * is selected
          */
         isSelected : function() {
-            return this.item.selected;
+            return this.item[this.selectAttr];
         },
 
         /**
          * toggle selected status
          */
         toggleSelected : function() {
-            this.setSelected(!this.item.selected);
+            this.setSelected(!this.item[this.selectAttr]);
         },
 
         /**
-         * Added, update selected status
+         * Added, update selected status by listening to changes in store.
          */
         _setItemAttr : function(val) {
             this._set("item", val);
@@ -65,6 +82,11 @@ define([
             }
         },
 
+        constructor : function(options) {
+
+            console.log(options);
+        },
+
         /**
          * Override
          */
@@ -72,12 +94,12 @@ define([
             this.inherited(arguments);
 
             // initial selected status
-            if (this.selectAttr in this.item) {
-                this.tree.expandChildrenDeferred.then(lang.hitch(this, function() {
-                    this.setSelected(this.item[this.selectAttr], true);
-                    this.updateParentSelectStatus();
-                }));
-            }
+            var selectedStatus = this.selectAttr in this.item ? this.item[this.selectAttr] : false;
+
+            this.tree.expandChildrenDeferred.then(lang.hitch(this, function() {
+                this.setSelected(selectedStatus, true);
+                this.updateParentSelectStatus();
+            }));
         },
 
         /**
@@ -85,8 +107,7 @@ define([
          */
         setSelected : function(/* Boolean */selected, /* Boolean */notUpdateChildren, visualStatus) {
             this.inherited(arguments);
-            // this.selected = selected;
-            this.item.selected = selected;
+            this.item[this.selectAttr] = selected;
             this.visualStatus = visualStatus ? visualStatus : selected ? 'S' : 'D';
 
             // update children
@@ -139,12 +160,14 @@ define([
                 }
                 if (node.visualStatus === 'S') {
                     isAllDisselected = false;
-                } else {
+                } else if (node.visualStatus === 'D') {
                     isAllSelected = false;
+                } else {
+                    throw 'Should not have any other state except [S, D, I]';
                 }
             }
 
-            // set visual status for this node
+            // get visual status for this node
             if (isAllSelected) {
                 visualStatus = 'S';
             } else if (isAllDisselected) {
@@ -164,8 +187,7 @@ define([
                 this.setSelected(true, true, 'I');
                 domClass.add(this.rowNode, 'indeterminate');
             }
-
-        },
+        }
 
     });
 });

@@ -81,7 +81,7 @@ body{
 <script type="text/javascript">
 require([
          'app/widget/tree/Tree',
-         'app/widget/tree/CheckBoxTree',
+         'app/widget/tree/SimpleCheckBoxTree',
          'app/widget/permissionTree/PermissionTree',
          'app/widget/permissionTree/treeNode/TreeNode',
          'dojox/form/TriStateCheckBox',
@@ -107,17 +107,17 @@ require([
                      { id: 'SD', name:'Sudan', type:'country', parent: 'AF' },
                          { id: 'Khartoum', name:'Khartoum', type:'city', parent: 'SD' },
                  { id: 'AS', name:'Asia', type:'continent', parent: 'world' },
-                     { id: 'CN', name:'China', type:'country', parent: 'AS' },
+                     { id: 'CN', name:'China', type:'country', parent: 'AS', selected: true },
                      { id: 'IN', name:'India', type:'country', parent: 'AS' },
                      { id: 'RU', name:'Russia', type:'country', parent: 'AS' },
                      { id: 'MN', name:'Mongolia', type:'country', parent: 'AS' },
                  { id: 'OC', name:'Oceania', type:'continent', population:'21 million', parent: 'world'},
-                 { id: 'EU', name:'Europe', type:'continent', parent: 'world' },
+                 { id: 'EU', name:'Europe', type:'continent', parent: 'world', selected: true },
                      { id: 'DE', name:'Germany', type:'country', parent: 'EU' },
                      { id: 'FR', name:'France', type:'country', parent: 'EU' },
                      { id: 'ES', name:'Spain', type:'country', parent: 'EU' },
                      { id: 'IT', name:'Italy', type:'country', parent: 'EU' },
-                 { id: 'NA', name:'North America', type:'continent', parent: 'world' },
+                 { id: 'NA', name:'North America', type:'continent', parent: 'world' , selected: true},
                  { id: 'SA', name:'South America', type:'continent', parent: 'world' }
              ],
              getChildren: function(object){
