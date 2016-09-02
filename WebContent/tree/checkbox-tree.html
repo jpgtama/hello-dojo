@@ -43,23 +43,12 @@ body{
 	padding: 10px 100px;
 }
 
-.claro .dijitTree .dijitTreeNode .dijitTreeRow .dijitTreeIcon {
-/*      display: none;  */
-}
-
-.claro .dijitTree .dijitTreeNode .dijitTreeRow .dijitTreeExpando{
-/*     display: none; */
-}
-
-.claro .dijitTree .dijitTreeNode .dijitTreeRow .dijitExpandoText{
-/*     display: none; */
-}
 
 </style>
 </head>
 <body class="claro philips">
 
-<h1>Customize Dojo Tree</h1>
+<h1>Checkbox Tree</h1>
 <hr/>
 
 
@@ -67,30 +56,22 @@ body{
 
 <br/><br/><hr/><br/><br/>
 
-<div id="tree2"></div>
+<h2>
+TODO
+Usage: 
+</h2>
 
 
-<hr/>
-<input type="checkbox" id="some-checkbox"/>
-
-
-<hr/>
-<input id="triStateCheckBox"/>
 
 
 <script type="text/javascript">
 require([
-         'app/widget/tree/Tree',
-         'app/widget/tree/SimpleCheckBoxTree',
-         'app/widget/permissionTree/PermissionTree',
-         'app/widget/permissionTree/treeNode/TreeNode',
-         'dojox/form/TriStateCheckBox',
+         'app/widget/checkBoxTree/CheckBoxTree',
          'dojo/store/Observable',
-         "dojo/_base/window", "dojo/store/Memory",
-         "dijit/tree/ObjectStoreModel", "dijit/Tree",
+         "dojo/store/Memory",
+         "dijit/tree/ObjectStoreModel", 
          "dojo/domReady!"
-     ], function(CheckBoxTree, NewCheckBoxTree, PermissionTree, TreeNode, TriStateCheckBox, Observable, 
-             win, Memory, ObjectStoreModel, Tree){
+     ], function(CheckBoxTree, Observable, Memory, ObjectStoreModel){
 
     
     
@@ -125,6 +106,7 @@ require([
              }
          });
          
+         // this is not needed
          myStore = window.myStore  = new Observable(myStore);
 
 
@@ -138,48 +120,14 @@ require([
          });
 
          // Create the Tree.
-         var tree = window.tree = new NewCheckBoxTree({
+         var tree = window.tree = new CheckBoxTree({
              autoExpand: true,
               model: myModel,
-// originalStore: myStore,
-//              treeNode: TreeNode,
-//              rootId: 'world'
          });
          tree.placeAt('tree1');
          tree.startup();
-         
-         // Create the Tree.
-//          var tree = new CheckBoxTree({
-//              autoExpand: true,
-// //               model: myModel,
-// originalStore: myStore,
-// //              treeNode: TreeNode,
-//              rootId: 'world'
-//          });
-//          tree.placeAt('tree2');
-//          tree.startup();
-
-
-         
-         // TriStateCheckBox
-         var triStateCheckBox = window.triStateCheckBox = new TriStateCheckBox({
-		    name: "checkBox",
-	        value: "agreed",
-	        checked: false
-		}, 'triStateCheckBox');
-	
-		triStateCheckBox.startup();
      });
-
-
-var checkbox = document.getElementById("some-checkbox");
-checkbox.indeterminate = true;
-
-
-		
 </script>
-
-<hr/>
 
 </body>
 </html>

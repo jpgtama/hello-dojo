@@ -1,0 +1,28 @@
+.philips .dijitTree.checkBoxTree .dijitTreeExpando {
+	display: none;
+}
+
+.philips .dijitTree.checkBoxTree .dijitTreeRow .dijitTreeIcon
+	{
+	background-image: url('./checkboxRadioButtonStatesExtend.png');
+	background-position: -15px;
+	width: 15px;
+	height: 15px;
+}
+
+.philips .dijitTree.checkBoxTree .dijitTreeRow.dijitTreeRowSelected .dijitTreeIcon {
+	background-position: 0px;
+}
+
+.philips .dijitTree.checkBoxTree .dijitTreeRow.dijitTreeRowSelected.indeterminate .dijitTreeIcon {
+	background-position: -30px;
+}
+
+.philips .dijitTree.checkBoxTree .dijitTreeNode .dijitTreeRow{
+	background: none;
+}
+
+.philips .dijitTree.checkBoxTree .dijitTreeRowHover, .philips .dijitTree.checkBoxTree .dijitTreeRowSelected{
+	border:0px;
+	padding:4px 0 2px;
+}
