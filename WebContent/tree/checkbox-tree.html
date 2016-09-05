@@ -51,6 +51,10 @@ body{
 
 <pre>
     app/widget/checkBoxTree/CheckBoxTree
+    
+    extends: dijit/Tree
+    
+    dependencies: app/widget/store/TreeMemory
 </pre>
 
 <br/><br/><hr/><br/><br/>
@@ -62,82 +66,375 @@ body{
 
 <pre>
 
+具体使用方法请参考网页源代码。
+
+
 1. 父节点选中，所有子节点选中；父节点取消，所有子节点取消。
 
 2. 所有子节点选中，父节点自动选中；所有子节点取消，父节点自动取消。
 
 3. 子节点部分选中，父节点显示方块。
 
-4. 此tree基于普通的dijit.Tree扩展，数据源是dojo.store。
+4. 数据源是app/widget/store/TreeMemory, 继承dojo/store/Memory. 数据源必须要有一个root数据。
 
-5. store数据需要有一个selected属性，true表示选中，false或者没有此属性，表示未选中。
+5. 数据源需要有一个selected属性，true表示选中，false或者没有此属性，表示未选中。
 
-6. 父节点的状态由子节点决定。 比如Europe下面有4个国家，如果一个都没有选中，那么Europe就是未选中，哪怕store里面Europe的selected=true，页面上也是未选中。
+6. 数据源示例: 
+[
+    ...
+    {
+        "id": 1001,
+        "display": "_permission_code_admin_manage_user_",
+        "code": "admin_manage_user",
+        "module": "admin",
+        "displayIndex": 1001,
+        "comment": null,
+        "parent": 1
+    }
+    ...
+]
+
+7. store的属性参见app/widget/store/TreeMomery.
+示例:
+var myStore = new TreeMemory({
+    data: permissionData,
+    idProperty: 'id',
+    labelProperty: 'display',
+    labelFormatter: function(label){ return i18n.getText(label);  },
+    parentProperty: 'parent',
+    rootId: 'root',
+    sortProperty: 'displayIndex',
+    sortOrder: 'asc'
+});
+
+8. 父节点的状态由子节点决定。 比如'系统管理'下面有2个子权限，如果一个都没有选中，那么'系统管理'就是未选中，哪怕store里面'系统管理'的selected=true，页面上也是未选中。
 
 
 </pre>
 
-
+<h2>示例代码:</h2>
+<pre>
+    	var permissionData = [{
+    		"id": 1,
+    		"display": "_permission_code_admin_",
+    		"code": "admin",
+    		"module": "admin",
+    		"displayIndex": 1000,
+    		"comment": null,
+    		"parent": "root",
+    		selected: true
+    	},
+    	{
+    		"id": 1001,
+    		"display": "_permission_code_admin_manage_user_",
+    		"code": "admin_manage_user",
+    		"module": "admin",
+    		"displayIndex": 1001,
+    		"comment": null,
+    		"parent": 1
+    	},
+    	{
+    		"id": 1002,
+    		"display": "_permission_code_admin_manage_careplan_",
+    		"code": "admin_manage_careplan",
+    		"module": "admin",
+    		"displayIndex": 1002,
+    		"comment": null,
+    		"parent": 1
+    	},
+    	{
+    		"id": 2,
+    		"display": "_permission_code_scheduler_",
+    		"code": "scheduler",
+    		"module": "scheduler",
+    		"displayIndex": 2000,
+    		"comment": null,
+    		"parent": "root"
+    	},
+    	{
+    		"id": 2001,
+    		"display": "_permission_code_scheduler_view_calendar_",
+    		"code": "scheduler_view_calendar",
+    		"module": "scheduler",
+    		"displayIndex": 2001,
+    		"comment": null,
+    		"parent": 2
+    	},
+    	{
+    		"id": 2002,
+    		"display": "_permission_code_scheduler_manage_calendar_",
+    		"code": "scheduler_manage_calendar",
+    		"module": "scheduler",
+    		"displayIndex": 2002,
+    		"comment": null,
+    		"parent": 2
+    	},
+    	{
+    		"id": 2003,
+    		"display": "_permission_code_scheduler_view_followup_",
+    		"code": "scheduler_view_followup",
+    		"module": "scheduler",
+    		"displayIndex": 2003,
+    		"comment": null,
+    		"parent": 2
+    	},
+    	{
+    		"id": 2004,
+    		"display": "_permission_code_scheduler_manage_followup_",
+    		"code": "scheduler_manage_followup",
+    		"module": "scheduler",
+    		"displayIndex": 2004,
+    		"comment": null,
+    		"parent": 2
+    	},
+    	{
+    		"id": 2005,
+    		"display": "_permission_code_scheduler_print_followup_app_",
+    		"code": "scheduler_print_followup_app",
+    		"module": "scheduler",
+    		"displayIndex": 2005,
+    		"comment": null,
+    		"parent": 2
+    	},
+    	{
+    		"id": 2006,
+    		"display": "_permission_code_scheduler_print_followup_app_list_",
+    		"code": "scheduler_print_followup_app_list",
+    		"module": "scheduler",
+    		"displayIndex": 2006,
+    		"comment": null,
+    		"parent": 2005,
+    		selected: true
+    	},
+    	{
+    		"id": 4,
+    		"display": "_permission_code_registry_",
+    		"code": "registry",
+    		"module": "registry",
+    		"displayIndex": 4000,
+    		"comment": null,
+    		"parent": "root"
+    	},
+    	{
+    		"id": 5,
+    		"display": "_permission_code_research_",
+    		"code": "research",
+    		"module": "research",
+    		"displayIndex": 5000,
+    		"comment": null,
+    		"parent": "root"
+    	},
+    	{
+    		"id": 6,
+    		"display": "_permission_code_analysis_",
+    		"code": "analysis",
+    		"module": "analysis",
+    		"displayIndex": 6000,
+    		"comment": null,
+    		"parent": "root"
+    	}];
+        
+        // add root
+        permissionData.push({
+            id: 'root'
+        });
+    
+         // Create store
+         var myStore = new TreeMemory({
+             data: permissionData,
+             idProperty: 'id',
+             labelProperty: 'display',
+             labelFormatter: function(label){ return i18n.getText(label);  },
+             parentProperty: 'parent',
+             rootId: 'root',
+             sortProperty: 'displayIndex',
+             sortOrder: 'asc'
+         });
+         
+         // Create the Tree.
+         var tree = window.tree = new CheckBoxTree({
+             store: myStore
+         });
+         tree.placeAt('tree1');
+         tree.startup();
+</pre>
 
 <script type="text/javascript">
 require([
          'app/widget/checkBoxTree/CheckBoxTree',
+         'app/widget/store/TreeMemory',
          'dojo/store/Observable',
          "dojo/store/Memory",
          "dijit/tree/ObjectStoreModel", 
          "dojo/domReady!"
-     ], function(CheckBoxTree, Observable, Memory, ObjectStoreModel){
+     ], function(CheckBoxTree, TreeMemory, Observable, Memory, ObjectStoreModel){
 
+		// sample tools    
+    	var i18n = {
+    	    data: {"_permission_code_admin_":"系统管理",
+        	    "_permission_code_admin_manage_user_":"用户管理",
+        	    "_permission_code_admin_manage_careplan_":"随访计划管理",
+        	    "_permission_code_scheduler_":"预约系统",
+        	    "_permission_code_scheduler_view_calendar_":"查看工作日历",
+        	    "_permission_code_scheduler_manage_calendar_":"管理工作日历",
+        	    "_permission_code_scheduler_view_followup_":"查询随访预约",
+        	    "_permission_code_scheduler_manage_followup_":"预约随访患者",
+        	    "_permission_code_scheduler_print_followup_app_":"打印随访预约单",
+        	    "_permission_code_scheduler_print_followup_app_list_":"打印随访患者列表",
+        	    "_permission_code_registry_":"注册采集",
+        	    "_permission_code_research_":"研究管理",
+        	    "_permission_code_analysis_":"数据分析"},
+        	    
+        	    getText: function(k){
+        	        if(k in this.data){
+        	            return this.data[k];
+        	        }else{
+        	            return k;
+        	        }
+        	    }
+    	};
+    	
     
+    	var permissionData = [{
+    		"id": 1,
+    		"display": "_permission_code_admin_",
+    		"code": "admin",
+    		"module": "admin",
+    		"displayIndex": 1000,
+    		"comment": null,
+    		"parent": "root",
+    		selected: true
+    	},
+    	{
+    		"id": 1001,
+    		"display": "_permission_code_admin_manage_user_",
+    		"code": "admin_manage_user",
+    		"module": "admin",
+    		"displayIndex": 1001,
+    		"comment": null,
+    		"parent": 1
+    	},
+    	{
+    		"id": 1002,
+    		"display": "_permission_code_admin_manage_careplan_",
+    		"code": "admin_manage_careplan",
+    		"module": "admin",
+    		"displayIndex": 1002,
+    		"comment": null,
+    		"parent": 1
+    	},
+    	{
+    		"id": 2,
+    		"display": "_permission_code_scheduler_",
+    		"code": "scheduler",
+    		"module": "scheduler",
+    		"displayIndex": 2000,
+    		"comment": null,
+    		"parent": "root"
+    	},
+    	{
+    		"id": 2001,
+    		"display": "_permission_code_scheduler_view_calendar_",
+    		"code": "scheduler_view_calendar",
+    		"module": "scheduler",
+    		"displayIndex": 2001,
+    		"comment": null,
+    		"parent": 2
+    	},
+    	{
+    		"id": 2002,
+    		"display": "_permission_code_scheduler_manage_calendar_",
+    		"code": "scheduler_manage_calendar",
+    		"module": "scheduler",
+    		"displayIndex": 2002,
+    		"comment": null,
+    		"parent": 2
+    	},
+    	{
+    		"id": 2003,
+    		"display": "_permission_code_scheduler_view_followup_",
+    		"code": "scheduler_view_followup",
+    		"module": "scheduler",
+    		"displayIndex": 2003,
+    		"comment": null,
+    		"parent": 2
+    	},
+    	{
+    		"id": 2004,
+    		"display": "_permission_code_scheduler_manage_followup_",
+    		"code": "scheduler_manage_followup",
+    		"module": "scheduler",
+    		"displayIndex": 2004,
+    		"comment": null,
+    		"parent": 2
+    	},
+    	{
+    		"id": 2005,
+    		"display": "_permission_code_scheduler_print_followup_app_",
+    		"code": "scheduler_print_followup_app",
+    		"module": "scheduler",
+    		"displayIndex": 2005,
+    		"comment": null,
+    		"parent": 2
+    	},
+    	{
+    		"id": 2006,
+    		"display": "_permission_code_scheduler_print_followup_app_list_",
+    		"code": "scheduler_print_followup_app_list",
+    		"module": "scheduler",
+    		"displayIndex": 2006,
+    		"comment": null,
+    		"parent": 2005,
+    		selected: true
+    	},
+    	{
+    		"id": 4,
+    		"display": "_permission_code_registry_",
+    		"code": "registry",
+    		"module": "registry",
+    		"displayIndex": 4000,
+    		"comment": null,
+    		"parent": "root"
+    	},
+    	{
+    		"id": 5,
+    		"display": "_permission_code_research_",
+    		"code": "research",
+    		"module": "research",
+    		"displayIndex": 5000,
+    		"comment": null,
+    		"parent": "root"
+    	},
+    	{
+    		"id": 6,
+    		"display": "_permission_code_analysis_",
+    		"code": "analysis",
+    		"module": "analysis",
+    		"displayIndex": 6000,
+    		"comment": null,
+    		"parent": "root"
+    	}];
+    	
+    	// add root
+    	permissionData.push({
+    	    id: 'root'
+    	});
     
-         // Create test store, adding the getChildren() method required by ObjectStoreModel
-         var myStore = new Memory({
-             data: [
-                 { id: 'world', name:'The earth', type:'planet', population: '6 billion'},
-                 { id: 'AF', name:'Africa', type:'continent', population:'900 million', area: '30,221,532 sq km',
-                         timezone: '-1 UTC to +4 UTC', parent: 'world'},
-                     { id: 'EG', name:'Egypt', type:'country', parent: 'AF' },
-                     { id: 'KE', name:'Kenya', type:'country', parent: 'AF' },
-                         { id: 'Nairobi', name:'Nairobi', type:'city', parent: 'KE' },
-                         { id: 'Mombasa', name:'Mombasa', type:'city', parent: 'KE' },
-                     { id: 'SD', name:'Sudan', type:'country', parent: 'AF' },
-                         { id: 'Khartoum', name:'Khartoum', type:'city', parent: 'SD' },
-                 { id: 'AS', name:'Asia', type:'continent', parent: 'world' },
-                     { id: 'CN', name:'China', type:'country', parent: 'AS', selected: true },
-                     { id: 'IN', name:'India', type:'country', parent: 'AS' },
-                     { id: 'RU', name:'Russia', type:'country', parent: 'AS' },
-                     { id: 'MN', name:'Mongolia', type:'country', parent: 'AS' },
-                 { id: 'OC', name:'Oceania', type:'continent', population:'21 million', parent: 'world'},
-                 { id: 'EU', name:'Europe', type:'continent', parent: 'world', selected: true },
-                     { id: 'DE', name:'Germany', type:'country', parent: 'EU' },
-                     { id: 'FR', name:'France', type:'country', parent: 'EU' },
-                     { id: 'ES', name:'Spain', type:'country', parent: 'EU' },
-                     { id: 'IT', name:'Italy', type:'country', parent: 'EU' },
-                 { id: 'NA', name:'North America', type:'continent', parent: 'world' , selected: true},
-                 { id: 'SA', name:'South America', type:'continent', parent: 'world' }
-             ],
-             getChildren: function(object){
-                 return this.query({parent: object.id});
-             }
+         // Create store
+         var myStore = new TreeMemory({
+             data: permissionData,
+             idProperty: 'id',
+             labelProperty: 'display',
+             labelFormatter: function(label){ return i18n.getText(label);  },
+             parentProperty: 'parent',
+             rootId: 'root',
+             sortProperty: 'displayIndex',
+             sortOrder: 'asc'
          });
          
-         // this is not needed
-         myStore = window.myStore  = new Observable(myStore);
-
-
-         // Create the model
-         var myModel = new ObjectStoreModel({
-             store: myStore,
-             query: {id: 'world'},
-             mayHaveChildren: function(item){
-                 return this.store.query({parent: item.id}).length > 0;
-             }
-         });
-
          // Create the Tree.
          var tree = window.tree = new CheckBoxTree({
-             autoExpand: true,
-              model: myModel,
+             store: myStore
          });
          tree.placeAt('tree1');
          tree.startup();

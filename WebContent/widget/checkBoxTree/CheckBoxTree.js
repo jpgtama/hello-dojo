@@ -22,10 +22,11 @@ define([
     './CheckBoxTreeNode',
     './_dndSelectorCheckBox',
     'dijit/Tree',
+    'dijit/tree/ObjectStoreModel',
     'dojo/_base/array',
     'dojo/_base/declare',
     'xstyle/css!./style/checkbox-tree.css'
-], function(CheckBoxTreeNode, _dndSelector, Tree, array, declare) {
+], function(CheckBoxTreeNode, _dndSelector, Tree, ObjectStoreModel, array, declare) {
 
     // change tree node class
     var TreeNode = CheckBoxTreeNode;
@@ -47,29 +48,29 @@ define([
     ], {
 
         /**
-         * add specific class name
+         * Override, add specific class name
          */
         baseClass : 'checkBoxTree dijitTree',
 
         /**
-         * dndController
+         * Override
+         */
+        showRoot : false,
+
+        /**
+         * Override, dndController
          */
         dndController : _dndSelector,
+
+        /**
+         * Override
+         */
+        autoExpand : true,
 
         /**
          * Override, to use our TreeNode class.
          */
         _createTreeNode : function(/* Object */args) {
-            // summary:
-            // creates a TreeNode
-            // description:
-            // Developers can override this method to define their own TreeNode
-            // class;
-            // However it will probably be removed in a future release in favor
-            // of a way
-            // of just specifying a widget for the label, rather than one that
-            // contains
-            // the children too.
             return new TreeNode(args);
         },
 
@@ -79,6 +80,31 @@ define([
         onLoad : function() {
             // handle select
             this.updateSelectStatus();
+        },
+
+        /**
+         * Override
+         */
+        _store2model : function() {
+            this.model = new ObjectStoreModel({
+                store : this.store,
+                labelAttr : this.store.labelProperty || 'name',
+                query : {
+                    id : this.store.rootId
+                },
+                mayHaveChildren : function(item) {
+                    return this.store.getChildren(item).length > 0;
+                },
+                getLabel : function(item) {
+                    var label = item[this.labelAttr];
+
+                    if (this.store.labelFormatter) {
+                        label = this.store.labelFormatter(label);
+                    }
+
+                    return label;
+                }
+            });
         },
 
         /**
