@@ -5,7 +5,7 @@
 <title>Customize Dojo Tree</title>
 <script type="text/javascript">
     dojoConfig = {
-        baseUrl : 'http://localhost:9090/dojo-release-1.10.4-src/dojo/',
+        baseUrl : '/lib/dojo/',
         parseOnLoad : true,
         async : false,
         cacheBust : true,
@@ -29,15 +29,15 @@
             },
             {
                 name : 'app',
-                location : '/hello-dojo'
+                location : '/demo'
             }
         ]
     };
 </script>
-<script src="http://localhost:9090/dojo-release-1.10.4-src/dojo/dojo.js"></script>
-<link rel="stylesheet" href="/dojo-release-1.10.4-src/dojo/resources/dojo.css" />
-<link rel="stylesheet" href="/dojo-release-1.10.4-src/dijit/themes/dijit.css" />
-<link rel="stylesheet" href="/dojo-release-1.10.4-src/dijit/themes/claro/claro.css" />
+<script src="/lib/dojo/dojo.js"></script>
+<link rel="stylesheet" href="/lib/dojo/resources/dojo.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/dijit.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/claro/claro.css" />
 <style type="text/css">
 body{
 	padding: 10px 100px;
@@ -48,19 +48,34 @@ body{
 </head>
 <body class="claro philips">
 
-<h1>Checkbox Tree</h1>
-<hr/>
 
+<pre>
+    app/widget/checkBoxTree/CheckBoxTree
+</pre>
+
+<br/><br/><hr/><br/><br/>
 
 <div id="tree1"></div>
 
 <br/><br/><hr/><br/><br/>
 
-<h2>
-TODO
-Usage: 
-</h2>
 
+<pre>
+
+1. 父节点选中，所有子节点选中；父节点取消，所有子节点取消。
+
+2. 所有子节点选中，父节点自动选中；所有子节点取消，父节点自动取消。
+
+3. 子节点部分选中，父节点显示方块。
+
+4. 此tree基于普通的dijit.Tree扩展，数据源是dojo.store。
+
+5. store数据需要有一个selected属性，true表示选中，false或者没有此属性，表示未选中。
+
+6. 父节点的状态由子节点决定。 比如Europe下面有4个国家，如果一个都没有选中，那么Europe就是未选中，哪怕store里面Europe的selected=true，页面上也是未选中。
+
+
+</pre>
 
 
 
