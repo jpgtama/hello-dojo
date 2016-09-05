@@ -33,17 +33,6 @@ define([
          * Override
          */
         setSelection : function(/* dijit/Tree._TreeNode[] */newSelection) {
-            // summary:
-            // set the list of selected nodes to be exactly newSelection. All
-            // changes to the
-            // selection should be passed through this function, which ensures
-            // that derived
-            // attributes are kept up to date. Anchor will be deleted if it has
-            // been removed
-            // from the selection, but no new anchor will be added by this
-            // function.
-            // newSelection: Node[]
-            // list of tree nodes to make selected
             if (this.singular) {
                 var node = newSelection[0];
 
@@ -65,7 +54,8 @@ define([
         },
 
         /**
-         * update selection recursively, specifically for checkbox tree
+         * update selection recursively, specifically for checkbox tree, in any
+         * case of consistency
          */
         updateSelection : function(node) {
             var _this = this;

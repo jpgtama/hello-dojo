@@ -24,9 +24,10 @@ define([
     'dijit/Tree',
     'dijit/tree/ObjectStoreModel',
     'dojo/_base/array',
+    'dojo/_base/lang',
     'dojo/_base/declare',
     'xstyle/css!./style/checkbox-tree.css'
-], function(CheckBoxTreeNode, _dndSelector, Tree, ObjectStoreModel, array, declare) {
+], function(CheckBoxTreeNode, _dndSelector, Tree, ObjectStoreModel, array, lang, declare) {
 
     // change tree node class
     var TreeNode = CheckBoxTreeNode;
@@ -68,6 +69,11 @@ define([
         autoExpand : true,
 
         /**
+         * selected item ids
+         */
+        value : null,
+
+        /**
          * Override, to use our TreeNode class.
          */
         _createTreeNode : function(/* Object */args) {
@@ -78,7 +84,17 @@ define([
          * Override
          */
         onLoad : function() {
-            // handle select
+
+            // initial selected ids
+            if (this.value && this.value.length > 0) {
+                this.traverseItems(lang.hitch(this, function(item) {
+                    if (this.value.indexOf(item.id) != -1) {
+                        item.selected = true;
+                    }
+                }));
+            }
+
+            // update select status
             this.updateSelectStatus();
         },
 
@@ -118,7 +134,8 @@ define([
             var store = this.model.store;
             var tree = this;
 
-            // DFS
+            // DFS, Post-Order Traversal because parent status is determined by
+            // children
             function dfs(item) {
                 var children = store.getChildren(item);
                 var S, D, I, status;
@@ -172,7 +189,36 @@ define([
             // update dndController selection, in any case of consistency
             this.dndController.updateSelection(tree.getNodesByItem(root)[0]);
 
-        }
+            // TODO set value to selected ids, don't hard code
+            var selectedIds = this.model.store.query({
+                selected : true
+            }).map(function(d) {
+                return d.id
+            }).filter(function(id) {
+                return id != 'root'
+            });
+            this.set('value', selectedIds);
 
+        },
+
+        /**
+         * DFS data items, execute callback on every item.
+         */
+        traverseItems : function(callback) {
+            var root = this.model.root;
+            var store = this.model.store;
+
+            function dfs(item) {
+                callback(item);
+
+                var children = store.getChildren(item);
+                for (var i = 0; i < children.length; i++) {
+                    var c = children[i];
+                    dfs(c);
+                }
+            }
+
+            dfs(root);
+        }
     });
 });

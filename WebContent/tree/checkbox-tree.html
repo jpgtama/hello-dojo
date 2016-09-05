@@ -75,11 +75,13 @@ body{
 
 3. 子节点部分选中，父节点显示方块。
 
-4. 数据源是app/widget/store/TreeMemory, 继承dojo/store/Memory. 数据源必须要有一个root数据。
+4. value的值是选中的id。
 
-5. 数据源需要有一个selected属性，true表示选中，false或者没有此属性，表示未选中。
+5. 数据源是app/widget/store/TreeMemory, 继承dojo/store/Memory. 数据源必须要有一个root数据。
 
-6. 数据源示例: 
+6. 数据源需要有一个selected属性，true表示选中，false或者没有此属性，表示未选中。
+
+7. 数据源示例: 
 [
     ...
     {
@@ -94,7 +96,7 @@ body{
     ...
 ]
 
-7. store的属性参见app/widget/store/TreeMomery.
+8. store的属性参见app/widget/store/TreeMomery.
 示例:
 var myStore = new TreeMemory({
     data: permissionData,
@@ -107,7 +109,7 @@ var myStore = new TreeMemory({
     sortOrder: 'asc'
 });
 
-8. 父节点的状态由子节点决定。 比如'系统管理'下面有2个子权限，如果一个都没有选中，那么'系统管理'就是未选中，哪怕store里面'系统管理'的selected=true，页面上也是未选中。
+9. 父节点的状态由子节点决定。 比如'系统管理'下面有2个子权限，如果一个都没有选中，那么'系统管理'就是未选中，哪怕store里面'系统管理'的selected=true，页面上也是未选中。
 
 
 </pre>
@@ -259,6 +261,7 @@ var myStore = new TreeMemory({
          tree.startup();
 </pre>
 
+
 <script type="text/javascript">
 require([
          'app/widget/checkBoxTree/CheckBoxTree',
@@ -302,8 +305,7 @@ require([
     		"module": "admin",
     		"displayIndex": 1000,
     		"comment": null,
-    		"parent": "root",
-    		selected: true
+    		"parent": "root"
     	},
     	{
     		"id": 1001,
@@ -384,8 +386,7 @@ require([
     		"module": "scheduler",
     		"displayIndex": 2006,
     		"comment": null,
-    		"parent": 2005,
-    		selected: true
+    		"parent": 2005
     	},
     	{
     		"id": 4,
@@ -421,7 +422,7 @@ require([
     	});
     
          // Create store
-         var myStore = new TreeMemory({
+         var myStore = window.myStore = new TreeMemory({
              data: permissionData,
              idProperty: 'id',
              labelProperty: 'display',
@@ -434,11 +435,40 @@ require([
          
          // Create the Tree.
          var tree = window.tree = new CheckBoxTree({
-             store: myStore
+             store: myStore,
+             value: [2, 2005, 2006]
          });
          tree.placeAt('tree1');
          tree.startup();
      });
+</script>
+
+
+<h2>使用声明方式：</h2>
+<script type="dojo/require">at: "dojox/mvc/at"</script>
+<select id="permissionId" 
+                    data-dojo-props="value:at(roleData,'permissionIds'),store:at(roleData, 'store'),readOnly:at(roleData,'readonly')"
+                    data-dojo-type="app/widget/checkBoxTree/CheckBoxTree" >
+                </select>
+<script type="text/javascript">
+    require([
+             'app/widget/checkBoxTree/CheckBoxTree',
+             'app/widget/store/TreeMemory',
+             'dojo/Stateful',
+             'dojo/store/Observable',
+             "dojo/store/Memory",
+             "dijit/tree/ObjectStoreModel", 
+             'dojox/mvc/at',
+             "dojo/domReady!"
+         ], function(CheckBoxTree, TreeMemory, Stateful, Observable, Memory, ObjectStoreModel, at){
+             window.roleData = new Stateful();
+             
+             roleData.store = myStore;
+             
+             roleData.permissionIds = [2, 2005, 2006];
+             
+         });
+
 </script>
 
 </body>
