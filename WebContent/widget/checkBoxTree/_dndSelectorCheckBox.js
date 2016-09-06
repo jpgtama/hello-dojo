@@ -19,15 +19,35 @@
  * </pre>
  ******************************************************************************/
 define([
+    'dijit/a11yclick',
     'dijit/tree/_dndSelector',
+    'dojo/on',
+    'dojo/_base/lang',
     'dojo/_base/declare'
-], function(_dndSelector, declare) {
+], function(a11yclick, _dndSelector, on, lang, declare) {
 
     return declare('_dndSelectorCheckBox', [
         _dndSelector
     ], {
 
+        /**
+         * Override
+         */
         singular : true,
+
+        /**
+         * Override
+         */
+        constructor : function() {
+            var events = this.events;
+            // remove the 9th element
+            // remove this -> on(this.tree.domNode, a11yclick.press,
+            // lang.hitch(this,"onClickPress")),
+            events[8].remove();
+
+            // only allowed to click checkbox & label
+            events.push(on(this.tree.domNode, on.selector(".dijitTreeRow .dijitTreeContent", a11yclick.press), lang.hitch(this, "onClickPress")));
+        },
 
         /**
          * Override

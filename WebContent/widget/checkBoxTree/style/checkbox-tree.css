@@ -26,3 +26,8 @@
 	border:0px;
 	padding:4px 0 2px;
 }
+
+/* cursor */
+.philips .dijitTree.checkBoxTree .dijitTreeNode .dijitTreeRow .dijitTreeContent {
+	cursor: pointer;
+}

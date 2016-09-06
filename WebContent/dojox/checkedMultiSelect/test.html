@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test CheckedMultiSelect</title>
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/lib/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/demo'
+            }
+        ]
+    };
+</script>
+<script src="/lib/dojo/dojo.js"></script>
+<link rel="stylesheet" href="/lib/dojo/resources/dojo.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/dijit.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/claro/claro.css" />
+<link rel="stylesheet" href="/lib/dojox/form/resources/CheckedMultiSelect.css" />
+<style type="text/css">
+body{
+	padding: 10px 100px;
+}
+</style>
+</head>
+<body class="claro philips">
+
+<pre>Test Dojox CheckedMultiSelect</pre>
+
+<br>
+
+<select multiple="true" name="multiselect" data-dojo-type="dojox.form.CheckedMultiSelect">
+      <option value="TN">Tennessee</option>
+      <option value="VA" selected="selected">Virginia</option>
+      <option value="WA" selected="selected">Washington</option>
+      <option value="FL">Florida</option>
+      <option value="CA">California</option>
+ </select>
+
+
+
+
+
+</body>
+</html>
