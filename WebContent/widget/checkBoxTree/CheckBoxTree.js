@@ -44,7 +44,7 @@ define([
      * 
      * 
      */
-    return declare('CheckBoxTree', [
+    return declare('app.widget.checkBoxTree.CheckBoxTree', [
         Tree
     ], {
 
@@ -67,6 +67,11 @@ define([
          * Override
          */
         autoExpand : true,
+
+        /**
+         * selected attribute will be added to data source
+         */
+        selectedAttr : 'selected',
 
         /**
          * selected item ids
@@ -189,13 +194,13 @@ define([
             // update dndController selection, in any case of consistency
             this.dndController.updateSelection(tree.getNodesByItem(root)[0]);
 
-            // TODO set value to selected ids, don't hard code
-            var selectedIds = this.model.store.query({
-                selected : true
-            }).map(function(d) {
-                return d.id
+            // set value to selected ids
+            var query = {};
+            query[this.selectedAttr] = true;
+            var selectedIds = store.query(query).map(function(d) {
+                return d[store.idProperty]
             }).filter(function(id) {
-                return id != 'root'
+                return id != store.rootId
             });
             this.set('value', selectedIds);
 

@@ -43,28 +43,22 @@ define([
      * 
      * 
      */
-    return declare('CheckBoxTreeNode', [
+    return declare('app.widget.checkBoxTree.CheckBoxTreeNode', [
         Tree._TreeNode
     ], {
-
-        /**
-         * selected attribute in data item
-         */
-        selectAttr : 'selected',
 
         /**
          * is selected
          */
         isSelected : function() {
-            return this.item[this.selectAttr];
+            return this.item[this.tree.selectedAttr];
         },
 
         /**
          * toggle selected status when user clicks
          */
         userToggleSelect : function() {
-            // this.setSelected(!this.item[this.selectAttr]);
-            var selAttr = this.selectAttr
+            var selAttr = this.tree.selectedAttr;
 
             // this.item[selAttr] = !this.item[selAttr];
             var selected = !this.item[selAttr];

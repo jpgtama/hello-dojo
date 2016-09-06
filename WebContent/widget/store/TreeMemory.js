@@ -22,7 +22,7 @@ define([
     'dojo/store/Memory',
     'dojo/_base/declare'
 ], function(Memory, declare) {
-    return declare('TreeMemory', [
+    return declare('app.widget.store.TreeMemory', [
         Memory
     ], {
 
@@ -57,7 +57,7 @@ define([
         sortOrder : 'asc',
 
         /**
-         * Add
+         * add getChildren function to store
          */
         getChildren : function(object) {
             var condition = {};
@@ -65,6 +65,7 @@ define([
 
             var options = {};
 
+            // add sort if has
             if (this.sortProperty) {
                 options.sort = [
                     {
@@ -75,7 +76,6 @@ define([
             }
 
             return this.query(condition, options);
-        },
-
+        }
     });
 });
