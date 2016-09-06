@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Interpreter Pattern - Add & Sub</title>
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/lib/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/demo'
+            }
+        ]
+    };
+</script>
+<script src="/lib/dojo/dojo.js"></script>
+<link rel="stylesheet" href="/lib/dojo/resources/dojo.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/dijit.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/claro/claro.css" />
+<style type="text/css">
+body{
+	padding: 10px 100px;
+}
+</style>
+</head>
+<body class="claro philips">
+
+<pre>Interpreter Pattern - Add & Sub</pre>
+
+<script type="text/javascript">
+
+
+function ConstExpr(value){
+    this.value = value;
+    this.isConst = true;
+    
+    this.interpret = function(ctx){
+        return parseInt(this.value);
+    }
+}
+
+function VarExpr(key){
+    this.key = key;
+    this.isVar = true;
+    
+    this.interpret = function(ctx){
+        return ctx[this.key];
+    }
+}
+
+
+function AddExpr(left, right){
+    this.left = left;
+    this.right = right;
+    this.isSymbol = true;
+    
+    this.interpret = function(ctx){
+        return left.interpret(ctx) + right.interpret(ctx);
+    }
+}
+
+function SubExpr(left, right){
+    this.left = left;
+    this.right = right;
+    this.isSymbol = true;
+    
+    this.interpret = function(ctx){
+        return left.interpret(ctx) - right.interpret(ctx);
+    }
+    
+}
+
+
+function SymbolExpr(st, left, right){
+    if(st.value === '+'){
+        this.expr = new AddExpr(left, right);
+    }else if(st.value === '-'){
+        this.expr = new SubExpr(left, right);
+    }else{
+        throw 'no other symbol';
+    }
+    
+    this.interpret = function(ctx){
+        return this.expr.interpret(ctx);
+    }
+    
+    
+    this.isSymbol = true;
+}
+
+
+function Calculator(exprStr){
+    // parse exprStr
+    var tokens = new Tokens(Lexer(exprStr));
+    
+    this.expr = null;
+    
+    var exprStack = [];
+    
+    while(tokens.hasNext()){
+			var t = tokens.next();
+        
+        if(t.isSymbol()){
+            if(exprStack.length ===0 ){
+                throw 'no left operand for ' + t.value;
+            }
+            
+            if(!tokens.hasNext()){
+                throw 'no right operand for ' + t.value;
+            }
+            
+            var left = exprStack.pop();
+            var right = tokens.next();
+            
+            if(validExprForSymbolExpr(left) && validTokenForSymbolExpr(right)){
+	            exprStack.push(new SymbolExpr(t, left, getExprFromToken(right)));
+            }else{
+                throw 'not a valid expr for ' + t.value;
+            }
+        }else {
+            exprStack.push(getExprFromToken(t));
+        }
+    }
+    
+    
+    this.expr = exprStack.pop();
+    
+    this.run = function(ctx){
+        return this.expr.interpret(ctx);
+    }
+    
+}
+
+function getExprFromToken(t){
+    if(t.type === 'C'){
+        return new ConstExpr(t.value);
+    }
+    if(t.type === 'V'){
+        return new VarExpr(t.value);
+    }
+}
+
+function validTokenForSymbolExpr(t){
+    return t.isVar() || t.isConst();
+}
+
+function validExprForSymbolExpr(e){
+    return !!e;
+}
+
+function Tokens(tokenArray){
+    this.tokenArray = tokenArray;
+    
+    this.index = 0;
+    
+    this.next = function(){
+        return this.tokenArray[this.index++];
+    };
+    
+    this.hasNext = function(){
+        return this.index < this.tokenArray.length;
+    };
+    
+}
+
+
+function Token(type, value){
+    // S for Symbol '+', '-', V for variables, C for const
+    this.type = type;
+    this.value = value;
+    
+    this.isSymbol = function(){
+        return this.type === 'S';
+    };
+    
+    
+    this.isVar = function(){
+        return this.type==='V';
+    };
+    
+    this.isConst = function(){
+        return this.type==='C';
+    };
+}
+
+
+
+function Lexer(str){
+    
+    var input = new Input(str);
+    
+    var tokens = [];
+    
+    // parse
+    var t = null;
+    while(input.index < input.str.length){
+        if((t = Symbol(input)) || (t = Variable(input))  || (t = Const(input))  ){
+			tokens.push(t);	        
+        }else if((t = Space(input)) ){
+         	// ignore space   
+        }else{
+            throw 'Invalid token at: ' + input.index;
+        }
+    }
+    
+    
+    return tokens;
+}
+
+
+function Input(str){
+    this.index = 0;
+    this.str = str;
+}
+
+function Symbol(/*Input*/input){
+    var c = input.str.charAt(input.index);
+    if(c === '+' || c === '-'){
+        input.index++;
+        return new Token('S', c);
+    }
+}
+
+
+function Variable(/*Input*/input){
+    // 
+    var index = input.index;
+    
+    var state = 0;
+    while(index < input.str.length){
+        var c = input.str.charAt(index);
+        
+        if(state === 0 && /[a-zA-Z]/.test(c)){
+            state = 1;
+        }else if(state ===1 && /[a-zA-Z0-9]/.test(c)){
+            state = 1;
+        }else{
+            break;
+        }
+
+        index++;
+    }
+    
+    // check state
+    if(state === 0){
+        return null;
+    }else if(state !== 0 || index === input.str.length){
+        // success
+        var t = input.str.substring(input.index, index); 
+        input.index = index;
+        return new Token('V', t);
+    }
+}
+
+
+function Const(/*Input*/input){
+    // 
+    var index = input.index;
+    
+    var state = 0;
+    while(index < input.str.length){
+        var c = input.str.charAt(index);
+        
+        if(state === 0 && /[0-9]/.test(c)){
+            state = 1;
+        }else if(state === 1 && /[0-9]/.test(c)){
+         	state = 1;   
+        }else{
+            break;
+        }
+
+        index++;
+    }
+    
+    // check state
+    if(state === 0){
+        return null;
+    }else if(state !== 0 || index === input.str.length){
+        // success
+        var t = input.str.substring(input.index, index); 
+        input.index = index;
+        return new Token('C', t);
+    }
+}
+
+function Space(/*Input*/ input){
+    var c = input.str.charAt(input.index);
+    if(c === ' '){
+        input.index++;
+        return c;
+    }
+}
+	
+</script>
+
+</body>
+</html>
