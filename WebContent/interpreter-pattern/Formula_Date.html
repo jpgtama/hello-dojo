@@ -45,7 +45,7 @@ body{
 }
 
 
-table{
+.display{
     border-spacing: 28px;
 }
 
@@ -54,13 +54,17 @@ table{
     height: 150px;
 }
 
+.date{
+    display: inline-block;
+}
+
 </style>
 </head>
 <body class="claro philips">
 
 <pre>Date Formula</pre>
 
-<table>
+<table class="display">
     <tr>
         <td>
             Please <button onclick="addFormData()">Add</button> form data:
@@ -108,8 +112,9 @@ table{
 
 
 <script>
-	require(['dijit/form/DateTextBox', 'dojo/date/locale',
-	         'dojo/dom-construct', 'dojo/string', 'dojo/_base/declare', 'dojo/domReady!'], function(DateTextBox, locale, domC, string, declare){
+	require(['app/widget/date/DateTime', 'dijit/form/DateTextBox', 'dojo/date/locale',
+	         'dojo/dom-construct', 'dojo/string', 'dojo/_base/declare', 'dojo/domReady!'], 
+	         function(DateTime, DateTextBox, locale, domC, string, declare){
 	    
 	    var fieldNameIndex = 'a'.charCodeAt(0);
 	    
@@ -125,11 +130,15 @@ table{
 	        
 	        $('#formData').appendChild(field);
 	        
-	        new DateTextBox({
+	        var dt =  new DateTime({
 	            className: 'date',
 	            required: true,
 	            value: '2005-12-30'
-	        }, dtbNode).startup();
+	        }, dtbNode);
+	        
+	        dt.setJson(JSON.stringify({key: 'xxx'}));
+	        
+	        dt.startup();
 	        
 	    }
 	    
@@ -281,6 +290,14 @@ function Expression(op, left, right, isNum, isVar, nv){
             }else{
                 throw 'no value for ' + this.nv;
             }
+        }
+        
+        if(!this.left){
+            throw 'no left operand for ' + this.op;
+        }
+        
+        if(!this.right){
+            throw 'no right operand for ' + this.op;
         }
         
         var left = this.left.interpret(ctx);
