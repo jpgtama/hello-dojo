@@ -234,6 +234,14 @@ function Input(str){
     this.str = str;
 }
 
+function Space(/*Input*/ input){
+    var c = input.str.charAt(input.index);
+    if(c === ' '){
+        input.index++;
+        return c;
+    }
+}
+
 function Symbol(/*Input*/input){
     var c = input.str.charAt(input.index);
     if(c === '+' || c === '-'){
@@ -242,6 +250,14 @@ function Symbol(/*Input*/input){
     }
 }
 
+
+function Brackets(/*Input*/ input){
+    var c = input.str.charAt(input.index);
+    if(c === '+' || c === '-'){
+        input.index++;
+        return new Token('S', c);
+    }
+}
 
 function Variable(/*Input*/input){
     // 
@@ -304,13 +320,7 @@ function Const(/*Input*/input){
     }
 }
 
-function Space(/*Input*/ input){
-    var c = input.str.charAt(input.index);
-    if(c === ' '){
-        input.index++;
-        return c;
-    }
-}
+
 	
 </script>
 

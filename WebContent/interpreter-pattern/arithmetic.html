@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Arithmetic - +-*/()</title>
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/lib/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/demo'
+            }
+        ]
+    };
+</script>
+<script src="/lib/dojo/dojo.js"></script>
+<link rel="stylesheet" href="/lib/dojo/resources/dojo.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/dijit.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/claro/claro.css" />
+<style type="text/css">
+body{
+	padding: 10px 100px;
+}
+</style>
+</head>
+<body class="claro philips">
+
+<pre>Arithmetic - +-*/()</pre>
+
+<script type="text/javascript">
+
+
+function Calculator(exprStr){
+    this.tokens = new Tokens(Lexer(exprStr));
+    
+    console.table(this.tokens.tokenArray);
+    
+    this.exp = getExp(this.tokens);
+    
+    console.log(this.exp);
+    
+    
+    this.run = function(ctx){
+        console.log('result: ', this.exp.interpret(ctx));
+    }
+    
+    
+    console.log(this.tokens.left());
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+// 1.Term = <数字> | <变量> | “(”Exp”)”
+
+// 2.Factor = Term ((“*” | “/”) Term)*
+
+// 3.Exp = Factor ((“+” | “-”) Factor)*
+
+
+function Expression(op, left, right, isNum, isVar, nv){
+    this.op = op;
+    this.left = left;
+    this.right = right;
+    this.isNum = isNum;
+    this.isVar = isVar;
+    this.nv = nv;
+    
+    this.interpret = function(ctx){
+        if(this.isNum){
+            return this.nv;
+        }else if(this.isVar){
+            return ctx[this.nv];
+        }
+        
+        var left = this.left.interpret(ctx);
+        var right = this.right.interpret(ctx);
+        
+        var value = null;
+        
+        if(this.op === '+'){
+            value = left + right;
+        }else if(this.op === '-'){
+            value = left - right;
+        }else if(this.op === '*'){
+            value = left * right;
+        }else if(this.op === '/'){
+            if(right === 0){
+                throw 'divided by 0 error';
+            }
+            value = left / right;
+        }
+        
+        return value;
+    }
+}
+
+function getNumber(/* Tokens */ tokens){
+    var t = tokens.current();
+    
+    if(t && t.isN){
+        var num = t.value;
+        tokens.forward();
+        return new Expression(null, null, null, true, null, num);
+    }
+}
+
+function getVar(/* Tokens */ tokens){
+    var t = tokens.current();
+    
+    if(t && t.isV){
+        var num = t.value;
+        tokens.forward();
+        return new Expression(null, null, null, null, true, num);
+    }
+}
+
+
+
+function getTerm(/* Tokens */ tokens){
+    // Term = <数字> | <变量> | “(”Exp”)”
+    var term = getNumber(tokens);
+    
+    if(term){
+        return term;
+    }
+    
+    
+    term = getVar(tokens);
+    
+    if(term){
+        return term;
+    }
+    
+    var token = tokens.current();
+    
+    if(token.isLB){
+        tokens.forward();
+        var exp = getExp(tokens);
+        
+        token = tokens.current();
+        if(token.isRB){
+            tokens.forward();
+           return exp; 
+        }else{
+            throw 'need RB here.';
+        }
+    }
+}
+
+
+function getFactor(tokens){
+    // Factor = Term ((“*” | “/”) Term)*
+    
+    var factor = getTerm(tokens);
+    
+    
+    
+    while(tokens.hasNext()){
+        var op = null;
+        
+        var token = tokens.current();
+        
+        if(token.isS && token.value === '*'){
+            op = '*';
+        }else if(token.isS && token.value === '/'){
+            op = '/';
+        }else{
+            break;
+        }
+        
+        if(op){
+            tokens.forward();
+            factor = new Expression(op, factor, getTerm(tokens));
+        }
+    }
+
+    return factor;
+}
+
+function getExp(tokens){
+    // Exp = Factor ((“+” | “-”) Factor)*
+    
+    var exp = getFactor(tokens);
+    
+    
+    
+    while(tokens.hasNext()){
+        var op = null;
+        
+        var token = tokens.current();
+        
+        if(token.isS && token.value === '+'){
+            op = '+';
+        }else if(token.isS && token.value === '-'){
+            op = '-';
+        }else{
+            break;
+        }
+        
+        if(op){
+            tokens.forward();
+            exp = new Expression(op, exp, getFactor(tokens));
+        }
+    }
+
+    return exp;
+    
+}
+
+function Tokens(tokenArray){
+    this.tokenArray = tokenArray;
+    
+    this.index = 0;
+    
+    this.next = function(){
+        return this.tokenArray[this.index++];
+    };
+    
+    this.hasNext = function(){
+        return this.index < this.tokenArray.length;
+    };
+    
+    this.current = function(){
+        return this.tokenArray[this.index];
+    }
+    
+    this.forward = function(){
+        this.index++;
+        return this;
+    }
+    
+    this.back = function(){
+        this.index--;
+        return this;
+    }
+    
+    this.left = function(){
+        var tmp = [];
+        var index = this.index;
+        if(index < this.tokenArray.length){
+            tmp.push(this.tokenArray[index++]);
+        }
+        
+        return tmp;
+    }
+}
+
+function Token(type, value){
+    // S for Symbol '+', '-', V for variables, N for number, B for ()
+    this.type = type;
+    this.value = value;
+    
+    
+    if(this.type === 'S'){
+        this.isS = true;
+    }else if(this.type==='V'){
+        this.isV = true;
+    }else if(this.type==='N'){
+        this.isN = true;
+    }else if(this.type==='B' && this.value === '('){
+        this.isB = this.isLB = true;
+    }else if(this.type==='B' && this.value === ')'){
+        this.isB = this.isRB = true;
+    }
+}
+
+
+
+function Lexer(str){
+    
+    var input = new Input(str);
+    
+    var tokens = [];
+    
+    // parse
+    var t = null;
+    while(input.index < input.str.length){
+        if((t = Symbol(input)) || (t = Variable(input))  || (t = Num(input))  || (t = Brackets(input)) ){
+			tokens.push(t);	        
+        }else if((t = Space(input)) ){
+         	// ignore space   
+        }else{
+            throw 'Invalid token at: ' + input.index;
+        }
+    }
+    
+    return tokens;
+}
+
+
+function Input(str){
+    this.index = 0;
+    this.str = str;
+}
+
+function Space(/*Input*/ input){
+    var c = input.str.charAt(input.index);
+    if(c === ' '){
+        input.index++;
+        return c;
+    }
+}
+
+
+function Brackets(/*Input*/ input){
+    var c = input.str.charAt(input.index);
+    if('()'.indexOf(c) !== -1){
+        input.index++;
+        return new Token('B', c);
+    }
+}
+
+function Symbol(/*Input*/input){
+    var c = input.str.charAt(input.index);
+    if('+-*/'.indexOf(c) !== -1){
+        input.index++;
+        return new Token('S', c);
+    }
+}
+
+function Variable(/*Input*/input){
+    // 
+    var index = input.index;
+    
+    var state = 0;
+    while(index < input.str.length){
+        var c = input.str.charAt(index);
+        
+        if(state === 0 && /[a-zA-Z]/.test(c)){
+            state = 1;
+        }else if(state ===1 && /[a-zA-Z0-9]/.test(c)){
+            state = 1;
+        }else{
+            break;
+        }
+
+        index++;
+    }
+    
+    // check state
+    if(state === 0){
+        return null;
+    }else if(state !== 0 || index === input.str.length){
+        // success
+        var t = input.str.substring(input.index, index); 
+        input.index = index;
+        return new Token('V', t);
+    }
+}
+
+
+function Num(/*Input*/input){
+    // 
+    var index = input.index;
+    
+    var state = 0;
+    while(index < input.str.length){
+        var c = input.str.charAt(index);
+        
+        if(state === 0 && /[0-9]/.test(c)){
+            state = 1;
+        }else if(state === 1 && /[0-9]/.test(c)){
+         	state = 1;   
+        }else{
+            break;
+        }
+
+        index++;
+    }
+    
+    // check state
+    if(state === 0){
+        return null;
+    }else if(state !== 0 || index === input.str.length){
+        // success
+        var t = input.str.substring(input.index, index); 
+        input.index = index;
+        return new Token('N', t);
+    }
+}
+
+
+	
+</script>
+
+</body>
+</html>
