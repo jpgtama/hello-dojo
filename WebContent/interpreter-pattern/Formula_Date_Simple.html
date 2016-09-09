@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Date Formula</title>
+<script type="text/javascript" src="moment.js"></script>
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/lib/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/demo'
+            }
+        ]
+    };
+</script>
+<script src="/lib/dojo/dojo.js"></script>
+<link rel="stylesheet" href="/lib/dojo/resources/dojo.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/dijit.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/claro/claro.css" />
+<style type="text/css">
+body{
+	padding: 10px 100px;
+}
+
+
+.display{
+    border-spacing: 28px;
+}
+
+#ctx{
+    width: 660px;
+    height: 150px;
+}
+
+.date{
+    display: inline-block;
+}
+
+.success, .error{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.success{
+    color: green;
+}
+
+.error{
+    color: red;
+}
+
+
+</style>
+</head>
+<body class="claro philips">
+
+<pre>Date Formula</pre>
+
+<table class="display">
+    <tr>
+        <td>
+                                    请选择计算类型：
+        </td> 
+    <td>
+    <select id="calcType">
+        <option value="date" selected>日期时间</option>
+        <option value="math">数值</option>
+    </select>
+
+    <tr>
+        <td>
+                                    请 修改 Form数据:
+        </td>
+        <td id="formData">
+        </td>
+    </tr>
+    <tr>
+        <td>
+                                    请选择计算类型：
+        </td>
+        <td>
+            <select id="opType">
+                <option value="-">时间差</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+                                    选择时间单位:
+        </td>
+        <td>
+            <select id="unit">
+                <option value="year">Year</option>
+                <option value="month">Month</option>
+                <option value="day" selected>Day</option>
+                <option value="hour">Hour</option>
+                <option value="minute">Minute</option>
+                <option value="second">Second</option>
+            </select>
+        </td>
+    </tr>
+   
+    <tr>
+        <td>
+            <button onclick="calc()">计算</button>
+        </td>
+        <td>
+            <div id="result"></div>
+        </td>
+    </tr>
+   
+
+</table>
+<hr/>
+
+
+
+<script>
+	require(['app/widget/date/DateTime', 'dijit/form/DateTextBox', 'dojo/date/locale',
+	         'dojo/dom-construct', 'dojo/string', 'dojo/_base/declare', 'dojo/domReady!'], 
+	         function(DateTime, DateTextBox, locale, domC, string, declare){
+	    
+	    var fieldNameIndex = 'a'.charCodeAt(0);
+	    
+	    window.addFormData = function(){
+	        
+	        var field = domC.toDom(string.substitute('<div class="field">  <input value="${fieldName}" class="name"/> &nbsp;=&nbsp;&nbsp;    </div>', {
+	            fieldName: String.fromCharCode(fieldNameIndex++)
+	        }));
+	        
+	        var dtbNode = domC.toDom('<input />');
+	        
+	        field.appendChild(dtbNode);
+	        
+	        $('#formData').appendChild(field);
+	        
+	        var dt =  new DateTime({
+	            className: 'date',
+	            required: true,
+	            value: '2005-12-30'
+	        }, dtbNode);
+	        
+	        dt.setJson(JSON.stringify({key: 'xxx'}));
+	        
+	        dt.startup();
+	        
+	    }
+
+	    // add two fields
+	    window.addFormData();
+	    window.addFormData();
+	    
+	});
+
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+
+function $(s){
+    return document.querySelector(s);
+}
+
+function calc(){
+    try{
+        // get value
+    	var calcType = $('#calcType').value;
+        	
+        var unit = $('#unit').value;
+        
+        var operation = getOperation();
+        
+        var data = getFormData();
+    
+        // validate
+        if(!calcType){
+            throw 'no calcType';
+        }
+        
+        if(!unit){
+            throw 'no unit';
+        }
+        
+        if(!operation){
+            throw 'no operation';
+        }
+        
+        if(!data){
+            throw 'no data';
+        }
+        
+        
+        var ctx = {
+            data: data,
+            unit: unit,
+            operation: operation,
+            calcType: calcType
+        };
+        
+        console.log(ctx);
+    
+        // calc
+        var result = CalculatorSimple(ctx);
+        console.log(result);
+        
+        $('#result').classList.remove('error');
+        $('#result').classList.add('success');
+        $('#result').innerText = result.value + ' '+ (ctx.calcType==='date' ?unit:'');
+        
+    }catch(e){
+        $('#result').classList.remove('success');
+        $('#result').classList.add('error');
+        $('#result').innerText = e;
+        throw e;
+    }
+    
+    
+}
+
+
+function getOperation(){
+    var opType = $('#opType').value;
+    
+    // field list
+	var fields = $('#formData').children;
+    
+    var fieldList = [];
+    
+    for(var i=0;i<fields.length; i++){
+        var field = fields[i];
+        
+        var name = field.children[0].value;
+        
+        fieldList.push(name);
+    }
+    
+    
+    var data = {
+        p: opType,
+        0: fieldList[0],
+        1: fieldList[1]
+    };
+    
+    var ret = '(p 0 1)'.replace(/[p01]/g, function(item){
+        return data[item];
+    });;
+    
+    return ret;
+}
+
+
+function getFormData(){
+    var fields = $('#formData').children;
+    
+    var ret = {};
+    
+    for(var i=0;i<fields.length; i++){
+        var field = fields[i];
+        
+        var name = field.children[0];
+
+        var date = dijit.getEnclosingWidget(field.children[1]).get('value');
+        if(!date){
+            throw 'please input date';
+        }
+        
+        var dateMs = date.getTime();
+        ret[name.value] = dateMs;
+    }
+    
+    return ret;
+}
+
+
+
+
+
+
+
+function CalculatorSimple(ctx){
+    var op = new OP(ctx.operation);
+    
+    window.calcMap = {
+        'date': DateCalc,
+        'math': MathCalc
+    };
+    
+    return {value: calcOP(op, ctx)};
+}
+
+function calcOP(/*OP*/op, ctx){
+    var c = op.get();
+    
+    if(c !== '('){
+        throw 'expression should start with (';
+    }
+    
+    op.forward();
+    
+    var oneExp = '';
+    
+    while(op.hasNext()){
+        
+        c = op.get();
+        if(c === '('){
+            oneExp += calcOP(op, ctx);
+        }
+        
+        c = op.get();
+        if(c === ')'){
+            op.forward();
+            break;
+        }
+        
+        oneExp += c;
+        op.forward();
+    }
+    
+    // calculate
+    console.log(oneExp);
+    
+    return calcMap[ctx.calcType](oneExp, ctx);
+}
+
+
+function OP(op){
+    this.value = op;
+    this.index = 0;
+    
+    this.hasNext = function(){
+        return this.index < this.value.length;
+    }
+    
+    this.get = function(){
+        return this.value.charAt(this.index);
+    }
+    
+    this.forward = function(){
+        this.index++;
+        return this;
+    }
+    
+}
+
+
+function DateCalc(oneExp, ctx){
+    var array = oneExp.split(' ');
+    
+    var op = array[0];
+    var a = array[1];
+    var b = array[2];
+    
+    if(op === '-'){
+        return moment(getData(ctx, a)).diff(moment(getData(ctx, b)), ctx.unit);
+    }
+    
+    throw 'no operation for date: ' + op;
+    
+}
+
+
+
+
+function MathCalc(oneExp, ctx){
+    var array = oneExp.split(' ');
+    
+    var op = array[0];
+    var a = array[1];
+    var b = array[2];
+    
+    if(op === '+'){
+        return getData(ctx, a) + getData(ctx, b);
+    }
+    if(op === '-'){
+        return getData(ctx, a) - getData(ctx, b);
+    }
+    if(op === '*'){
+        return getData(ctx, a) * getData(ctx, b);
+    }
+    if(op === '/'){
+        if(getData(ctx, b) === 0){
+            throw 'can\'t divide by 0';
+        }
+        
+        return getData(ctx, a) / getData(ctx, b);
+    }
+    
+    throw 'no operation for math: ' + op;
+}
+
+
+function getData(ctx, name){
+    var data = ctx.data;
+    if(/^[\-]?[0-9]+/.test(name)){
+        return parseInt(name);
+    }else{
+        return data[name];
+    }
+}
+
+
+
+
+
+
+
+
+
+	
+</script>
+
+</body>
+</html>
