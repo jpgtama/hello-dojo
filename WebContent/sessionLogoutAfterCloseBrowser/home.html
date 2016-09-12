@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+</head>
+<body>
+
+<pre>
+    This is your home.
+</pre>
+<hr/>
+
+
+<script type="text/javascript">
+	// long polling
+	
+	var xmlHttp = new XMLHttpRequest();
+	
+	xmlHttp.onreadystatechange = function(){
+	    
+	    if(this.readyState === XMLHttpRequest.DONE){
+	        
+	        if(this.status === 200){
+	         	console.log(this.responseText);   
+	        }else if(this.status === 400){
+	            console.log("error");
+	        }
+	        
+	    }
+	    
+	}
+	
+	xmlHttp.open("POST", 'session', true);
+	xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	xmlHttp.send('sid= '+112233);
+
+</script>
+
+</body>
+</html>

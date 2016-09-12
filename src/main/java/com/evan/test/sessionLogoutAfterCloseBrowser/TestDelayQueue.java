@@ -1,4 +1,4 @@
-package com.evan.test.DelayQueue;
+package com.evan.test.sessionLogoutAfterCloseBrowser;
 
 public class TestDelayQueue {
 	

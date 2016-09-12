@@ -1,4 +1,4 @@
-package com.evan.test.DelayQueue;
+package com.evan.test.sessionLogoutAfterCloseBrowser;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.DelayQueue;
