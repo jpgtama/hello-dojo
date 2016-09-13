@@ -1,4 +1,4 @@
-package com.evan.test.sessionLogoutAfterCloseBrowser;
+package com.evan.test.sessionLogoutAfterCloseBrowser.servlet;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,7 @@
-package com.philips.his.pixiu.cdr.formula;
+package com.philips.his.pixiu.cdr.formula.parser;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -26,7 +29,7 @@ public class DateCalc extends Calc {
 		throw new RuntimeException("no operation for date" + op);
 	}
 	
-	public static void main(String[] args) {
+	public static void main_(String[] args) {
 		
 		DateTime start = new DateTime(System.currentTimeMillis() - 1200 * 60 * 60 * 24 * 3);
 		
@@ -50,4 +53,18 @@ public class DateCalc extends Calc {
 				minutes, seconds));
 		
 	}
+	
+	public static void main(String[] args) {
+		DateTime dt1 = new DateTime("2016-2-28");
+		DateTime dt2 = new DateTime("2016-3-1");
+		
+		System.out.println(Days.daysBetween(dt1, dt2).getDays());
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		
+		System.out.println(cal.getActualMaximum(Calendar.DAY_OF_YEAR));
+		
+	}
+	
 }
