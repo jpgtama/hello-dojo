@@ -9,8 +9,9 @@ import java.util.Random;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class CalculatorTest {
+public class FormulaExecutorTest {
 	
+	@SuppressWarnings("unused")
 	private static String[] randomDateGenerator() {
 		String[] ret = new String[4];
 		
@@ -46,12 +47,10 @@ public class CalculatorTest {
 		
 		Map<String, Object> data = new HashMap<>();
 		
-		Calendar cal = Calendar.getInstance();
-		
 		data.put("birthDate", 805010584197L);
 		data.put("deceasedTime", 1447920397197L);
 		
-		Number result = Calculator.calculate(formula, data);
+		Number result = FormulaExecutor.calculate(formula, data);
 		
 		Assert.assertEquals(20, result);
 		
@@ -73,12 +72,10 @@ public class CalculatorTest {
 		
 		Map<String, Object> data = new HashMap<>();
 		
-		Calendar cal = Calendar.getInstance();
-		
 		data.put("birthDate", 805010584197L);
 		data.put("deceasedTime", 1447920397197L);
 		
-		Number result = Calculator.calculate(formula, data);
+		Number result = FormulaExecutor.calculate(formula, data);
 		
 		Assert.assertEquals(244, result);
 		
@@ -101,12 +98,10 @@ public class CalculatorTest {
 		
 		Map<String, Object> data = new HashMap<>();
 		
-		Calendar cal = Calendar.getInstance();
-		
 		data.put("birthDate", 1454496553633L);
 		data.put("deceasedTime", 1477017153633L);
 		
-		Number result = Calculator.calculate(formula, data);
+		Number result = FormulaExecutor.calculate(formula, data);
 		
 		Assert.assertEquals(261, result);
 		
@@ -129,12 +124,10 @@ public class CalculatorTest {
 		
 		Map<String, Object> data = new HashMap<>();
 		
-		Calendar cal = Calendar.getInstance();
-		
 		data.put("birthDate", 1472753896900L);
 		data.put("deceasedTime", 1473687410900L);
 		
-		Number result = Calculator.calculate(formula, data);
+		Number result = FormulaExecutor.calculate(formula, data);
 		
 		Assert.assertEquals(259, result);
 		
@@ -157,12 +150,10 @@ public class CalculatorTest {
 		
 		Map<String, Object> data = new HashMap<>();
 		
-		Calendar cal = Calendar.getInstance();
-		
 		data.put("birthDate", 1472753896900L);
 		data.put("deceasedTime", 1473687410900L);
 		
-		Number result = Calculator.calculate(formula, data);
+		Number result = FormulaExecutor.calculate(formula, data);
 		
 		Assert.assertEquals(15558, result);
 		
@@ -185,12 +176,10 @@ public class CalculatorTest {
 		
 		Map<String, Object> data = new HashMap<>();
 		
-		Calendar cal = Calendar.getInstance();
-		
 		data.put("birthDate", 1472753896900L);
 		data.put("deceasedTime", 1473687410900L);
 		
-		Number result = Calculator.calculate(formula, data);
+		Number result = FormulaExecutor.calculate(formula, data);
 		
 		Assert.assertEquals(933514, result);
 		
@@ -213,12 +202,10 @@ public class CalculatorTest {
 		
 		Map<String, Object> data = new HashMap<>();
 		
-		Calendar cal = Calendar.getInstance();
-		
 		data.put("aa", 11.111);
 		data.put("bb", 22.222);
 		
-		Number result = Calculator.calculate(formula, data);
+		Number result = FormulaExecutor.calculate(formula, data);
 		
 		Assert.assertEquals(33.33, result.doubleValue(), 0);
 		
@@ -241,12 +228,10 @@ public class CalculatorTest {
 		
 		Map<String, Object> data = new HashMap<>();
 		
-		Calendar cal = Calendar.getInstance();
-		
 		data.put("aa", 11.111);
 		data.put("bb", 22.222);
 		
-		Number result = Calculator.calculate(formula, data);
+		Number result = FormulaExecutor.calculate(formula, data);
 		
 		Assert.assertEquals(-11.11, result.doubleValue(), 0);
 		
@@ -269,12 +254,10 @@ public class CalculatorTest {
 		
 		Map<String, Object> data = new HashMap<>();
 		
-		Calendar cal = Calendar.getInstance();
-		
 		data.put("aa", 11.111);
 		data.put("bb", 22.222);
 		
-		Number result = Calculator.calculate(formula, data);
+		Number result = FormulaExecutor.calculate(formula, data);
 		
 		Assert.assertEquals(246.91, result.doubleValue(), 0);
 		
@@ -297,12 +280,10 @@ public class CalculatorTest {
 		
 		Map<String, Object> data = new HashMap<>();
 		
-		Calendar cal = Calendar.getInstance();
-		
 		data.put("aa", 11.111);
 		data.put("bb", 22.222);
 		
-		Number result = Calculator.calculate(formula, data);
+		Number result = FormulaExecutor.calculate(formula, data);
 		
 		Assert.assertEquals(0.5, result.doubleValue(), 0);
 		

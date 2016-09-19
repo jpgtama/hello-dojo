@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import com.philips.his.pixiu.cdr.formula.function.Formulas.DateTimeUnit;
 
-public class Calculator {
+public class FormulaExecutor {
 	
 	private static void checkData(Map<String, Object> data, String[] params, int dataCount) {
 		for (int i = 0; i < dataCount; i++) {

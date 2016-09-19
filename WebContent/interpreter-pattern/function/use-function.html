@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Date Formula</title>
+<link rel="stylesheet" href="../treant-js/Treant.css" type="text/css"/>
+<script src="../treant-js/vendor/raphael.js"></script>
+<script src="../treant-js/Treant.js"></script>
+<script type="text/javascript" src="../moment.js"></script>
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/lib/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/demo'
+            }
+        ]
+    };
+</script>
+<script src="/lib/dojo/dojo.js"></script>
+<link rel="stylesheet" href="/lib/dojo/resources/dojo.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/dijit.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/claro/claro.css" />
+<style type="text/css">
+body{
+	padding: 10px 100px;
+}
+
+
+.display{
+    border-spacing: 28px;
+    font-size: 20px;
+}
+
+.display select, .display input{
+    height: 32px;
+    width: 86px;
+    font-size: 20px;
+}
+
+.display .formula.date select{
+    width: 140px;
+}
+
+#ctx{
+    width: 660px;
+    height: 150px;
+}
+
+
+
+.hidden{
+    display: none;
+}
+
+</style>
+</head>
+<body class="claro philips">
+
+<pre>公式计算</pre>
+
+<table class="display">
+
+
+    <tr>
+        <td>
+                                选择计算类型
+        </td>
+        <td>
+            <select id="calcType" onchange="switchCalcType(this.value)">
+                <option value="date">日期</option>
+                <option value="number">数字</option>
+            </select>
+        </td>
+    </tr>
+    
+    <tr class="formDataType date">
+        <td>表单数据 - 日期</td>
+        <td class="formData">
+        </td>
+    </tr>
+    
+    <tr class="formDataType number hidden">
+        <td>表单数据 - 数字</td>
+        <td class="formData">
+        </td>
+    </tr>
+    
+    <tr class="formula date">
+        <td>
+                                    计算公式
+        </td>
+        <td>
+            <select class="operand1">
+                <option value="startDate">起始日期</option>
+                <option value="endDate">结束日期</option>
+            </select>
+            <select class="operator">
+                <option value="dateSub">-</option>
+            </select>
+            <select class="operand2">
+                <option value="startDate">起始日期</option>
+                <option value="endDate">结束日期</option>
+            </select>
+            <select class="unit">
+                <option value="years">年</option>
+                <option value="months">月</option>
+                <option value="days" selected>天</option>
+                <option value="hours">时</option>
+                <option value="minutes">分</option>
+                <option value="seconds">秒</option>
+            </select>
+        </td>
+    </tr>
+    
+    <tr class="formula number hidden">
+        <td>
+                                    计算公式
+        </td>
+        <td>
+            <select class="operand1">
+                <option value="height">身高</option>
+                <option value="weight">体重</option>
+            </select>
+            <select class="operator">
+                <option value="numberAdd">+</option>                
+                <option value="numberSub">-</option>                
+                <option value="numberMul">*</option>                
+                <option value="numberDiv">/</option>                
+            </select>
+            <select class="operand2">
+                <option value="height">身高</option>
+                <option value="weight">体重</option>
+            </select>
+            <select class="decimal">
+                <option value="0" selected>0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </td>
+    </tr>
+   
+    <tr>
+        <td>
+            <button onclick="getFormula()">获取公式</button>
+        </td>
+        <td>
+            <div>
+                <div id="formula"></div>
+            </div>
+        </td>
+    </tr>
+   
+    <tr>
+        <td>
+            <button onclick="calc()">计算结果</button>
+        </td>
+        <td>
+            <div>
+                <div id="result"></div>
+            </div>
+        </td>
+    </tr>
+   
+
+</table>
+<hr/>
+<div id="tree-simple" style="width:800px; height: 600px"> </div>
+
+
+
+<script type="text/javascript">
+
+	// default type: date
+	switchCalcType('date');
+	
+
+	function switchCalcType(t){
+	    if(t === 'number'){
+	        formData_number();
+	    }else if(t === 'date'){
+	        formData_date();
+	    }
+	}
+
+	
+	function getFormula(){
+	    // get calc type
+	    var ct = $('#calcType').value;
+	    
+	    if(ct === 'date'){
+	        var p1 = $('.formula.date').querySelector('.operand1').value;
+	        
+	        var op = $('.formula.date').querySelector('.operator').value;
+	        
+	        var p2 = $('.formula.date').querySelector('.operand2').value;
+	        
+	        var unit = $('.formula.date').querySelector('.unit').value;	        
+	        
+	        var formula = op + '(' + p1 + ', '+ p2 +', '+ unit+')';
+	        
+	        $('#formula').innerText = formula;
+	        
+	        console.log(formula);
+	    }else if(ct === 'number'){
+	        
+			var p1 = $('.formula.number').querySelector('.operand1').value;
+	        
+	        var op = $('.formula.number').querySelector('.operator').value;
+	        
+	        var p2 = $('.formula.number').querySelector('.operand2').value;
+	        
+	        var decimal = $('.formula.number').querySelector('.decimal').value;	        
+	        
+	        var formula = op + '(' + p1 + ', '+ p2 +', '+ decimal+')';
+	        
+	        $('#formula').innerText = formula;
+	        console.log(formula);
+	    }
+	    
+	}
+	
+
+	// generate form data
+	function formData_date(){
+	    // hide number
+	    hideNumber();
+	    
+	    // show date
+	    showDate();
+	    
+	    // generate form data
+	    var startDate = {
+	        title: '起始日期',
+	        data: new Date(2014, Math.floor(Math.random() * 12) , Math.floor(Math.random() * 30), Math.floor(Math.random() * 24), Math.floor(Math.random() * 60), Math.floor(Math.random() * 60))
+	    };
+	    
+	    var endDate = {
+	        title: '结束日期',
+	        data: new Date(2015, Math.floor(Math.random() * 12) , Math.floor(Math.random() * 30), Math.floor(Math.random() * 24), Math.floor(Math.random() * 60), Math.floor(Math.random() * 60))
+	    };
+	    
+	    // form data
+		var formData = startDate.title + ': ' + startDate.data.toLocaleString() + '    ' + endDate.title + ': '+ endDate.data.toLocaleString()  ;
+	    
+	    
+	    $('.formDataType.date').querySelector('.formData').innerText = formData;
+	    
+	}
+	
+	function formData_number(){
+	    // hide date
+	    hideDate();
+	    
+	    // show number
+	    showNumber();
+	    
+	    // generate form data
+	    var height = {
+	      	title: '身高',
+	      	unit: 'cm',
+	      	data:  ( 100 + Math.random() * 150 ).toFixed()
+	    };
+	    
+	    var weight = {
+	      	title: '体重',
+	      	unit: 'kg',
+	      	data: (40 +  Math.random()*60).toFixed()
+	    };
+	    
+	    var formData = height.title + '('+height.unit+'): ' + height.data  + ',   '+ weight.title + '('+weight.unit + '):' + weight.data;
+	    
+	    $('.formDataType.number').querySelector('.formData').innerText = formData;
+	    
+	}
+	
+	function hideNumber(){
+	    $('.formDataType.number').classList.add('hidden');
+	    $('.formula.number').classList.add('hidden');
+	}
+	
+	function showNumber(){
+	    $('.formDataType.number').classList.remove('hidden');
+	    $('.formula.number').classList.remove('hidden');
+	}
+	
+	function hideDate(){
+	    $('.formDataType.date').classList.add('hidden');
+	    $('.formula.date').classList.add('hidden');
+	}
+	
+	function showDate(){
+	    $('.formDataType.date').classList.remove('hidden');
+	    $('.formula.date').classList.remove('hidden');
+	}
+	
+
+	function $(s){
+	    return document.querySelector(s);
+	}
+
+
+</script>
+
+
+
+<script>
+// 	require(['app/widget/date/DateTime', 'dijit/form/DateTextBox', 'dojo/date/locale',
+// 	         'dojo/dom-construct', 'dojo/string', 'dojo/_base/declare', 'dojo/domReady!'], 
+// 	         function(DateTime, DateTextBox, locale, domC, string, declare){
+	    
+// 	    var fieldNameIndex = 'a'.charCodeAt(0);
+	    
+// 	    window.addFormData = function(){
+	        
+// 	        var field = domC.toDom(string.substitute('<div class="field">  <input value="${fieldName}" class="name"/> &nbsp;=&nbsp;&nbsp;    </div>', {
+// 	            fieldName: String.fromCharCode(fieldNameIndex++)
+// 	        }));
+	        
+// 	        var dtbNode = domC.toDom('<input />');
+	        
+// 	        field.appendChild(dtbNode);
+	        
+// 	        $('#formData').appendChild(field);
+	        
+// 	        var dt =  new DateTime({
+// 	            className: 'date',
+// 	            required: true,
+// 	            value: '2005-12-30'
+// 	        }, dtbNode);
+	        
+// 	        dt.setJson(JSON.stringify({key: 'xxx'}));
+	        
+// 	        dt.startup();
+	        
+// 	    }
+	    
+// 	    window.addFormData();
+	    
+// 	});
+
+</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
