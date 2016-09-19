@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Date Formula</title>
+<link rel="stylesheet" href="treant-js/Treant.css" type="text/css"/>
+<script src="treant-js/vendor/raphael.js"></script>
+<script src="treant-js/Treant.js"></script>
 <script type="text/javascript" src="moment.js"></script>
 <script type="text/javascript">
     dojoConfig = {
@@ -108,7 +111,7 @@ body{
 
 </table>
 <hr/>
-
+<div id="tree-simple" style="width:800px; height: 600px"> </div>
 
 
 <script>
@@ -196,6 +199,9 @@ function calc(){
         // parse
         var cal = new Calculator(expStr);
         
+        // draw tree
+        drawTree(cal.exp);
+        
         // run
         var result = cal.run(ctx);
         console.log(result);
@@ -229,6 +235,60 @@ function getFormData(){
     }
     
     return ret;
+}
+
+function drawTree(exp){
+    // get node
+    function dfs(exp){
+        
+        var node = {
+            text: {},
+            children: []
+        };
+        
+        if(exp.op){
+            node.text.name = exp.op
+        }else if(exp.nv){
+            node.text.name = exp.nv
+        }
+        
+        
+        
+        if(exp.left){
+            node.children.push(dfs(exp.left));
+        }
+        
+        if(exp.right){
+            node.children.push(dfs(exp.right));
+        }
+        
+        
+        return node;
+    }
+    
+    
+	var node = dfs(exp);
+	//console.log(node);
+	
+	
+	var simple_chart_config = {
+                chart: {
+                    container: "#tree-simple",
+                    levelSeparation: 5,
+                    siblingSeparation : 10,
+                    connectors: {
+                        type: "straight"
+                    }
+                },
+                
+                nodeStructure: node
+            };
+
+	if(window.my_chart){
+    	window.my_chart.destroy();
+	}
+	
+	window.my_chart = new Treant(simple_chart_config);
 }
 	
 </script>

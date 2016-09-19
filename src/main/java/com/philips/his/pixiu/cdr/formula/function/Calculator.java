@@ -1,10 +1,6 @@
 package com.philips.his.pixiu.cdr.formula.function;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,43 +8,7 @@ import com.philips.his.pixiu.cdr.formula.function.Formulas.DateTimeUnit;
 
 public class Calculator {
 	
-	public static void main(String[] args) {
-		String formula = "dateSub(deceasedTime, birthDate, hours)";
-		
-		Map<String, Object> data = new HashMap<>();
-		
-		Calendar cal = Calendar.getInstance();
-		
-		Random r = new Random();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
-		
-		cal.set(2016, 8, r.nextInt(28), r.nextInt(24), r.nextInt(60), r.nextInt(60));
-		System.out.println(String.format("%s, %s", sdf.format(cal.getTime()), cal.getTimeInMillis()));
-		data.put("birthDate", cal.getTimeInMillis());
-		
-		cal.set(2016, 8, r.nextInt(28), r.nextInt(24), r.nextInt(60), r.nextInt(60));
-		System.out.println(String.format("%s, %s", sdf.format(cal.getTime()), cal.getTimeInMillis()));
-		
-		data.put("deceasedTime", cal.getTimeInMillis());
-		
-		Number result = calculate(formula, data);
-		
-		// String formula = "dateSub(deceasedTime, birthDate, months)";
-		//
-		// Map<String, Object> data = new HashMap<>();
-		//
-		// Calendar cal = Calendar.getInstance();
-		//
-		// data.put("birthDate", 805010584197L);
-		// data.put("deceasedTime", 1447920397197L);
-		//
-		// long result = Calculator.calc(formula, data);
-		
-		System.out.println(result);
-		
-	}
-	
-	private static void checkData(Map data, String[] params, int dataCount) {
+	private static void checkData(Map<String, Object> data, String[] params, int dataCount) {
 		for (int i = 0; i < dataCount; i++) {
 			if (data.get(params[i]) == null) {
 				throw new IllegalArgumentException(String.format("the key '%s' is not found in data", params[i]));
@@ -62,19 +22,7 @@ public class Calculator {
 		}
 	}
 	
-	private static void checkParameters(Map data, String[] params, int plen) {
-		if (params.length != plen) {
-			throw new IllegalArgumentException("the arguments size must be 3");
-		}
-		
-		for (int i = 0; i < params.length; i++) {
-			if (data.get(params[i]) == null) {
-				throw new IllegalArgumentException(String.format("the key '%s' is not found in data", params[i]));
-			}
-		}
-	}
-	
-	public static Number calculate(String formula, Map data) {
+	public static Number calculate(String formula, Map<String, Object> data) {
 		
 		if (formula == null) {
 			throw new IllegalArgumentException("formula is null");
@@ -107,7 +55,7 @@ public class Calculator {
 		
 	}
 	
-	private static Number calculateDate(String functionName, String[] params, Map data) {
+	private static Number calculateDate(String functionName, String[] params, Map<String, Object> data) {
 		checkParameterLength(params, 3);
 		checkData(data, params, 2);
 		
@@ -127,7 +75,7 @@ public class Calculator {
 		return Formulas.dateSub((long) data.get(p1), (long) data.get(p2), unit);
 	}
 	
-	private static Number calculateNumber(String functionName, String[] params, Map data) {
+	private static Number calculateNumber(String functionName, String[] params, Map<String, Object> data) {
 		checkParameterLength(params, 3);
 		checkData(data, params, 2);
 		
@@ -160,7 +108,7 @@ public class Calculator {
 	 * @param params
 	 * @param data
 	 */
-	private static Number convertNumberType(Map data, String key) {
+	private static Number convertNumberType(Map<String, Object> data, String key) {
 		Number result;
 		Object obj = data.get(key);
 		

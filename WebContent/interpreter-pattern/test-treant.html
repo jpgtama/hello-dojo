@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="treant-js/Treant.css" type="text/css"/>
+</head>
+<body>
+    <!-- HTML -->
+    <div id="tree-simple" style="width:335px; height: 160px"> </div>
+    
+    
+    <!-- javascript -->
+    <script src="treant-js/vendor/raphael.js"></script>
+    <script src="treant-js/Treant.js"></script>
+    <script type="text/javascript">
+//     	var config = {
+//             container: "#tree-simple"
+//         };
+//         var parent_node = {
+//             text: { name: "Parent node" }
+//         };
+//         var first_child = {
+//             parent: parent_node,
+//             text: { name: "First child" }
+//         };
+//         var second_child = {
+//             parent: parent_node,
+//             text: { name: "Second child" }
+//         };
+        
+//         var simple_chart_config = [
+//             config, parent_node,
+//             first_child, second_child
+//         ];
+
+
+            var simple_chart_config = {
+                chart: {
+                    container: "#tree-simple",
+                    levelSeparation: 5,
+                    siblingSeparation : 5,
+                    connectors: {
+                        type: "straight"
+                    }
+                },
+                
+                nodeStructure: {
+                    text: { name: "Parent node" },
+                    children: [
+                        {
+                            text: { name: "First child" }
+                        },
+                        {
+                            text: { name: "Second child" }
+                        }
+                    ]
+                }
+            };
+
+    
+    
+    	var my_chart = new Treant(simple_chart_config);
+    	
+    
+    </script>
+</body>
+</html>

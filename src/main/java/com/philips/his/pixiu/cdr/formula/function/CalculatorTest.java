@@ -223,4 +223,88 @@ public class CalculatorTest {
 		Assert.assertEquals(33.33, result.doubleValue(), 0);
 		
 	}
+	
+	/**
+	 * testCalc_NumberAdd,
+	 * 
+	 * 11
+	 * 
+	 * 22
+	 * 
+	 * 33
+	 * 
+	 */
+	@Test
+	public void testCalc_NumberSub() {
+		
+		String formula = "numberSub(aa, bb, 2)";
+		
+		Map<String, Object> data = new HashMap<>();
+		
+		Calendar cal = Calendar.getInstance();
+		
+		data.put("aa", 11.111);
+		data.put("bb", 22.222);
+		
+		Number result = Calculator.calculate(formula, data);
+		
+		Assert.assertEquals(-11.11, result.doubleValue(), 0);
+		
+	}
+	
+	/**
+	 * testCalc_NumberAdd,
+	 * 
+	 * 11
+	 * 
+	 * 22
+	 * 
+	 * 33
+	 * 
+	 */
+	@Test
+	public void testCalc_NumberMul() {
+		
+		String formula = "numberMul(aa, bb, 2)";
+		
+		Map<String, Object> data = new HashMap<>();
+		
+		Calendar cal = Calendar.getInstance();
+		
+		data.put("aa", 11.111);
+		data.put("bb", 22.222);
+		
+		Number result = Calculator.calculate(formula, data);
+		
+		Assert.assertEquals(246.91, result.doubleValue(), 0);
+		
+	}
+	
+	/**
+	 * testCalc_NumberAdd,
+	 * 
+	 * 11
+	 * 
+	 * 22
+	 * 
+	 * 33
+	 * 
+	 */
+	@Test
+	public void testCalc_NumberDiv() {
+		
+		String formula = "numberDiv(aa, bb, 2)";
+		
+		Map<String, Object> data = new HashMap<>();
+		
+		Calendar cal = Calendar.getInstance();
+		
+		data.put("aa", 11.111);
+		data.put("bb", 22.222);
+		
+		Number result = Calculator.calculate(formula, data);
+		
+		Assert.assertEquals(0.5, result.doubleValue(), 0);
+		
+	}
 }
