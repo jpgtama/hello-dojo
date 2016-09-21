@@ -20,23 +20,31 @@ var functionMap = {
 
 };
 
+////////////////////////////////////////////////////////////////////////////////////////////////
 // syntax:
-// term = <string> | <number> | <id> | '(' exp ')' | function
+// term = <string> | <number> | <id> | '(' valueExp ')' | function
+//
 // function = <id> ( '()' | ( '(' paramlist ')' ) )
-// paramlist = exp (',' exp )*
+//
+// paramlist = valueExp (',' valueExp )*
+//
 // factor = term (('*' | '/') term)*
-// exp = factor (('+' | '-') factor)*
+//
+// valueExp = factor (('+' | '-') factor)*
+//
+// assignExp = <id> '=' valueExp
+//
+// exp = (valueExp | assignExp) (',' (valueExp | assignExp))*
+//
+//
+//
+
 function Result(type, value) {
     this.isN = type === 'number';
     this.isD = type === 'date';
     this.value = value;
 }
 
-// 1.Term = <String> | <数字> | <变量> | “(”Exp”)”
-
-// 2.Factor = Term ((“*” | “/”) Term)*
-
-// 3.Exp = Factor ((“+” | “-”) Factor)*
 
 function ConstantExp(type, value) {
     // type: number, string
@@ -58,11 +66,17 @@ function IdExp(value) {
     this.value = value;
 
     this.interpret = function(ctx) {
-        if (this.value in ctx.data) {
-            return ctx.data[this.value];
-        } else {
-            throw 'no value for ' + this.value;
+
+        if(ctx.data){
+            if (this.value in ctx.data) {
+                return ctx.data[this.value];
+            } else {
+                throw 'no value for ' + this.value;
+            }
+        }else{
+            throw 'context.data is needed';
         }
+
     }
 }
 
@@ -72,6 +86,11 @@ function ArithmeticExp(op, left, right) {
     this.right = right;
 
     this.interpret = function(ctx) {
+
+        if(!ctx){
+            throw 'context is needed';
+        }
+
         if (!this.left) {
             throw 'no left operand for ' + this.op;
         }
@@ -126,6 +145,23 @@ function FunctionExp(name, paramlist) {
 
 }
 
+function AssignExp(name, valueExp){
+    this.name = name;
+    this.valueExp = valueExp;
+
+    this.interpret = function(ctx){
+        var v = this.valueExp.interpret(ctx);
+
+        // add to ctx data
+        ctx.data[name] = v;
+
+        return v;
+    }
+
+}
+
+
+
 function getString(/* Tokens */tokens) {
     var t = tokens.current();
 
@@ -146,23 +182,13 @@ function getNumber(/* Tokens */tokens) {
     }
 }
 
-// function getNumber(/* Tokens */tokens) {
-// var t = tokens.current();
-//
-// if (t && t.isN) {
-// var num = t.value;
-// tokens.forward();
-// return new Expression(null, null, null, true, null, num);
-// }
-// }
-
 function getId(/* Tokens */tokens) {
     var t = tokens.current();
 
     if (t && t.type === 'id') {
-        var num = t.value;
+        var value = t.value;
         tokens.forward();
-        return new IdExp(num);
+        return new IdExp(value);
     }
 }
 
@@ -212,7 +238,7 @@ function getFunction(/* Tokens */tokens) {
 
 function getParamList(/* Tokens */tokens) {
     // paramlist = exp (',' exp )*
-    var exp = getExp(tokens);
+    var exp = getValueExp(tokens);
 
     if (exp) {
 
@@ -226,7 +252,7 @@ function getParamList(/* Tokens */tokens) {
 
             if (cm.value === ',') {
 
-                var nexp = getExp(tokens);
+                var nexp = getValueExp(tokens);
 
                 if (nexp) {
                     paramlist.push(nexp);
@@ -277,7 +303,7 @@ function getTerm(/* Tokens */tokens) {
 
     if (token.value === '(') {
         tokens.forward();
-        var exp = getExp(tokens);
+        var exp = getValueExp(tokens);
 
         token = tokens.current();
         if (token.value === ')') {
@@ -311,7 +337,7 @@ function getFactor(tokens) {
             tokens.forward();
             var term = getTerm(tokens);
             if (term) {
-                factor = new Expression(op, factor, term);
+                factor = new ArithmeticExp(op, factor, term);
             } else {
                 throw 'need two operands for ' + op;
             }
@@ -321,7 +347,7 @@ function getFactor(tokens) {
     return factor;
 }
 
-function getExp(/* Tokens */tokens) {
+function getValueExp(/* Tokens */tokens) {
     // Exp = Factor ((“+” | “-”) Factor)*
     var exp = getFactor(tokens);
 
@@ -350,6 +376,46 @@ function getExp(/* Tokens */tokens) {
     }
 
     return exp;
+}
+
+function getAssignExp(/* Tokens */tokens){
+    // assignExp ::= <id> "=" <valueExp>
+
+    var id = getId(tokens);
+
+    if(id){
+
+        var eq = tokens.next();
+
+        if(eq){
+            if(eq.value === '='){
+                var valueExp = getValueExp(tokens);
+
+                if(valueExp){
+                    return new AssignExp(id.value, valueExp);
+                }else{
+                    throw 'no value exp after =';
+                }
+
+
+            }else{
+                tokens.back(2);
+                return;
+            }
+        }else{
+            tokens.back();
+            return;
+        }
+
+
+    }
+}
+
+
+function getExp(/* Tokens */tokens){
+    // exp = (valueExp | assignExp) (',' (valueExp | assignExp))*
+
+
 
 }
 
@@ -397,5 +463,5 @@ function Tokens(tokenArray) {
 function Parser(/* Array */tokenArray) {
     var tokens = new Tokens(tokenArray);
 
-    return getExp(tokens);
+    return getValueExp(tokens);
 }

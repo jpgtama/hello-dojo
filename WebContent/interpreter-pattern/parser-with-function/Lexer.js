@@ -2,7 +2,7 @@
  * Created by evan on 9/20/16.
  */
 function Token(type, value, startPosition) {
-    // symbol for Symbol '+-*/(),'
+    // symbol for Symbol '+-*/(),='
     // id for identifier,
     // string
     // number
@@ -54,7 +54,7 @@ function Space(/* Input */input) {
 
 function Symbol(/* Input */input) {
     var c = input.str.charAt(input.index);
-    if ('+-*/(),'.indexOf(c) !== -1) {
+    if ('+-*/(),='.indexOf(c) !== -1) {
         var token = new Token('symbol', c, input.index);
         input.index++;
         return token;
