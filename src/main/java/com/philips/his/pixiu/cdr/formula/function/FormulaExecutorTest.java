@@ -1,6 +1,7 @@
 package com.philips.his.pixiu.cdr.formula.function;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class FormulaExecutorTest {
+	
+	public static void main(String[] args) {
+		System.out.println(Arrays.toString(randomDateGenerator()));
+	}
 	
 	@SuppressWarnings("unused")
 	private static String[] randomDateGenerator() {

@@ -110,7 +110,7 @@ public class SXSSFWorkbookTest {
 		
 	}
 	
-	public static void main(String[] args) throws Exception {
+	public static void main__(String[] args) throws Exception {
 		OPCPackage pkg = OPCPackage.open(new File("c:/temp/sxssf.xlsx"));
 		
 		XSSFWorkbook workbook = new XSSFWorkbook(pkg);
@@ -121,12 +121,13 @@ public class SXSSFWorkbookTest {
 		
 	}
 	
-	public static void main__(String[] args) throws Exception {
-		SXSSFWorkbook wb = new SXSSFWorkbook(20);
+	public static void main(String[] args) throws Exception {
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		SXSSFWorkbook wb = new SXSSFWorkbook(workbook, 100, true, false);
 		Sheet sh = wb.createSheet();
 		for (int rownum = 0; rownum < 1048; rownum++) {
 			Row row = sh.createRow(rownum);
-			for (int cellnum = 0; cellnum < 16384; cellnum++) {
+			for (int cellnum = 0; cellnum < 163; cellnum++) {
 				Cell cell = row.createCell(cellnum);
 				String address = new CellReference(cell).formatAsString();
 				cell.setCellValue(address);
