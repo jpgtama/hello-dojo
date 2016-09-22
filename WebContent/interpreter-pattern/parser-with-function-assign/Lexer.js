@@ -100,7 +100,7 @@ function Num(/* Input */input) {
     while (index < input.str.length) {
         var c = input.str.charAt(index);
 
-        if (state === 0 && /[\-1-9]/.test(c)) {
+        if (state === 0 && /[\-0-9]/.test(c)) {
             state = 1;
         } else if (state === 1 && /[0-9]/.test(c)) {
             state = 1;

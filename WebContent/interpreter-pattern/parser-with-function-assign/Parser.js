@@ -4,18 +4,22 @@
 
 var functionMap = {
 
-    dateSub : function(d1, d2, unit, decimals) {
+    dateSub: function (d1, d2, unit, decimals) {
         d1 = moment(d1);
         d2 = moment(d2);
         return d1.diff(d2, unit);
     },
 
-    max : function(a, b) {
+    max: function (a, b) {
         return Math.max(a, b);
     },
 
-    abs : function(a) {
+    abs: function (a) {
         return Math.abs(a);
+    },
+
+    sqrt: function(a){
+        return Math.sqrt(a);
     }
 
 };
@@ -34,9 +38,9 @@ var functionMap = {
 //
 // assignExp = <id> '=' valueExp
 //
-// exp = (valueExp | assignExp) (',' (valueExp | assignExp))*
+// exp = valueExp | assignExp
 //
-//
+// expList = exp*
 //
 
 function Result(type, value) {
@@ -51,7 +55,7 @@ function ConstantExp(type, value) {
     this.type = type;
     this.value = value;
 
-    this.interpret = function(ctx) {
+    this.interpret = function (ctx) {
         if (this.type === 'number') {
             return this.value
         } else if (this.type === 'string') {
@@ -65,15 +69,15 @@ function ConstantExp(type, value) {
 function IdExp(value) {
     this.value = value;
 
-    this.interpret = function(ctx) {
+    this.interpret = function (ctx) {
 
-        if(ctx.data){
+        if (ctx.data) {
             if (this.value in ctx.data) {
                 return ctx.data[this.value];
             } else {
                 throw 'no value for ' + this.value;
             }
-        }else{
+        } else {
             throw 'context.data is needed';
         }
 
@@ -85,9 +89,9 @@ function ArithmeticExp(op, left, right) {
     this.left = left;
     this.right = right;
 
-    this.interpret = function(ctx) {
+    this.interpret = function (ctx) {
 
-        if(!ctx){
+        if (!ctx) {
             throw 'context is needed';
         }
 
@@ -127,7 +131,7 @@ function FunctionExp(name, paramlist) {
     this.name = name;
     this.paramlist = paramlist;
 
-    this.interpret = function(ctx) {
+    this.interpret = function (ctx) {
         var f = functionMap[this.name];
 
         // get param values
@@ -145,14 +149,18 @@ function FunctionExp(name, paramlist) {
 
 }
 
-function AssignExp(name, valueExp){
+function AssignExp(name, valueExp) {
     this.name = name;
     this.valueExp = valueExp;
 
-    this.interpret = function(ctx){
+    this.interpret = function (ctx) {
         var v = this.valueExp.interpret(ctx);
 
         // add to ctx data
+        if(!('data' in ctx)){
+            ctx.data = {};
+        }
+
         ctx.data[name] = v;
 
         return v;
@@ -160,8 +168,34 @@ function AssignExp(name, valueExp){
 
 }
 
+function ExpListExp() {
+    this.expList = [];
+
+    this.add = function (exp) {
+        this.expList.push(exp);
+    };
+
+    this.interpret = function (ctx) {
+
+        var lastValue = null;
+
+        for (var i = 0; i < this.expList.length; i++) {
+            var exp = this.expList[i];
+
+            lastValue = exp.interpret(ctx);
+        }
+
+        return lastValue;
+    }
 
 
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// get
+//
 function getString(/* Tokens */tokens) {
     var t = tokens.current();
 
@@ -296,7 +330,14 @@ function getTerm(/* Tokens */tokens) {
     term = getId(tokens);
 
     if (term) {
-        return term;
+
+        var next = tokens.current();
+
+        if( !next ||  '(='.indexOf(next.value)=== -1){
+            return term;
+        }else{
+            tokens.back();
+        }
     }
 
     var token = tokens.current();
@@ -378,31 +419,31 @@ function getValueExp(/* Tokens */tokens) {
     return exp;
 }
 
-function getAssignExp(/* Tokens */tokens){
+function getAssignExp(/* Tokens */tokens) {
     // assignExp ::= <id> "=" <valueExp>
 
     var id = getId(tokens);
 
-    if(id){
+    if (id) {
 
         var eq = tokens.next();
 
-        if(eq){
-            if(eq.value === '='){
+        if (eq) {
+            if (eq.value === '=') {
                 var valueExp = getValueExp(tokens);
 
-                if(valueExp){
+                if (valueExp) {
                     return new AssignExp(id.value, valueExp);
-                }else{
+                } else {
                     throw 'no value exp after =';
                 }
 
 
-            }else{
+            } else {
                 tokens.back(2);
                 return;
             }
-        }else{
+        } else {
             tokens.back();
             return;
         }
@@ -412,11 +453,49 @@ function getAssignExp(/* Tokens */tokens){
 }
 
 
-function getExp(/* Tokens */tokens){
-    // exp = (valueExp | assignExp) (',' (valueExp | assignExp))*
+function getExp(/* Tokens */tokens) {
+    // exp = valueExp | assignExp
+    var exp = getValueExp(tokens);
+
+    if (exp) {
+        return exp;
+    }
+
+    exp = getAssignExp(tokens);
+
+    return exp;
 
 
+}
 
+
+function getExpList(/* Tokens */tokens) {
+    // expList = exp (, exp )*
+    var expListExp = new ExpListExp();
+
+    var exp = getExp(tokens);
+    if(exp){
+        expListExp.add(exp);
+
+        while(tokens.hasNext()){
+            var comma = tokens.next();
+
+            if(comma.value === ','){
+                exp = getExp(tokens);
+
+                if(exp){
+                    expListExp.add(exp);
+                }else{
+                    throw 'no exp after ,';
+                }
+
+            }else{
+                throw 'no , after exp';
+            }
+        }
+    }
+
+    return expListExp;
 }
 
 function Tokens(tokenArray) {
@@ -424,24 +503,24 @@ function Tokens(tokenArray) {
 
     this.index = 0;
 
-    this.next = function() {
+    this.next = function () {
         return this.tokenArray[this.index++];
     };
 
-    this.hasNext = function() {
+    this.hasNext = function () {
         return this.index < this.tokenArray.length;
     };
 
-    this.current = function() {
+    this.current = function () {
         return this.tokenArray[this.index];
     };
 
-    this.forward = function() {
+    this.forward = function () {
         this.index++;
         return this;
     };
 
-    this.back = function(n) {
+    this.back = function (n) {
         n = n || 1;
         n = Math.max(n, 1);
 
@@ -449,7 +528,7 @@ function Tokens(tokenArray) {
         return this;
     };
 
-    this.left = function() {
+    this.left = function () {
         var tmp = [];
         var index = this.index;
         if (index < this.tokenArray.length) {
@@ -463,5 +542,5 @@ function Tokens(tokenArray) {
 function Parser(/* Array */tokenArray) {
     var tokens = new Tokens(tokenArray);
 
-    return getValueExp(tokens);
+    return getExpList(tokens);
 }
