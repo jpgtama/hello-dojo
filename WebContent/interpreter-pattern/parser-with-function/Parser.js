@@ -311,7 +311,7 @@ function getFactor(tokens) {
             tokens.forward();
             var term = getTerm(tokens);
             if (term) {
-                factor = new Expression(op, factor, term);
+                factor = new ArithmeticExp(op, factor, term);
             } else {
                 throw 'need two operands for ' + op;
             }

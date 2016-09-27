@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Flex layout</title>
+<style>
+body {
+	padding: 10px 56px;
+}
+
+pre {
+	background-color: #ececec;
+	padding: 10px;
+}
+
+.container {
+	width: 98%;
+	height: 600px;
+	border: 1px solid;
+	display: flex;
+	padding: 10px;
+}
+
+.item {
+	flex: 1;
+	background-color: lightblue;
+	margin: 10px;
+}
+</style>
+</head>
+<body>
+
+    <pre>Flex Layout</pre>
+    <hr />
+
+    <div class="container">
+        <div class="item">Hello</div>
+        <div class="item">Hello</div>
+    </div>
+
+
+    <hr />
+    <button onclick="add()">Add</button>
+    <button onclick="removeLast()">Remove</button>
+
+    <hr />
+
+
+    <div class='dijitReset dijitMenu' data-dojo-attach-point='containerNode' style='overflow: auto; overflow-x: hidden;'
+        role='listbox'>
+        <div class='dijitMenuItem dijitMenuPreviousButton' data-dojo-attach-point='previousButton' role='option'></div>
+        <div class='dijitMenuItem dijitMenuNextButton' data-dojo-attach-point='nextButton' role='option'></div>
+    </div>
+
+
+
+    <script type="text/javascript">
+                    function add() {
+                        var con = document.querySelector('.container');
+
+                        var div = document.createElement('div');
+                        div.classList.add('item');
+                        div.innerText = "Hello, I am added.";
+
+                        con.appendChild(div);
+
+                    }
+
+                    function removeLast() {
+                        var con = document.querySelector('.container');
+                        console.log('con', con);
+                        var index = con.children.length - 1;
+                        console.log('index', index);
+                        var lastChild = con.children[index];
+                        console.log('lastChild', lastChild);
+
+                        con.removeChild(lastChild);
+
+                    }
+                </script>
+
+</body>
+</html>
