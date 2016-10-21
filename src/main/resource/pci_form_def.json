@@ -1,0 +1,2137 @@
+{
+	"name": "PCI注册-10page",
+	"pages": [{
+		"name": "核心",
+		"sections": [{
+			"name": ".人口统计学",
+			"columns": [{
+				"name": "分栏1",
+				"fields": [{
+					"type": "text",
+					"key": "text1",
+					"label": "患者编号",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 8
+				},
+				{
+					"type": "text",
+					"key": "text2",
+					"label": "社保号",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "date",
+					"key": "date",
+					"label": "出生日期",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"pattern": "yyyy/MM/dd"
+				},
+				{
+					"type": "select",
+					"key": "nation",
+					"label": "民族",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": [],
+					"permission": null,
+					"groupby": null,
+					"options": [{
+						"value": 101,
+						"label": "汉族"
+					},
+					{
+						"value": 102,
+						"label": "满族"
+					}]
+				}]
+			},
+			{
+				"name": "分栏2",
+				"fields": [{
+					"type": "number",
+					"key": "number01",
+					"label": "年龄",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"max": 150,
+					"min": 1
+				},
+				{
+					"type": "textarea",
+					"key": "textarea",
+					"label": "患者说明",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 2000
+				}]
+			}]
+		},
+		{
+			"name": "保险支付",
+			"columns": [{
+				"name": "分栏45",
+				"fields": [{
+					"type": "datetime",
+					"key": "datetime01",
+					"label": "到达时间/日期",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"pattern": ["yyyy/MM/dd",
+					"HH:mm"]
+				},
+				{
+					"type": "text",
+					"key": "Address",
+					"label": "患者现住址",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "boolean",
+					"key": "UnknownAddress",
+					"label": "住址未知",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": false,
+					"permission": null,
+					"groupby": "Address"
+				},
+				{
+					"type": "radio",
+					"key": "radio1",
+					"label": "住院来源",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "门诊",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "急诊",
+						"value": 102,
+						"predefined": false,
+						"subs": []
+					}]
+				}]
+			},
+			{
+				"name": "分栏46",
+				"fields": [{
+					"type": "checkbox",
+					"key": "checkbox01",
+					"label": "支付方式（选择所有适用类型）",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": [],
+					"permission": null,
+					"groupby": null,
+					"options": [{
+						"value": 101,
+						"label": "社会基本医疗保"
+					},
+					{
+						"value": 102,
+						"label": "商业医疗保险"
+					}]
+				}]
+			}]
+		}]
+	},
+	{
+		"name": "病史",
+		"sections": [{
+			"name": "病史",
+			"columns": [{
+				"name": "分栏23",
+				"fields": [{
+					"type": "radio",
+					"key": "radio2",
+					"label": "正在吸烟/近期吸烟史(<1年)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "否",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "是",
+						"value": 102,
+						"predefined": false,
+						"subs": []
+					}]
+				},
+				{
+					"type": "radio",
+					"key": "radio3",
+					"label": "高血压",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "否",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "是",
+						"value": 102,
+						"predefined": false,
+						"subs": []
+					}]
+				},
+				{
+					"type": "radio",
+					"key": "radio5",
+					"label": "高血压",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "否",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "是",
+						"value": 102,
+						"predefined": false,
+						"subs": []
+					}]
+				},
+				{
+					"type": "radio",
+					"key": "radio7",
+					"label": "肾功能衰竭",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "否",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "是",
+						"value": 102,
+						"predefined": false,
+						"subs": []
+					}]
+				},
+				{
+					"type": "radio",
+					"key": "radio6",
+					"label": "冠心病家族史",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "否",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "是",
+						"value": 102,
+						"predefined": false,
+						"subs": []
+					}]
+				},
+				{
+					"type": "radio",
+					"key": "radio4",
+					"label": "正在进行透析",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "否",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "是",
+						"value": 102,
+						"predefined": false,
+						"subs": []
+					}]
+				}]
+			}]
+		}]
+	},
+	{
+		"name": "过程",
+		"sections": [{
+			"name": "导管治疗记录（心导管术填写）",
+			"columns": [{
+				"name": "分栏67",
+				"fields": [{
+					"type": "text",
+					"key": "text3",
+					"label": "收缩压",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text4",
+					"label": "舒张压",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text5",
+					"label": "心率",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				}]
+			}]
+		}]
+	},
+	{
+		"name": "出院",
+		"sections": [{
+			"name": "出院情况",
+			"columns": [{
+				"name": "分栏91",
+				"fields": [{
+					"type": "date",
+					"key": "date05",
+					"label": "出院日期",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"pattern": "yyyy/MM/dd"
+				},
+				{
+					"type": "radio",
+					"key": "Status_radio",
+					"label": "出院状态",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": [],
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "存活",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "死亡",
+						"value": 102,
+						"predefined": false,
+						"subs": [{
+							"type": "datetime",
+							"key": "deathTime",
+							"label": "死亡时间",
+							"desc": null,
+							"required": false,
+							"hidden": false,
+							"predefined": false,
+							"defaultvalue": null,
+							"permission": null,
+							"groupby": null,
+							"pattern": ["yyyy/MM/dd",
+							"HH:mm"]
+						}]
+					}]
+				}]
+			},
+			{
+				"name": "分栏92",
+				"fields": []
+			}]
+		},
+		{
+			"name": "实验室检查（试行或已行PCI术填写）",
+			"columns": [{
+				"name": "分栏89",
+				"fields": [{
+					"type": "text",
+					"key": "text6",
+					"label": "CK-MB",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text7",
+					"label": "肌钙蛋白I ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text8",
+					"label": "肌钙蛋白T ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text9",
+					"label": "肌酐",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text10",
+					"label": "血红蛋白 ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text11",
+					"label": "低密度脂蛋白(LDL)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text12",
+					"label": "B型脑钠肽(BNP)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text13",
+					"label": "超敏CRP(Hs-CRP)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text14",
+					"label": "eGFR",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				}]
+			}]
+		},
+		{
+			"name": "出院情况",
+			"columns": [{
+				"name": "分栏91",
+				"fields": [{
+					"type": "date",
+					"key": "date05_1",
+					"label": "出院日期",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"pattern": "yyyy/MM/dd"
+				},
+				{
+					"type": "radio",
+					"key": "Status_radio_1",
+					"label": "出院状态",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": [],
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "存活",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "死亡",
+						"value": 102,
+						"predefined": false,
+						"subs": [{
+							"type": "datetime",
+							"key": "deathTime_1",
+							"label": "死亡时间",
+							"desc": null,
+							"required": false,
+							"hidden": false,
+							"predefined": false,
+							"defaultvalue": null,
+							"permission": null,
+							"groupby": null,
+							"pattern": ["yyyy/MM/dd",
+							"HH:mm"]
+						}]
+					}]
+				}]
+			},
+			{
+				"name": "分栏92",
+				"fields": []
+			}]
+		}]
+	},
+	{
+		"name": "出院2",
+		"sections": [{
+			"name": "出院情况",
+			"columns": [{
+				"name": "分栏91",
+				"fields": [{
+					"type": "date",
+					"key": "date05_2",
+					"label": "出院日期",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"pattern": "yyyy/MM/dd"
+				},
+				{
+					"type": "radio",
+					"key": "Status_radio_2",
+					"label": "出院状态",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": [],
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "存活",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "死亡",
+						"value": 102,
+						"predefined": false,
+						"subs": [{
+							"type": "datetime",
+							"key": "deathTime_2",
+							"label": "死亡时间",
+							"desc": null,
+							"required": false,
+							"hidden": false,
+							"predefined": false,
+							"defaultvalue": null,
+							"permission": null,
+							"groupby": null,
+							"pattern": ["yyyy/MM/dd",
+							"HH:mm"]
+						}]
+					}]
+				}]
+			},
+			{
+				"name": "分栏92",
+				"fields": []
+			}]
+		},
+		{
+			"name": "实验室检查（试行或已行PCI术填写）",
+			"columns": [{
+				"name": "分栏89",
+				"fields": [{
+					"type": "text",
+					"key": "text6_1",
+					"label": "CK-MB",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text7_1",
+					"label": "肌钙蛋白I ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text8_1",
+					"label": "肌钙蛋白T ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text9_1",
+					"label": "肌酐",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text10_1",
+					"label": "血红蛋白 ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text11_1",
+					"label": "低密度脂蛋白(LDL)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text12_1",
+					"label": "B型脑钠肽(BNP)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text13_1",
+					"label": "超敏CRP(Hs-CRP)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text14_1",
+					"label": "eGFR",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				}]
+			}]
+		},
+		{
+			"name": "出院情况",
+			"columns": [{
+				"name": "分栏91",
+				"fields": [{
+					"type": "date",
+					"key": "date05_1_1",
+					"label": "出院日期",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"pattern": "yyyy/MM/dd"
+				},
+				{
+					"type": "radio",
+					"key": "Status_radio_1_1",
+					"label": "出院状态",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": [],
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "存活",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "死亡",
+						"value": 102,
+						"predefined": false,
+						"subs": [{
+							"type": "datetime",
+							"key": "deathTime_1_1",
+							"label": "死亡时间",
+							"desc": null,
+							"required": false,
+							"hidden": false,
+							"predefined": false,
+							"defaultvalue": null,
+							"permission": null,
+							"groupby": null,
+							"pattern": ["yyyy/MM/dd",
+							"HH:mm"]
+						}]
+					}]
+				}]
+			},
+			{
+				"name": "分栏92",
+				"fields": []
+			}]
+		}]
+	},
+	{
+		"name": "出院3",
+		"sections": [{
+			"name": "出院情况",
+			"columns": [{
+				"name": "分栏91",
+				"fields": [{
+					"type": "date",
+					"key": "date05_2_1",
+					"label": "出院日期",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"pattern": "yyyy/MM/dd"
+				},
+				{
+					"type": "radio",
+					"key": "Status_radio_2_1",
+					"label": "出院状态",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": [],
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "存活",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "死亡",
+						"value": 102,
+						"predefined": false,
+						"subs": [{
+							"type": "datetime",
+							"key": "deathTime_2_1",
+							"label": "死亡时间",
+							"desc": null,
+							"required": false,
+							"hidden": false,
+							"predefined": false,
+							"defaultvalue": null,
+							"permission": null,
+							"groupby": null,
+							"pattern": ["yyyy/MM/dd",
+							"HH:mm"]
+						}]
+					}]
+				}]
+			},
+			{
+				"name": "分栏92",
+				"fields": []
+			}]
+		},
+		{
+			"name": "实验室检查（试行或已行PCI术填写）",
+			"columns": [{
+				"name": "分栏89",
+				"fields": [{
+					"type": "text",
+					"key": "text6_1_1",
+					"label": "CK-MB",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text7_1_1",
+					"label": "肌钙蛋白I ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text8_1_1",
+					"label": "肌钙蛋白T ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text9_1_1",
+					"label": "肌酐",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text10_1_1",
+					"label": "血红蛋白 ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text11_1_1",
+					"label": "低密度脂蛋白(LDL)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text12_1_1",
+					"label": "B型脑钠肽(BNP)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text13_1_1",
+					"label": "超敏CRP(Hs-CRP)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text14_1_1",
+					"label": "eGFR",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				}]
+			}]
+		},
+		{
+			"name": "出院情况",
+			"columns": [{
+				"name": "分栏91",
+				"fields": [{
+					"type": "date",
+					"key": "date05_1_1_1",
+					"label": "出院日期",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"pattern": "yyyy/MM/dd"
+				},
+				{
+					"type": "radio",
+					"key": "Status_radio_1_1_1",
+					"label": "出院状态",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": [],
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "存活",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "死亡",
+						"value": 102,
+						"predefined": false,
+						"subs": [{
+							"type": "datetime",
+							"key": "deathTime_1_1_1",
+							"label": "死亡时间",
+							"desc": null,
+							"required": false,
+							"hidden": false,
+							"predefined": false,
+							"defaultvalue": null,
+							"permission": null,
+							"groupby": null,
+							"pattern": ["yyyy/MM/dd",
+							"HH:mm"]
+						}]
+					}]
+				}]
+			},
+			{
+				"name": "分栏92",
+				"fields": []
+			}]
+		}]
+	},
+	{
+		"name": "出院4",
+		"sections": [{
+			"name": "出院情况",
+			"columns": [{
+				"name": "分栏91",
+				"fields": [{
+					"type": "date",
+					"key": "date05_2_1_1",
+					"label": "出院日期",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"pattern": "yyyy/MM/dd"
+				},
+				{
+					"type": "radio",
+					"key": "Status_radio_2_1_1",
+					"label": "出院状态",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": [],
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "存活",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "死亡",
+						"value": 102,
+						"predefined": false,
+						"subs": [{
+							"type": "datetime",
+							"key": "deathTime_2_1_1",
+							"label": "死亡时间",
+							"desc": null,
+							"required": false,
+							"hidden": false,
+							"predefined": false,
+							"defaultvalue": null,
+							"permission": null,
+							"groupby": null,
+							"pattern": ["yyyy/MM/dd",
+							"HH:mm"]
+						}]
+					}]
+				}]
+			},
+			{
+				"name": "分栏92",
+				"fields": []
+			}]
+		},
+		{
+			"name": "实验室检查（试行或已行PCI术填写）",
+			"columns": [{
+				"name": "分栏89",
+				"fields": [{
+					"type": "text",
+					"key": "text6_1_1_1",
+					"label": "CK-MB",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text7_1_1_1",
+					"label": "肌钙蛋白I ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text8_1_1_1",
+					"label": "肌钙蛋白T ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text9_1_1_1",
+					"label": "肌酐",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text10_1_1_1",
+					"label": "血红蛋白 ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text11_1_1_1",
+					"label": "低密度脂蛋白(LDL)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text12_1_1_1",
+					"label": "B型脑钠肽(BNP)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text13_1_1_1",
+					"label": "超敏CRP(Hs-CRP)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text14_1_1_1",
+					"label": "eGFR",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				}]
+			}]
+		},
+		{
+			"name": "出院情况",
+			"columns": [{
+				"name": "分栏91",
+				"fields": [{
+					"type": "date",
+					"key": "date05_1_1_1_1",
+					"label": "出院日期",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"pattern": "yyyy/MM/dd"
+				},
+				{
+					"type": "radio",
+					"key": "Status_radio_1_1_1_1",
+					"label": "出院状态",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": [],
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "存活",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "死亡",
+						"value": 102,
+						"predefined": false,
+						"subs": [{
+							"type": "datetime",
+							"key": "deathTime_1_1_1_1",
+							"label": "死亡时间",
+							"desc": null,
+							"required": false,
+							"hidden": false,
+							"predefined": false,
+							"defaultvalue": null,
+							"permission": null,
+							"groupby": null,
+							"pattern": ["yyyy/MM/dd",
+							"HH:mm"]
+						}]
+					}]
+				}]
+			},
+			{
+				"name": "分栏92",
+				"fields": []
+			}]
+		}]
+	},
+	{
+		"name": "出院5",
+		"sections": [{
+			"name": "出院情况",
+			"columns": [{
+				"name": "分栏91",
+				"fields": [{
+					"type": "date",
+					"key": "date05_2_1_1_1",
+					"label": "出院日期",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"pattern": "yyyy/MM/dd"
+				},
+				{
+					"type": "radio",
+					"key": "Status_radio_2_1_1_1",
+					"label": "出院状态",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": [],
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "存活",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "死亡",
+						"value": 102,
+						"predefined": false,
+						"subs": [{
+							"type": "datetime",
+							"key": "deathTime_2_1_1_1",
+							"label": "死亡时间",
+							"desc": null,
+							"required": false,
+							"hidden": false,
+							"predefined": false,
+							"defaultvalue": null,
+							"permission": null,
+							"groupby": null,
+							"pattern": ["yyyy/MM/dd",
+							"HH:mm"]
+						}]
+					}]
+				}]
+			},
+			{
+				"name": "分栏92",
+				"fields": []
+			}]
+		},
+		{
+			"name": "实验室检查（试行或已行PCI术填写）",
+			"columns": [{
+				"name": "分栏89",
+				"fields": [{
+					"type": "text",
+					"key": "text6_1_1_1_1",
+					"label": "CK-MB",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text7_1_1_1_1",
+					"label": "肌钙蛋白I ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text8_1_1_1_1",
+					"label": "肌钙蛋白T ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text9_1_1_1_1",
+					"label": "肌酐",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text10_1_1_1_1",
+					"label": "血红蛋白 ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text11_1_1_1_1",
+					"label": "低密度脂蛋白(LDL)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text12_1_1_1_1",
+					"label": "B型脑钠肽(BNP)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text13_1_1_1_1",
+					"label": "超敏CRP(Hs-CRP)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text14_1_1_1_1",
+					"label": "eGFR",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				}]
+			}]
+		},
+		{
+			"name": "出院情况",
+			"columns": [{
+				"name": "分栏91",
+				"fields": [{
+					"type": "date",
+					"key": "date05_1_1_1_1_1",
+					"label": "出院日期",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"pattern": "yyyy/MM/dd"
+				},
+				{
+					"type": "radio",
+					"key": "Status_radio_1_1_1_1_1",
+					"label": "出院状态",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": [],
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "存活",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "死亡",
+						"value": 102,
+						"predefined": false,
+						"subs": [{
+							"type": "datetime",
+							"key": "deathTime_1_1_1_1_1",
+							"label": "死亡时间",
+							"desc": null,
+							"required": false,
+							"hidden": false,
+							"predefined": false,
+							"defaultvalue": null,
+							"permission": null,
+							"groupby": null,
+							"pattern": ["yyyy/MM/dd",
+							"HH:mm"]
+						}]
+					}]
+				}]
+			},
+			{
+				"name": "分栏92",
+				"fields": []
+			}]
+		}]
+	},
+	{
+		"name": "出院6",
+		"sections": [{
+			"name": "出院情况",
+			"columns": [{
+				"name": "分栏91",
+				"fields": [{
+					"type": "date",
+					"key": "date05_2_1_1_1_1",
+					"label": "出院日期",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"pattern": "yyyy/MM/dd"
+				},
+				{
+					"type": "radio",
+					"key": "Status_radio_2_1_1_1_1",
+					"label": "出院状态",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": [],
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "存活",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "死亡",
+						"value": 102,
+						"predefined": false,
+						"subs": [{
+							"type": "datetime",
+							"key": "deathTime_2_1_1_1_1",
+							"label": "死亡时间",
+							"desc": null,
+							"required": false,
+							"hidden": false,
+							"predefined": false,
+							"defaultvalue": null,
+							"permission": null,
+							"groupby": null,
+							"pattern": ["yyyy/MM/dd",
+							"HH:mm"]
+						}]
+					}]
+				}]
+			},
+			{
+				"name": "分栏92",
+				"fields": []
+			}]
+		},
+		{
+			"name": "实验室检查（试行或已行PCI术填写）",
+			"columns": [{
+				"name": "分栏89",
+				"fields": [{
+					"type": "text",
+					"key": "text6_1_1_1_1_1",
+					"label": "CK-MB",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text7_1_1_1_1_1",
+					"label": "肌钙蛋白I ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text8_1_1_1_1_1",
+					"label": "肌钙蛋白T ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text9_1_1_1_1_1",
+					"label": "肌酐",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text10_1_1_1_1_1",
+					"label": "血红蛋白 ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text11_1_1_1_1_1",
+					"label": "低密度脂蛋白(LDL)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text12_1_1_1_1_1",
+					"label": "B型脑钠肽(BNP)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text13_1_1_1_1_1",
+					"label": "超敏CRP(Hs-CRP)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text14_1_1_1_1_1",
+					"label": "eGFR",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				}]
+			}]
+		},
+		{
+			"name": "出院情况",
+			"columns": [{
+				"name": "分栏91",
+				"fields": [{
+					"type": "date",
+					"key": "date05_1_1_1_1_1_1",
+					"label": "出院日期",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"pattern": "yyyy/MM/dd"
+				},
+				{
+					"type": "radio",
+					"key": "Status_radio_1_1_1_1_1_1",
+					"label": "出院状态",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": [],
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "存活",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "死亡",
+						"value": 102,
+						"predefined": false,
+						"subs": [{
+							"type": "datetime",
+							"key": "deathTime_1_1_1_1_1_1",
+							"label": "死亡时间",
+							"desc": null,
+							"required": false,
+							"hidden": false,
+							"predefined": false,
+							"defaultvalue": null,
+							"permission": null,
+							"groupby": null,
+							"pattern": ["yyyy/MM/dd",
+							"HH:mm"]
+						}]
+					}]
+				}]
+			},
+			{
+				"name": "分栏92",
+				"fields": []
+			}]
+		}]
+	},
+	{
+		"name": "出院7",
+		"sections": [{
+			"name": "出院情况",
+			"columns": [{
+				"name": "分栏91",
+				"fields": [{
+					"type": "date",
+					"key": "date05_2_1_1_1_1_1",
+					"label": "出院日期",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"pattern": "yyyy/MM/dd"
+				},
+				{
+					"type": "radio",
+					"key": "Status_radio_2_1_1_1_1_1",
+					"label": "出院状态",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": [],
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "存活",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "死亡",
+						"value": 102,
+						"predefined": false,
+						"subs": [{
+							"type": "datetime",
+							"key": "deathTime_2_1_1_1_1_1",
+							"label": "死亡时间",
+							"desc": null,
+							"required": false,
+							"hidden": false,
+							"predefined": false,
+							"defaultvalue": null,
+							"permission": null,
+							"groupby": null,
+							"pattern": ["yyyy/MM/dd",
+							"HH:mm"]
+						}]
+					}]
+				}]
+			},
+			{
+				"name": "分栏92",
+				"fields": []
+			}]
+		},
+		{
+			"name": "实验室检查（试行或已行PCI术填写）",
+			"columns": [{
+				"name": "分栏89",
+				"fields": [{
+					"type": "text",
+					"key": "text6_1_1_1_1_1_1",
+					"label": "CK-MB",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text7_1_1_1_1_1_1",
+					"label": "肌钙蛋白I ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text8_1_1_1_1_1_1",
+					"label": "肌钙蛋白T ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text9_1_1_1_1_1_1",
+					"label": "肌酐",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text10_1_1_1_1_1_1",
+					"label": "血红蛋白 ",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text11_1_1_1_1_1_1",
+					"label": "低密度脂蛋白(LDL)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text12_1_1_1_1_1_1",
+					"label": "B型脑钠肽(BNP)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text13_1_1_1_1_1_1",
+					"label": "超敏CRP(Hs-CRP)",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				},
+				{
+					"type": "text",
+					"key": "text14_1_1_1_1_1_1",
+					"label": "eGFR",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"maxlength": 100
+				}]
+			}]
+		},
+		{
+			"name": "出院情况",
+			"columns": [{
+				"name": "分栏91",
+				"fields": [{
+					"type": "date",
+					"key": "date05_1_1_1_1_1_1_1",
+					"label": "出院日期",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": null,
+					"permission": null,
+					"groupby": null,
+					"pattern": "yyyy/MM/dd"
+				},
+				{
+					"type": "radio",
+					"key": "Status_radio_1_1_1_1_1_1_1",
+					"label": "出院状态",
+					"desc": null,
+					"required": false,
+					"hidden": false,
+					"predefined": false,
+					"defaultvalue": [],
+					"permission": null,
+					"groupby": null,
+					"optionsmodule": null,
+					"options": [{
+						"label": "存活",
+						"value": 101,
+						"predefined": false,
+						"subs": []
+					},
+					{
+						"label": "死亡",
+						"value": 102,
+						"predefined": false,
+						"subs": [{
+							"type": "datetime",
+							"key": "deathTime_1_1_1_1_1_1_1",
+							"label": "死亡时间",
+							"desc": null,
+							"required": false,
+							"hidden": false,
+							"predefined": false,
+							"defaultvalue": null,
+							"permission": null,
+							"groupby": null,
+							"pattern": ["yyyy/MM/dd",
+							"HH:mm"]
+						}]
+					}]
+				}]
+			},
+			{
+				"name": "分栏92",
+				"fields": []
+			}]
+		}]
+	}]
+}
