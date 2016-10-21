@@ -2,7 +2,7 @@
  * Created by evan on 9/20/16.
  */
 function Token(type, value, startPosition) {
-    // symbol for Symbol '+-*/(),='
+    // symbol for Symbol '+-*/(),=[].{}:'
     // id for identifier,
     // string
     // number
@@ -39,9 +39,25 @@ function Lexer(str) {
 function Input(str) {
     this.index = 0;
     this.str = str;
+
+    this.hasNext = function(){
+        return  this.index < this.str.length ;
+    };
+
     this.current = function() {
         return this.str.charAt(this.index);
-    }
+    };
+
+    this.next = function(n){
+        n = n?Math.max(n, 1): 1;
+        return this.str.charAt(this.index + n);
+    };
+
+    this.forward = function(n){
+        n = n?Math.max(n, 1): 1;
+        this.index += n;
+    };
+
 }
 
 function Space(/* Input */input) {
@@ -54,7 +70,11 @@ function Space(/* Input */input) {
 
 function Symbol(/* Input */input) {
     var c = input.str.charAt(input.index);
-    if ('+-*/(),='.indexOf(c) !== -1) {
+
+    // special handle for '-' and negative number
+    if(c === '-' && input.hasNext() && /[0-9]/.test(input.next())){
+        return null;
+    }else if ('+-*/(),=[].{}:\\'.indexOf(c) !== -1) {
         var token = new Token('symbol', c, input.index);
         input.index++;
         return token;
