@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Absolute with scroll</title>
+<style>
+body {
+    padding: 10px 56px;
+    position: relative;
+    z-index: 3;
+}
+
+pre {
+    background-color: #ececec;
+    padding: 10px;
+}
+
+.scroll{
+    height: 400px;
+    width: 400px;
+    overflow: scroll;
+    border: 2px solid lightcoral;
+        position: relative;
+}
+
+
+
+.scroll input{
+    display: block;
+    margin: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.popup{
+    background-color: lightblue;
+    height: 40px;
+    width: 171px;
+    border: 1px solid;
+    position: absolute;
+    top: 129px;
+    left: 84px;
+    z-index:1;
+}
+
+.dropdown .icon{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-image: url(" commonFormArrows.png");
+    background-position: -38px 53%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+</style>
+</head>
+<body>
+
+    <pre>Absolute with scroll</pre>
+    <hr />
+
+    <div class="scroll">
+            <select>
+            <option>Hello</option>
+            <option>Hello</option>
+            <option>Hello</option>
+            <option>Hello</option>
+            <option>Hello</option>
+        </select>
+        <input type="text" name="city" list="citynames">
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        <input type="text"/>
+        
+    
+    </div>
+<div class="popup">
+
+</div>
+    
+<datalist id="citynames">
+  <option value="Boston">
+  <option value="Cambridge">
+</datalist>
+
+
+
+<div class="dropdown">
+    <input type="text"><div class="icon"></div>
+    <div class="menu">
+        <select>
+            <option>Hello</option>
+            <option>Hello</option>
+            <option>Hello</option>
+            <option>Hello</option>
+            <option>Hello</option>
+        </select>
+     </div>
+</div>
+
+<script type="text/javascript">
+	
+var scroll = document.querySelector('.scroll');
+
+var popup = document.querySelector('.popup');
+
+var originalTop = popup.style.top;
+
+scroll.addEventListener('scroll', function(e){
+    var stop = scroll.scrollTop;
+    console.debug(stop);
+    
+    
+    //popup.style.top = originalTop - stop;
+    
+});
+
+
+
+</script>
+
+</body>
+</html>

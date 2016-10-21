@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tree using ul</title>
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/lib/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/demo'
+            }
+        ]
+    };
+</script>
+<script src="/lib/dojo/dojo.js"></script>
+<link rel="stylesheet" href="/lib/dojo/resources/dojo.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/dijit.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/claro/claro.css" />
+<style>
+body {
+	padding: 10px 56px;
+}
+
+pre {
+	background-color: #ececec;
+	padding: 10px;
+}
+
+.treeContainer, .treeContainer2 {
+    height: 400px;
+    width: 30%;
+	padding: 19px;
+	padding-left: 0px;
+	border: 1px solid;
+    margin-top: 10px;
+    overflow: scroll;
+}
+
+ul {
+	list-style: none;
+	padding-left: 19px;
+	margin: 0px;
+}
+
+ul:not(.parent){
+    padding-left: 0px;
+}
+
+
+.nodeWrapper{
+    cursor: default; 
+    -webkit-user-select: none; 
+}
+
+li.parent > .nodeWrapper{
+    color: rgb(135, 135, 135);
+    font-family: "CentraleSans Condensed", "Microsoft YaHei", 微软雅黑;
+    font-size: 18px;
+}
+
+li:not(.parent) > .nodeWrapper{
+ 	
+    padding: 2.5px;
+    padding-left: 19px;
+    color: rgb(77, 77, 77);
+    font-family: "CentraleSans Condensed", "Microsoft YaHei", 微软雅黑;
+    font-size: 16px;
+}
+
+li:not(.parent) > .nodeWrapper:hover {
+	background-color: rgba(178, 226, 255, 0.3);
+}
+
+li>ul {
+	margin-top: 5px;
+}
+
+
+ul.root.hidden{
+        padding-left: 0px;
+}
+
+.nodeWrapper.hidden{
+    display: none;   
+}
+
+.nodeWrapper.selected{
+    background-color: rgba(178, 226, 255, 0.3);
+}
+
+</style>
+
+</head>
+<body class="claro philips">
+
+    <pre>
+    Tree using ul
+</pre>
+
+
+    <div class="treeContainer">
+
+        <ul class="parent">
+            <li class="parent">
+                <div class="nodeWrapper">患者基本信息</div>
+                
+                <ul class="parent">
+                    <li class="parent">
+                        <div class="nodeWrapper">患者信息</div>
+                        
+                        <ul class="parent">
+                            <li class="parent">
+                                <div class="nodeWrapper">基本信息</div>
+
+                                <ul>
+                                    <li><div class="nodeWrapper">患者姓名</div></li>
+                                    <li><div class="nodeWrapper">出生日期</div></li>
+                                    <li><div class="nodeWrapper">民族</div></li>
+                                    <li><div class="nodeWrapper">患者编号</div></li>
+                                    <li><div class="nodeWrapper">社保号</div></li>
+                                    <li><div class="nodeWrapper">住院号</div></li>
+                                    <li><div class="nodeWrapper">过敏史</div></li>
+                                    <li><div class="nodeWrapper">性别</div></li>
+                                    <li><div class="nodeWrapper">年龄</div></li>
+                                    <li><div class="nodeWrapper">婚姻状态</div></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </li>
+
+        </ul>
+
+
+
+    </div>
+
+    <hr/>
+    
+    <button onclick="showTree()">Show Tree</button>
+    
+    
+    <li>Hello</li>
+    
+
+    <div class="treeContainer2">
+        
+    
+    </div>
+    
+    <div class="treeContainer3">
+        
+        <div>
+            <label>Name</label>
+            <div class="child">
+                
+            </div>
+        </div>
+    
+    
+    </div>
+
+
+
+
+<script type="text/javascript">
+
+
+
+	require(["dojo/store/Memory", "dojo/dom-construct", "dojo/string", "dojo/text!./treeData.json", 
+	         'dojo/on', 'dojo/dom-class'], function(Memory, domC, string, treeData, 
+	        on, domClass){
+	    
+	    treeData = JSON.parse(treeData);
+	    
+	    var treeContainer = document.querySelector('.treeContainer2');
+	    
+	    
+	    function TreeNode(){
+	        
+	        
+	    }
+	    
+	    function createRootNode(root, hiddenRoot){
+	        
+	        var ul = domC.toDom('<ul class="root"></ul>');
+	        
+	        
+	        var li = domC.toDom('<li></li>');
+	        
+	        var div = domC.toDom(string.substitute('<div class="root nodeWrapper">${label}</div>', {
+	            label: root.label
+	        }));
+
+	        
+	        if(hiddenRoot){
+	            ul.classList.add("hidden");
+	            div.classList.add("hidden");
+	        }
+	        
+	        domC.place(div, li);
+	        domC.place(li, ul);
+	        
+	        domC.place(ul, treeContainer);
+	        
+	        return {domNode: li, childContainer: null};
+	    }
+	    
+	    
+	    
+	    function addChild(parentNode, childItem){
+	        
+	        if(!parentNode.childContainer){
+     			var ul = domC.toDom('<ul>               </ul>')
+     			
+    	        domC.place(ul, parentNode.domNode);
+     			
+     			parentNode.childContainer = ul;
+	        }
+	        
+	        
+	        var li = domC.toDom(string.substitute('<li>     <div class="nodeWrapper">${label}</div>    </li>', {
+	            label: childItem.label
+	        }));
+	        
+	        domC.place(li, parentNode.childContainer);
+	        
+	        
+	        // update parent class
+	        parentNode.domNode.classList.add('parent');
+	        parentNode.domNode.parentElement.classList.add('parent');
+	        
+	        return {domNode: li, childContainer: null};
+	    }
+	    
+	    var selectorArray = window.selectorArray = [];
+	    
+	    
+	    function clearOtherSelector(keepNode){
+	        
+	        function _clear(node){
+	            if(node !== keepNode){
+	                domClass.remove(node, 'selected');
+	            }
+	        }
+	        
+	        selectorArray.forEach(_clear);
+	    }
+	    
+	    
+	    function selector(childWidget){
+	        
+	        if(!childWidget.selector){
+	            childWidget.selector = true;
+	            
+	            
+	            var domNode = childWidget.domNode;
+	            
+	            
+	            
+	            
+ 	            on(domNode, '.nodeWrapper:click', function(e){
+					e.stopPropagation()
+
+					
+
+					if(e.shiftKey){
+					    // TODO 
+					    
+					}else if(e.ctrlKey){
+     	                domClass.toggle(this, 'selected');
+     	                
+     	                if(domClass.contains(this, 'selected')){
+     	                   if(selectorArray.indexOf(this) === -1){
+       					    	selectorArray.push(this);
+        	               	}
+     	                }else{
+     	                   if(selectorArray.indexOf(this) !== -1){
+       					    	selectorArray.splice(selectorArray.indexOf(this), 1);
+        	               	}
+     	                }
+     	                
+					}else{
+					    // only click
+     	                domClass.add(this, 'selected');
+     	               	if(selectorArray.indexOf(this)=== -1){
+    					    selectorArray.push(this);
+     	               	}
+     	               	
+     	                clearOtherSelector(this);
+					}
+ 	            });
+	            
+	            
+	            
+	            
+	        }else{
+	            console.log('child node already add selector');
+	            
+	        }
+	        
+	        
+	    }
+	    
+	    window.showTree = function(){
+        	var treeData1 = [{id: "root", label: "root"},  {"id":0.9157025013963775,"root":"root","parent":"root","orderIndex":0,"from":1,"label":"患者基本信息","format":null,"options":null},{"id":0.12149269593956258,"root":"root","parent":0.9157025013963775,"orderIndex":1,"from":1,"label":"患者信息","format":null,"options":null},{"id":0.6231121248307896,"root":"root","parent":0.12149269593956258,"orderIndex":2,"from":1,"label":"基本信息","format":null,"options":null},{"id":0.9423902391626497,"root":"root","parent":0.6231121248307896,"orderIndex":3,"from":1,"type":"text","field":"patientName","label":"患者姓名","format":null,"options":null},{"id":0.011727483945946249,"root":"root","parent":0.6231121248307896,"orderIndex":4,"from":1,"type":"date","field":"birthDate","label":"出生日期","format":"yyyy/MM/dd","options":null},{"id":0.6000014000305187,"root":"root","parent":0.6231121248307896,"orderIndex":5,"from":1,"type":"text","field":"ethnic","label":"民族","format":null,"options":null},{"id":0.7884986158318208,"root":"root","parent":0.6231121248307896,"orderIndex":6,"from":1,"type":"text","field":"mrn","label":"患者编号","format":null,"options":null},{"id":0.6269286190646657,"root":"root","parent":0.6231121248307896,"orderIndex":7,"from":1,"type":"text","field":"socialSecurity","label":"社保号","format":null,"options":null},{"id":0.17691718391145694,"root":"root","parent":0.6231121248307896,"orderIndex":8,"from":1,"type":"text","field":"inpatientNo","label":"住院号","format":null,"options":null},{"id":0.41037683248318735,"root":"root","parent":0.6231121248307896,"orderIndex":9,"from":1,"type":"textarea","field":"allergies","label":"过敏史","format":null,"options":null},{"id":0.33758770931320115,"root":"root","parent":0.6231121248307896,"orderIndex":10,"from":1,"type":"radio","field":"gender","label":"性别","format":null,"options":{"0":"女","1":"男","2":"其他","9":"未知"}},{"id":0.004065847964722202,"root":"root","parent":0.6231121248307896,"orderIndex":11,"from":1,"type":"text","field":"patientAge","label":"年龄","format":null,"options":null},{"id":0.5511952767895001,"root":"root","parent":0.6231121248307896,"orderIndex":12,"from":1,"type":"radio","field":"maritalStatus","label":"婚姻状态","format":null,"options":{"10":"未婚","20":"已婚","21":"初婚","22":"再婚","23":"复婚","30":"丧偶","40":"离婚","90":"未说明的婚姻状况"}},{"id":0.49872111649390294,"root":"root","parent":0.6231121248307896,"orderIndex":13,"from":1,"type":"text","field":"idCard","label":"身份证号","format":null,"options":null},{"id":0.5857009134611453,"root":"root","parent":0.6231121248307896,"orderIndex":14,"from":1,"type":"text","field":"outpatientNo","label":"门诊号","format":null,"options":null},{"id":0.7603703909372157,"root":"root","parent":0.6231121248307896,"orderIndex":15,"from":1,"type":"text","field":"empi","label":"EMPI","format":null,"options":null},{"id":0.9138768584266992,"root":"root","parent":0.6231121248307896,"orderIndex":16,"from":1,"type":"radio","field":"isDeceased","label":"死亡状态","format":null,"options":{"0":"否","1":"是"}},{"id":0.37179171549821,"root":"root","parent":0.6231121248307896,"orderIndex":17,"from":1,"type":"date","field":"deceasedTime","label":"死亡时间","format":"yyyy/MM/dd","options":null}];
+    	    
+        	treeData.unshift({id: "root", label: "root"});
+        	
+        	var store = new Memory({
+        	    data: treeData,
+        	    
+        	    getChildren: function(parent){
+        	        return this.query({parent: parent.id});
+        	    }
+        	});
+        	
+        	
+        	var itemWidgetMap = window.itemWidgetMap = {};
+        	
+        	var nodesItemMap = {};
+        	
+    	    // get root
+    	    var root = store.get("root");
+    	    
+    	    var idProperty = 'id';
+    	    
+    	    
+    	    if(root){
+    	        var existingWidget = itemWidgetMap[root[idProperty]];
+    	        
+    	        
+    	        if(existingWidget){
+    	            // do nothing
+    	        }else{
+    	            existingWidget = createRootNode(root, true);
+    	            itemWidgetMap[root[idProperty]] = existingWidget;
+    	            nodesItemMap[existingWidget.domNode] =  root[idProperty];
+    	        }
+    	        
+    	        
+    	        // load children
+    	        var itemQ = [
+                    root
+                ];
+
+    	        var p = window.setInterval(function(){
+    	            
+                    if (itemQ.length > 0) {
+                        var item = itemQ.shift();
+        
+                        var itemWidget = itemWidgetMap[item[idProperty]];
+                        
+                        if(itemWidget){
+                            var children = store.getChildren(item);
+                            
+                            children.forEach(function(c){
+                                var childWidget = addChild(itemWidget, c);
+                                
+                                itemWidgetMap[c[idProperty]] = childWidget;
+                                nodesItemMap[childWidget.domNode] = c[idProperty];
+                                
+                                // add selector
+                                selector(childWidget);
+                                
+                            });
+                            
+            
+                            if (children.length > 0) {
+                                itemQ = itemQ.concat(children);
+                            }
+                            
+                        }else{
+                            throw 'no node for item ' + JSON.stringify(item);
+                        }
+                    }else{
+                        console.log('clear interval', p);
+                        window.clearInterval(p);
+                    }
+    	        }, 1);
+    	        
+    	        
+//     	        while(itemQ.length > 0) {
+//                         var item = itemQ.shift();
+        
+//                         var itemWidget = itemWidgetMap[item[idProperty]];
+                        
+//                         if(itemWidget){
+//                             var children = store.getChildren(item);
+                            
+//                             children.forEach(function(c){
+//                                 var childWidget = addChild(itemWidget, c);
+                                
+//                                 itemWidgetMap[c[idProperty]] = childWidget;
+                                
+//                                 // add selector
+//                                 selector(childWidget);
+                                
+//                             });
+                            
+            
+//                             if (children.length > 0) {
+//                                 itemQ = itemQ.concat(children);
+//                             }
+                            
+//                         }else{
+//                             throw 'no node for item ' + JSON.stringify(item);
+//                         }
+//                     }
+    	        
+    	        
+    	        
+    	        
+    	    }else{
+    	        throw 'no root';
+    	    }
+	        
+	        
+	        
+	    }
+	    
+	    
+	    
+	    
+	    
+    	
+    	
+	});
+
+	
+	
+	
+	
+
+
+
+</script>
+
+
+</body>
+</html>

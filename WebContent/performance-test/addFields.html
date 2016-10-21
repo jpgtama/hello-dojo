@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Add Fields</title>
+<style>
+body {
+    padding: 10px 56px;
+}
+
+pre {
+    background-color: #ececec;
+    padding: 10px;
+}
+
+
+.container{
+    width: 80%;
+    height: 400px;
+    border: 2px solid gray;
+    overflow: scroll;
+    margin-bottom: 20px;
+}
+
+
+.oldCdr.option{
+    width: 50px;
+    word-wrap: break-word;
+    position: relative;
+    padding-left: 10px;
+    display: inline-block;
+}
+
+.oldCdr.option::before{
+    content: '   ';
+}
+
+.oldCdr.option input{
+    position: absolute;
+    left: -10px;
+}
+
+$gutter: 10;
+
+.grid#{$gutter} {
+    background: red;
+}
+
+</style>
+</head>
+<body>
+
+<pre>Add Fields</pre>
+<hr/>
+
+
+<div class="container" > </div>
+
+<button onclick="addF(2700)">Add 2700</button>
+
+<hr/>
+
+<label class="oldCdr option"  >
+
+    <input type="checkbox"  >
+    1112233445566767788888888888888888888890
+
+</label>
+
+
+<hr/>
+
+<div class="grid10">
+    Hello, I am grid 10;
+</div>
+
+
+
+<script type="text/javascript">
+
+	function addF(n){
+	    
+	    var start = Date.now();
+	    
+	    var c = document.querySelector('.container');
+	    
+	    
+	    for(var i=0;i<n;i++){
+	        
+	        var input = document.createElement('input');
+	        
+	        c.appendChild(input);
+	        
+	    }
+	    
+	    var end = Date.now();
+	    
+	    console.debug('time passed: ', (end -start) + ' ms', (end -start)/1000.0 + ' s');
+	    
+	}
+
+
+</script>
+
+
+</body>
+</html>

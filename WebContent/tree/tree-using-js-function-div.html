@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tree using JS function Div</title>
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/lib/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/demo'
+            }
+        ]
+    };
+</script>
+<script src="/lib/dojo/dojo.js"></script>
+<link rel="stylesheet" href="/lib/dojo/resources/dojo.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/dijit.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/claro/claro.css" />
+<style>
+body {
+	padding: 10px 56px;
+}
+
+pre {
+	background-color: #ececec;
+	padding: 10px;
+}
+
+.treeContainer {
+    height: 400px;
+    width: 30%;
+	padding: 19px;
+	padding-left: 0px;
+	border: 1px solid;
+    margin-top: 10px;
+    overflow: scroll;
+}
+
+.treeNode  label.selected{
+    background-color: rgba(178, 226, 255, 0.3);
+}
+
+.treeNode label{
+    cursor: default; 
+    -webkit-user-select: none; 
+    display: block;
+    padding: 2.5px;
+}
+
+.treeNode.parent label{
+         color: rgb(135, 135, 135); 
+     font-family: "CentraleSans Condensed", "Microsoft YaHei", 微软雅黑; 
+     font-size: 18px; 
+}
+
+.treeNode:not(.parent) label{
+    color: rgb(77, 77, 77); 
+     font-family: "CentraleSans Condensed", "Microsoft YaHei", 微软雅黑; 
+     font-size: 16px; 
+}
+
+.treeNode:not(.parent) label:hover{
+    background-color: rgba(129, 208, 255, 0.3);
+}
+
+
+</style>
+
+</head>
+<body class="claro philips">
+
+    <pre>
+    Tree using JS function Div
+</pre>
+
+
+
+    <hr/>
+    
+    <button onclick="showTree()">Show Tree</button>
+    
+    
+    
+
+    <div class="treeContainer">
+        
+    
+    </div>
+    
+
+
+
+
+<script type="text/javascript">
+
+    function hitch(_this, func){
+        return function(){
+            func.apply(_this, arguments);
+        }
+    }
+
+    function timeStamp(){
+        var d = new Date();
+        return '[' + d.getMinutes() + ':' +d.getSeconds() +  ':' + d.getMilliseconds() + ']';
+    }
+
+    function Selector(){
+        this.rootTreeNode = null;
+        this.treeNodeList = [];
+        this.selectedMap = {};
+        
+        // selector id
+        this.sidIndex = 0;
+        
+        // lastNonShiftSelect
+        var lastNonShiftSelect = null;
+        
+        
+        // add tree node
+        this.add = function(treeNode){
+            treeNode.sid = this.sidIndex++;
+            this.treeNodeList.push(treeNode);
+        }
+        
+        // select funciton, will be set in TreeNode
+        this.select = null;
+        this.disselect = null;
+        this.isSelected = null;
+        
+        this._select = function(treeNode){
+            if(this.select){
+                this.select(treeNode);
+            }
+            
+            this.selectedMap[treeNode.sid] = treeNode;
+        }
+        
+        this._disselect = function(treeNode){
+            if(this.disselect){
+                this.disselect(treeNode);
+            }
+            
+            delete this.selectedMap[treeNode.sid];
+        }
+        
+        this._isSelected = function(treeNode){
+            var is = false;
+            if(this.isSelected){
+                is = this.isSelected(treeNode);
+            }
+            
+            return is;
+        }
+        
+        // click
+        this.click = function(treeNode, options){
+            console.log('pciPath: ', treeNode.pciPath);
+            
+            if(options.shift){
+                // TODO shift
+                if(this.lastNonShiftSelect){
+                    
+                    
+                    
+                }
+                
+                
+                // first time
+                if(!this.lastNonShiftSelect){
+                    this.lastNonShiftSelect = treeNode;
+                }
+            }else if(options.ctrl){
+                // ctrl
+                if(this._isSelected(treeNode)){
+                    this._disselect(treeNode);
+                }else{
+                    this._select(treeNode);
+                }
+                
+                this.lastNonShiftSelect = treeNode;
+            }else{
+                // cancel other selection
+                this._cancelOther(treeNode);
+                
+                // select this treeNode
+            	this._select(treeNode);
+                
+                this.lastNonShiftSelect = treeNode;
+            }
+        }
+        
+        this._cancelOther = function(treeNode){
+            for(var i in this.selectedMap){
+                var tn = this.selectedMap[i];
+                if(tn !== treeNode){
+                    this._disselect(tn);
+                }
+            }
+        }
+        
+    }
+    
+    var selector = new Selector();
+    
+    function TreeNode(item, options){
+        this.item = item;
+        this.paddingLeft = 0;
+        
+        // index of my children
+        this.childrenIndex = 0;
+        
+        // parent children index path, from root
+        this.pciPath = [];
+        
+        // selector
+        if(options && options.selector){
+            this.selector = options.selector;
+            this.selector.add(this);
+            
+            if(!this.selector.select){
+                this.selector.select = function(treeNode){
+                    treeNode.label.classList.add("selected");
+                }
+            }
+            
+            if(!this.selector.disselect){
+                this.selector.disselect = function(treeNode){
+                    treeNode.label.classList.remove("selected");
+                }
+            }
+            
+            if(!this.selector.isSelected){
+                this.selector.isSelected = function(treeNode){
+                    return treeNode.label.classList.contains("selected");
+                }
+            }
+        }
+        
+        // wrapper
+        var wrapper = this.wrapper = document.createElement('div');
+        wrapper.classList.add('treeNode');
+        
+        // label
+        var label = this.label = document.createElement('label');
+        label.innerText = item.label;
+        if(options && options.isHidden){
+            label.style.display = 'none';
+        }
+        
+        
+        
+        wrapper.appendChild(label);
+        
+        this.placeAt = function(idDom){
+            var pa = idDom;
+            if(typeof idDom === 'string'){
+                // get dom
+                pa = domcument.getElementById(idDom);
+            }
+            
+            if(pa){
+                pa.appendChild(this.wrapper);
+            }
+        }
+        
+        this.addChild = function(child){
+            if(!this.childContainer){
+                this.childContainer = document.createElement('div');
+                this.childContainer.classList.add('childContainer');
+                
+                this.wrapper.appendChild(this.childContainer);
+            }
+            
+            if(child && child.wrapper){
+                // set pciPath
+                child.pciPath = this.pciPath.slice(0);
+                child.pciPath.push(this.childrenIndex++);
+                
+                
+                this.childContainer.appendChild(child.wrapper);
+                // add padding
+                child.paddingLeft = this.paddingLeft + 9;
+                child.label.style.paddingLeft = child.paddingLeft + 'px'; 
+                
+                // update parent class
+                this.wrapper.classList.add('parent');
+            }
+        }
+        
+        // selector
+        this.wrapper.addEventListener('click', hitch(this, function(e){
+            e.stopPropagation();
+            // this.label.classList.add("selected");
+            
+            if(this.selector){
+                this.selector.click(this, {ctrl: e.ctrlKey, shift: e.shiftKey});
+            }
+            
+        }));
+        
+    }
+    
+    // createRootNode
+    function createRootNode(itemWidgetMap, root, idProperty, treeContainer){
+        var existingWidget = itemWidgetMap[root[idProperty]];
+        if(existingWidget){
+            // do nothing
+        }else{
+            existingWidget = new TreeNode(root, {isHidden: true, selector: selector});
+            itemWidgetMap[root[idProperty]] = existingWidget;
+        }
+		// attach to DOM    	        
+        existingWidget.placeAt(treeContainer);
+		
+		return existingWidget;
+    }
+    
+    // getAllParents
+	function getAllParents(treeData, parentProperty, store){
+	    var parentQueue = [];
+	    
+	    // use map to improve performance
+		var tempMap = {};
+		
+		for(var i=0; i<treeData.length; i++){
+		    var d = treeData[i];
+		    
+		    var pId = d[parentProperty]; 
+		    if(pId){
+		        var p = store.get(pId);
+		        
+		        if(p && !tempMap[pId]){
+		            parentQueue.push(p);
+		            tempMap[pId] = p;
+		        }
+		    }
+		}
+		return parentQueue;
+	}
+    
+    // loadDataWithParentQueue
+	function loadDataWithParentQueue(parentQueue, itemWidgetMap, idProperty, store){
+        while(parentQueue.length > 0){
+            var p = parentQueue.shift();
+            
+            var pWidget = itemWidgetMap[p[idProperty]];
+            
+            if(pWidget){
+            var children = store.getChildren(p);
+            
+            children.forEach(function(c){
+                  var childWidget = new TreeNode(c, {selector: selector});
+                  pWidget.addChild(childWidget);
+                  
+                  itemWidgetMap[c[idProperty]] = childWidget;
+             });
+                
+            }else{
+                throw 'no widget for parent ' + JSON.stringify(p);
+            }
+        }
+     }
+	
+
+	require(["dojo/store/Memory", "dojo/dom-construct", "dojo/string", "dojo/text!./treeData.json", 
+	         'dojo/on', 'dojo/dom-class', 'dojo/dom'], function(Memory, domC, string, treeData, 
+	        on, domClass, dom){
+	  
+  		treeData = JSON.parse(treeData);
+	    
+	    var treeContainer = document.querySelector('.treeContainer');
+	    
+	    window.showTree = function(){
+        	treeData.unshift({id: "root", label: "root"});
+    	    var idProperty = 'id';
+    	    var parentProperty = 'parent';
+        	var itemWidgetMap = window.itemWidgetMap = {};
+        	
+        	var store = new Memory({
+        	    data: treeData,
+        	    
+        	    getChildren: function(parent){
+        	        return this.query({parent: parent.id});
+        	    }
+        	});
+        	
+    	    // get root -> root must be ready
+    	    var root = store.get("root");
+    	    if(root){
+    	        
+    	        var rootWidget = createRootNode(itemWidgetMap, root, idProperty, treeContainer);
+    	        selector.rootTreeNode = rootWidget;
+    	        
+    	        
+    	        // load children
+    	        var itemQ = [
+                    root
+                ];
+    	        
+    	        // put all parents to queue
+    	        console.log('begin to gather parent', timeStamp());
+    	        var parentQueue = getAllParents(treeData, parentProperty, store);
+				// 480
+    	        console.log('parents: ', parentQueue.length);
+    	        console.log('end to gather parent', timeStamp());
+
+    	        
+    	        
+    	        // load data
+    	        console.log('begin to load data', timeStamp());
+    	        loadDataWithParentQueue(parentQueue, itemWidgetMap, idProperty, store);
+    	        console.log('end to load data', timeStamp());
+    	        
+    	    }else{
+    	        throw 'no root';
+    	    }
+	    }
+    	
+	});
+	
+	
+
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tree using Dojo Widget</title>
+<script type="text/javascript">
+    dojoConfig = {
+        baseUrl : '/lib/dojo/',
+        parseOnLoad : true,
+        async : false,
+        cacheBust : true,
+        isDebug : true,
+        packages : [
+            {
+                name : 'dgrid',
+                location : '../dgrid'
+            },
+            {
+                name : 'dstore',
+                location : '../dstore'
+            },
+            {
+                name : 'put-selector',
+                location : '../put-selector'
+            },
+            {
+                name : 'xstyle',
+                location : '../xstyle'
+            },
+            {
+                name : 'app',
+                location : '/demo'
+            }
+        ]
+    };
+</script>
+<script src="/lib/dojo/dojo.js"></script>
+<link rel="stylesheet" href="/lib/dojo/resources/dojo.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/dijit.css" />
+<link rel="stylesheet" href="/lib/dijit/themes/claro/claro.css" />
+<style>
+body {
+	padding: 10px 56px;
+}
+
+pre {
+	background-color: #ececec;
+	padding: 10px;
+}
+
+.treeContainer, .treeContainer2 {
+    height: 400px;
+    width: 30%;
+	padding: 19px;
+	padding-left: 0px;
+	border: 1px solid;
+    margin-top: 10px;
+    overflow: scroll;
+}
+
+ul {
+	list-style: none;
+	padding-left: 19px;
+	margin: 0px;
+}
+
+ul:not(.parent){
+    padding-left: 0px;
+}
+
+
+.nodeWrapper{
+    cursor: default; 
+    -webkit-user-select: none; 
+}
+
+li.parent > .nodeWrapper{
+    color: rgb(135, 135, 135);
+    font-family: "CentraleSans Condensed", "Microsoft YaHei", 微软雅黑;
+    font-size: 18px;
+}
+
+li:not(.parent) > .nodeWrapper{
+ 	
+    padding: 2.5px;
+    padding-left: 19px;
+    color: rgb(77, 77, 77);
+    font-family: "CentraleSans Condensed", "Microsoft YaHei", 微软雅黑;
+    font-size: 16px;
+}
+
+li:not(.parent) > .nodeWrapper:hover {
+	background-color: rgba(178, 226, 255, 0.3);
+}
+
+li>ul {
+	margin-top: 5px;
+}
+
+
+ul.root.hidden{
+        padding-left: 0px;
+}
+
+.nodeWrapper.hidden{
+    display: none;   
+}
+
+.nodeWrapper.selected{
+    background-color: rgba(178, 226, 255, 0.3);
+}
+
+</style>
+
+</head>
+<body class="claro philips">
+
+    <pre>
+    Tree using Dojo Widget
+</pre>
+
+
+
+    <hr/>
+    
+    <button onclick="showTree()">Show Tree</button>
+    
+    
+    
+
+    <div class="treeContainer2">
+        
+    
+    </div>
+    
+    <div id="treeContainer3">
+        
+    
+    
+    </div>
+
+
+
+
+<script type="text/javascript">
+
+    function timeStamp(){
+        var d = new Date();
+        return '[' + d.getMinutes() + ':' +d.getSeconds() +  ':' + d.getMilliseconds() + ']';
+    }
+
+
+	require(["dojo/store/Memory", "dojo/dom-construct", "dojo/string", "dojo/text!./treeData.json", 
+	         'dojo/on', 'dojo/dom-class', 'app/widget/mytree/TreeNode'], function(Memory, domC, string, treeData, 
+	        on, domClass, TreeNode){
+	    
+	  
+  		treeData = JSON.parse(treeData);
+	    
+	    var treeContainer = document.querySelector('.treeContainer2');
+	    
+	    window.showTree = function(){
+        	treeData.unshift({id: "root", label: "root"});
+        	
+        	var store = new Memory({
+        	    data: treeData,
+        	    
+        	    getChildren: function(parent){
+        	        return this.query({parent: parent.id});
+        	    }
+        	});
+        	
+        	
+        	var itemWidgetMap = window.itemWidgetMap = {};
+        	
+        	
+    	    // get root
+    	    var root = store.get("root");
+    	    
+    	    var idProperty = 'id';
+    	    
+    	    
+    	    if(root){
+    	        var existingWidget = itemWidgetMap[root[idProperty]];
+    	        
+    	        
+    	        if(existingWidget){
+    	            // do nothing
+    	        }else{
+    	            existingWidget = new TreeNode(root);
+    	            itemWidgetMap[root[idProperty]] = existingWidget;
+    	        }
+    	        
+    	        existingWidget.placeAt(treeContainer);
+    	        
+    	        // load children
+    	        var itemQ = [
+                    root
+                ];
+    	        
+    	        
+    	        // put all parents to queue
+    	        var parentQueue = [];
+    	        
+    	        console.log('begin to gather parent', timeStamp());
+    	        
+    	        while (itemQ.length > 0) {
+                    var item = itemQ.shift();
+    
+                    var children = store.getChildren(item);
+                    
+                    if (children.length > 0) {
+                        parentQueue.push(item);
+                        itemQ = itemQ.concat(children);
+                    }
+                }
+    	        
+    	        console.log('end to gather parent', timeStamp());
+    	        
+    	        // load data
+    	        console.log('begin to load data', timeStamp());
+    	        while(parentQueue.length > 0){
+    	            var p = parentQueue.shift();
+    	            
+    	            var pWidget = itemWidgetMap[p[idProperty]];
+    	            
+    	            if(pWidget){
+        	            var children = store.getChildren(p);
+        	            
+        	            children.forEach(function(c){
+                             var childWidget = new TreeNode(c);
+                             pWidget.addChild(childWidget);
+                             
+                             itemWidgetMap[c[idProperty]] = childWidget;
+                        });
+    	                
+    	            }else{
+    	                throw 'no widget for parent ' + JSON.stringify(p);
+    	            }
+    	            
+    	        }
+    	        
+    	        console.log('end to load data', timeStamp());
+    	        
+
+//     	        var p = window.setInterval(function(){
+    	            
+//                     if (itemQ.length > 0) {
+//                         var item = itemQ.shift();
+        
+//                         var itemWidget = itemWidgetMap[item[idProperty]];
+                        
+//                         if(itemWidget){
+//                             var children = store.getChildren(item);
+                            
+//                             children.forEach(function(c){
+//                                 var childWidget = new TreeNode(c);
+//                                 itemWidget.addChild(childWidget);
+                                
+//                                 itemWidgetMap[c[idProperty]] = childWidget;
+//                             });
+                            
+            
+//                             if (children.length > 0) {
+//                                 itemQ = itemQ.concat(children);
+//                             }
+                            
+//                         }else{
+//                             throw 'no node for item ' + JSON.stringify(item);
+//                         }
+//                     }else{
+//                         console.log('clear interval', p);
+//                         window.clearInterval(p);
+//                     }
+//     	        }, 1);
+    	        
+    	        
+//     	        while(itemQ.length > 0) {
+//                         var item = itemQ.shift();
+        
+//                         var itemWidget = itemWidgetMap[item[idProperty]];
+                        
+//                         if(itemWidget){
+//                             var children = store.getChildren(item);
+                            
+//                             children.forEach(function(c){
+//                                 var childWidget = addChild(itemWidget, c);
+                                
+//                                 itemWidgetMap[c[idProperty]] = childWidget;
+                                
+//                                 // add selector
+//                                 selector(childWidget);
+                                
+//                             });
+                            
+            
+//                             if (children.length > 0) {
+//                                 itemQ = itemQ.concat(children);
+//                             }
+                            
+//                         }else{
+//                             throw 'no node for item ' + JSON.stringify(item);
+//                         }
+//                     }
+    	        
+    	        
+    	        
+    	        
+    	    }else{
+    	        throw 'no root';
+    	    }
+	        
+	        
+	        
+	    }
+	    
+	    
+	    
+	    
+	    
+    	
+    	
+	});
+
+	
+	
+	
+	
+
+
+
+</script>
+
+
+</body>
+</html>
