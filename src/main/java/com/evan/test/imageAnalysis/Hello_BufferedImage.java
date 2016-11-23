@@ -23,12 +23,13 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.lang3.text.StrSubstitutor;
+import com.evan.test.imageAnalysis.entity.Rect;
+import com.evan.test.imageAnalysis.entity.RectGroupManager;
 
 /**
  * Hello_BufferedImage
@@ -39,9 +40,10 @@ import org.apache.commons.lang3.text.StrSubstitutor;
  */
 public class Hello_BufferedImage {
 	
+	private static String srcImageFilePath = "C:/Users/310199253/Pictures/hello_ia/hemoglobin.bmp";
+	
 	public static void main(String[] args) throws Exception {
 		
-		String srcImageFilePath = "C:/Users/310199253/Pictures/hello_ia/hemoglobin.bmp";
 		String binaryImageFilePath = srcImageFilePath + ".binary.bmp";
 		String squareImageFilePath = srcImageFilePath + ".square_${squareSize}.bmp";
 		
@@ -62,14 +64,15 @@ public class Hello_BufferedImage {
 		
 		// squre
 		BufferedImage biBinary = ImageIO.read(new File(binaryImageFilePath));
-		square(biBinary, 2, squareImageFilePath);
-		square(biBinary, 3, squareImageFilePath);
-		square(biBinary, 4, squareImageFilePath);
-		square(biBinary, 5, squareImageFilePath);
-		square(biBinary, 6, squareImageFilePath);
-		square(biBinary, 7, squareImageFilePath);
-		square(biBinary, 8, squareImageFilePath);
-		square(biBinary, 9, squareImageFilePath);
+		// square(biBinary, 2);
+		// square(biBinary, 3);
+		// square(biBinary, 4);
+		// square(biBinary, 5);
+		// square(biBinary, 6);
+		// square(biBinary, 7);
+		// square(biBinary, 8);
+		// square(biBinary, 9);
+		squareGroup(biBinary, 4);
 		
 	}
 	
@@ -132,23 +135,93 @@ public class Hello_BufferedImage {
 		return color.getRed() == value && color.getGreen() == value && color.getBlue() == value;
 	}
 	
-	private static void square(BufferedImage bi, int squareSize, String outputFilePath) throws Exception {
+	/**
+	 * group squares
+	 * 
+	 * @param bi
+	 * @param squareSize
+	 * @param outputFilePath
+	 * @throws Exception
+	 */
+	private static void squareGroup(BufferedImage bi, int squareSize) throws Exception {
 		int srcWidth = bi.getWidth(); // 源图宽度
 		int srcHeight = bi.getHeight(); // 源图高度
 		
 		// formate outputFilePath
-		Map<String, Object> replace = new HashMap<>();
-		replace.put("squareSize", squareSize);
-		StrSubstitutor sub = new StrSubstitutor(replace);
-		outputFilePath = sub.replace(outputFilePath);
+		String outputFilePath = srcImageFilePath + String.format("_squareGroup_%s_reduced.bmp", squareSize);
 		
 		// copy image
 		BufferedImage newBi = new BufferedImage(srcWidth, srcHeight, BufferedImage.TYPE_INT_RGB);
 		Graphics g = newBi.getGraphics();
 		g.drawImage(bi, 0, 0, null);
 		
-		// draw rect
+		// rect list
+		List<Rect> rects = new ArrayList<>();
+		
+		// get all filled rects
+		// g.setColor(Color.BLUE);
+		for (int y = 0; y < srcHeight; y += squareSize) {
+			for (int x = 0; x < srcWidth; x += squareSize) {
+				
+				int rectWidth = Math.min(squareSize, srcWidth - x);
+				int rectHeight = Math.min(squareSize, srcHeight - y);
+				
+				if (isSquareFilled(newBi, x, y, rectWidth, rectHeight)) {
+					// g.drawRect(x, y, rectWidth, rectHeight);
+					rects.add(new Rect(x, y, rectWidth, rectHeight));
+				}
+				
+			}
+		}
+		
+		System.out.println("rect size: " + rects.size());
+		
+		// group squares
+		RectGroupManager rgm = new RectGroupManager();
+		for (Rect rect : rects) {
+			rgm.addRect(rect);
+		}
+		
+		// rgm.printGroupList();
+		
+		// group twice
+		RectGroupManager rgmTwice = new RectGroupManager();
+		for (Rect r : rgm.reduceAllGroup()) {
+			rgmTwice.addRect(r);
+		}
+		
+		// reduce groups
 		g.setColor(Color.BLUE);
+		for (Rect r : rgmTwice.reduceAllGroup()) {
+			g.drawRect(r.x, r.y, r.w, r.h);
+			System.out.println(r);
+		}
+		
+		// output
+		ImageIO.write(newBi, "BMP", new File(outputFilePath));
+		
+		// log
+		System.out.println("squareGroup done.");
+		g.dispose();
+	}
+	
+	private static void square(BufferedImage bi, int squareSize) throws Exception {
+		int srcWidth = bi.getWidth(); // 源图宽度
+		int srcHeight = bi.getHeight(); // 源图高度
+		
+		// formate outputFilePath
+		String outputFilePath = srcImageFilePath + String.format(".square_%s.bmp", squareSize);
+		
+		// copy image
+		BufferedImage newBi = new BufferedImage(srcWidth, srcHeight, BufferedImage.TYPE_INT_RGB);
+		Graphics g = newBi.getGraphics();
+		g.drawImage(bi, 0, 0, null);
+		
+		// rect list
+		List<Rect> rects = new ArrayList<>();
+		
+		// draw rect
+		g.setColor(Color.LIGHT_GRAY);
 		for (int y = 0; y < srcHeight; y += squareSize) {
 			for (int x = 0; x < srcWidth; x += squareSize) {
 				
@@ -157,6 +230,8 @@ public class Hello_BufferedImage {
 				
 				if (isSquareFilled(newBi, x, y, rectWidth, rectHeight)) {
 					g.drawRect(x, y, rectWidth, rectHeight);
+					// g.fillRect(x, y, rectWidth, rectHeight);
+					rects.add(new Rect(x, y, rectWidth, rectHeight));
 				}
 				
 			}
